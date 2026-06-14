@@ -9,4 +9,16 @@ const base = process.env.BASE_PATH ?? "/Run-Hub/";
 export default defineConfig({
   base,
   plugins: [react()],
+  build: {
+    target: "es2022",
+  },
+  esbuild: {
+    target: "es2022",
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: "es2022",
+    },
+  },
 });
+
