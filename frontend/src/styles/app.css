@@ -315,14 +315,28 @@
   top: 1.25rem;
   left: 1.25rem;
   z-index: 6;
-  background: var(--panel-bg);
-  border: 1px solid var(--panel-border);
-  color: var(--text);
-  border-radius: 10px;
-  padding: 0.5rem 0.75rem;
-  font-family: var(--font-ui);
+  /* More opaque + coral edge so it clearly reads as a tappable control over
+     the busy map, not part of the scenery. */
+  background: rgba(18, 34, 47, 0.92);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 12px;
+  padding: 0;
+  width: 46px;
+  height: 46px;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   pointer-events: auto;
+  backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(217, 112, 89, 0.25);
+}
+
+.control-panel__toggle svg {
+  display: block;
 }
 
 .control-panel__heading {
@@ -436,7 +450,7 @@
 /* --- mobile: collapse the panel behind a toggle --- */
 @media (max-width: 640px) {
   .control-panel__toggle {
-    display: block;
+    display: flex;
   }
   .control-panel {
     width: min(300px, 86vw);
@@ -444,6 +458,25 @@
   }
   .control-panel[data-collapsed="true"] {
     display: none;
+  }
+
+  /* The hero title reads over a denser patch of map labels on phones, so
+     deepen the focused scrim and the title shadow for legibility. Keep the
+     scrim within the viewport so it never creates horizontal overflow. */
+  .hero::before {
+    width: 100%;
+    height: 70vh;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(18, 34, 47, 0.92) 0%,
+      rgba(18, 34, 47, 0.7) 46%,
+      transparent 78%
+    );
+  }
+  .hero__title {
+    text-shadow:
+      0 0 24px rgba(18, 34, 47, 0.95),
+      0 2px 30px rgba(18, 34, 47, 0.9);
   }
 }
 

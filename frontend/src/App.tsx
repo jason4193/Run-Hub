@@ -28,6 +28,9 @@ export default function App() {
   const [viewState, setViewState] = useState<MapViewState | null>(null);
   const [interactive, setInteractive] = useState(false);
   const [pinned, setPinned] = useState(false);
+  // Stats become reachable from the map section onward (not just the explore
+  // zone at the very bottom), so the toggle is discoverable mid-scroll.
+  const [statsReady, setStatsReady] = useState(false);
 
   const sectionRef = useRef<HTMLElement>(null);
   const exploreRef = useRef<HTMLElement>(null);
@@ -99,17 +102,19 @@ export default function App() {
         setViewState={setViewState}
         setInteractive={setInteractive}
         setPinned={setPinned}
+        setStatsReady={setStatsReady}
         runCount={activities.activities.length}
         totalDistanceM={stats.totalDistanceM}
       />
 
       {/* Interactive viewport: a transparent full-height pane the (now unlocked)
           fixed map shows through, so the user can pan / zoom / tilt over Sydney. */}
-      <section className="map-explore" aria-label="Explore the map" ref={exploreRef}>
-        {interactive && (
-          <ControlPanel paceEfforts={paceCurve.pace} stats={stats} />
-        )}
-      </section>
+      <section className="map-explore" aria-label="Explore the map" ref={exploreRef} />
+
+      {/* Stats HUD — fixed-position, so it lives outside the scroll sections.
+          Mounts once the map section is reached (collapsed behind a toggle on
+          mobile; persistent on desktop) and unmounts back on the hero. */}
+      {statsReady && <ControlPanel paceEfforts={paceCurve.pace} stats={stats} />}
 
       <Footer generatedAt={activities.generatedAt} />
     </div>
