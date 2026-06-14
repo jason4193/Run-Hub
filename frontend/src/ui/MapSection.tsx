@@ -14,6 +14,8 @@ export interface MapSectionProps {
   setViewState: (vs: MapViewState) => void;
   setInteractive: (interactive: boolean) => void;
   setPinned: (pinned: boolean) => void;
+  /** Reveal the persistent stats toggle once the map section is reached. */
+  setStatsReady: (ready: boolean) => void;
   runCount: number;
   totalDistanceM: number;
 }
@@ -30,6 +32,7 @@ export default function MapSection({
   setViewState,
   setInteractive,
   setPinned,
+  setStatsReady,
   runCount,
   totalDistanceM,
 }: MapSectionProps) {
@@ -38,11 +41,18 @@ export default function MapSection({
   const onProgress = useCallback((p: number): void => {
     const caps = capsRef.current?.querySelectorAll<HTMLElement>("[data-caption]");
     if (!caps) return;
+    const n = caps.length;
     caps.forEach((cap, i) => {
-      const start = i / caps.length;
-      const local = Math.min(1, Math.max(0, (p - start) * caps.length * 1.5));
-      cap.style.opacity = String(local);
-      cap.style.transform = `translateY(${((1 - local) * 12).toFixed(1)}px)`;
+      // Staggered reveal (rise + fade in), in reading order.
+      const start = i / n;
+      const reveal = Math.min(1, Math.max(0, (p - start) * n * 1.5));
+      // Staggered exit over the tail of the scrub — each line dissolves and
+      // lifts away one at a time (rather than the whole block at once), so the
+      // captions settle in place instead of riding the full screen height up.
+      const exitStart = 0.78 + (i / n) * 0.13;
+      const exit = Math.min(1, Math.max(0, (p - exitStart) / 0.09));
+      cap.style.opacity = String(reveal * (1 - exit));
+      cap.style.transform = `translateY(${((1 - reveal) * 12 - exit * 10).toFixed(1)}px)`;
     });
   }, []);
 
@@ -53,6 +63,7 @@ export default function MapSection({
     setViewState,
     setInteractive,
     setPinned,
+    setStatsReady,
     onProgress,
   });
 

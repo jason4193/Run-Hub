@@ -53,9 +53,27 @@ export default function ControlPanel({ paceEfforts, stats }: ControlPanelProps) 
         type="button"
         className="control-panel__toggle"
         aria-expanded={!collapsed}
+        aria-label={collapsed ? "Show stats" : "Close stats"}
         onClick={() => setCollapsed((c) => !c)}
       >
-        {collapsed ? "Stats ▸" : "Close ✕"}
+        {collapsed ? (
+          // Bar-chart glyph — "stats".
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <rect x="3" y="13" width="4" height="8" rx="1" fill="currentColor" />
+            <rect x="10" y="8" width="4" height="13" rx="1" fill="currentColor" />
+            <rect x="17" y="3" width="4" height="18" rx="1" fill="currentColor" />
+          </svg>
+        ) : (
+          // X glyph — "close".
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path
+              d="M6 6l12 12M18 6L6 18"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+        )}
       </button>
 
       <aside className="control-panel" data-collapsed={collapsed}>

@@ -26,6 +26,12 @@ export interface MapScrollSceneOptions {
   setInteractive: (interactive: boolean) => void;
   /** True while the section is pinned (so the ambient loop pauses). */
   setPinned: (pinned: boolean) => void;
+  /**
+   * Latched true once the map section is reached and held until the user
+   * scrolls back up to the hero — gates the persistent stats toggle so it's
+   * discoverable from the map section onward (not just in the explore zone).
+   */
+  setStatsReady?: (ready: boolean) => void;
   /** Scrub progress 0..1, for caption reveals. */
   onProgress?: (progress: number) => void;
 }
@@ -65,6 +71,7 @@ export function useMapScrollScene(opts: MapScrollSceneOptions): void {
     setViewState,
     setInteractive,
     setPinned,
+    setStatsReady,
     onProgress,
   } = opts;
 
@@ -77,6 +84,7 @@ export function useMapScrollScene(opts: MapScrollSceneOptions): void {
       setViewState(sampleKeyframes(keyframes, 0.5));
       setInteractive(true);
       setPinned(false);
+      setStatsReady?.(true);
       return;
     }
 
@@ -98,20 +106,24 @@ export function useMapScrollScene(opts: MapScrollSceneOptions): void {
       onEnter: () => {
         setPinned(true);
         setInteractive(false);
+        setStatsReady?.(true);
       },
       onEnterBack: () => {
         setPinned(true);
         setInteractive(false);
+        setStatsReady?.(true);
       },
       // Scrub finished: stop pinning so the ambient loop resumes. Interactivity is
       // handled separately (below) so it doesn't start while captions still show.
       onLeave: () => {
         setPinned(false);
       },
-      // Scrolled back up to the hero → ambient resumes, camera stays scripted.
+      // Scrolled back up to the hero → ambient resumes, camera stays scripted,
+      // and the stats toggle hides again (it belongs to the map onward).
       onLeaveBack: () => {
         setPinned(false);
         setInteractive(false);
+        setStatsReady?.(false);
       },
     });
 
@@ -138,6 +150,7 @@ export function useMapScrollScene(opts: MapScrollSceneOptions): void {
     setViewState,
     setInteractive,
     setPinned,
+    setStatsReady,
     onProgress,
   ]);
 }
