@@ -1,88 +1,88 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-14T04:56:52.770Z",
+  "generatedAt": "2026-06-14T06:27:06.344Z",
   "pace": [
     {
       "distance": 400,
       "label": "400 m",
-      "timeSeconds": 102,
-      "paceSecPerKm": 255,
-      "activityId": "i157070615",
-      "date": "2026-06-05T17:58:30"
+      "timeSeconds": 88,
+      "paceSecPerKm": 220,
+      "activityId": "i157090431",
+      "date": "2026-02-02T07:34:07"
     },
     {
       "distance": 1000,
       "label": "1 km",
-      "timeSeconds": 292,
-      "paceSecPerKm": 292,
-      "activityId": "i157070615",
-      "date": "2026-06-05T17:58:30"
+      "timeSeconds": 289,
+      "paceSecPerKm": 289,
+      "activityId": "i157090487",
+      "date": "2026-04-12T17:50:02"
     },
     {
       "distance": 1609,
       "label": "1 mile",
-      "timeSeconds": 538,
-      "paceSecPerKm": 334.298532317596,
-      "activityId": "i157070604",
-      "date": "2026-06-13T10:14:29"
+      "timeSeconds": 478,
+      "paceSecPerKm": 297.01616811860765,
+      "activityId": "i157090487",
+      "date": "2026-04-12T17:50:02"
     },
     {
       "distance": 5000,
       "label": "5 km",
-      "timeSeconds": 1741,
-      "paceSecPerKm": 348.2,
-      "activityId": "i157070604",
-      "date": "2026-06-13T10:14:29"
+      "timeSeconds": 1705,
+      "paceSecPerKm": 341,
+      "activityId": "i157090434",
+      "date": "2026-02-07T07:04:37"
     },
     {
       "distance": 10000,
       "label": "10 km",
-      "timeSeconds": 4107,
-      "paceSecPerKm": 410.7,
-      "activityId": "i157070926",
-      "date": "2026-05-13T16:56:58"
+      "timeSeconds": 3572,
+      "paceSecPerKm": 357.2,
+      "activityId": "i157090469",
+      "date": "2026-03-29T08:00:17"
     }
   ],
   "gap": [
     {
       "distance": 400,
       "label": "400 m",
-      "timeSeconds": 61,
-      "paceSecPerKm": 152.5,
-      "activityId": "i157070615",
-      "date": "2026-06-05T17:58:30"
+      "timeSeconds": 54,
+      "paceSecPerKm": 135,
+      "activityId": "i157090462",
+      "date": "2026-03-27T07:37:19"
     },
     {
       "distance": 1000,
       "label": "1 km",
-      "timeSeconds": 222,
-      "paceSecPerKm": 222,
-      "activityId": "i157070615",
-      "date": "2026-06-05T17:58:30"
+      "timeSeconds": 134,
+      "paceSecPerKm": 134,
+      "activityId": "i157090462",
+      "date": "2026-03-27T07:37:19"
     },
     {
       "distance": 1609,
       "label": "1 mile",
-      "timeSeconds": 440,
-      "paceSecPerKm": 273.404004125915,
-      "activityId": "i157070615",
-      "date": "2026-06-05T17:58:30"
+      "timeSeconds": 216,
+      "paceSecPerKm": 134.21651111635825,
+      "activityId": "i157090462",
+      "date": "2026-03-27T07:37:19"
     },
     {
       "distance": 5000,
       "label": "5 km",
-      "timeSeconds": 1573,
-      "paceSecPerKm": 314.6,
-      "activityId": "i157070630",
-      "date": "2026-05-30T16:58:07"
+      "timeSeconds": 1473,
+      "paceSecPerKm": 294.6,
+      "activityId": "i157090462",
+      "date": "2026-03-27T07:37:19"
     },
     {
       "distance": 10000,
       "label": "10 km",
-      "timeSeconds": 3556,
-      "paceSecPerKm": 355.6,
-      "activityId": "i157070630",
-      "date": "2026-05-30T16:58:07"
+      "timeSeconds": 3493,
+      "paceSecPerKm": 349.3,
+      "activityId": "i157090469",
+      "date": "2026-03-29T08:00:17"
     }
   ]
 }
