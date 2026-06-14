@@ -1,0 +1,20 @@
+{
+  "name": "run-hub-root",
+  "private": true,
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspace=frontend",
+    "preview": "npm run preview --workspace=frontend",
+    "fetch": "tsx scripts/fetch-snapshot.ts",
+    "typecheck": "npm run typecheck --workspace=frontend",
+    "local-test": "bash scripts/local-test.sh"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

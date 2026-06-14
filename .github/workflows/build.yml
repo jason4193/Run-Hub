@@ -1,0 +1,64 @@
+name: Build & deploy Run Hub
+
+on:
+  workflow_dispatch: {} # manual "refresh after a run" button
+  schedule:
+    - cron: "0 6 * * *" # daily ~06:00 UTC
+  # Option B (future): an external relay calling repository_dispatch fires the same job.
+  repository_dispatch:
+    types: [intervals-activity]
+
+permissions:
+  contents: write # commit the refreshed Snapshot back to the repo
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build Snapshot from intervals.icu
+        env:
+          INTERVALS_API_KEY: ${{ secrets.INTERVALS_API_KEY }}
+          INTERVALS_ATHLETE_ID: ${{ secrets.INTERVALS_ATHLETE_ID }}
+        run: npm run fetch
+
+      - name: Commit refreshed Snapshot
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet -- data; then
+            git add data
+            git commit -m "chore: refresh snapshot"
+            git push
+          else
+            echo "No snapshot changes."
+          fi
+
+      - name: Build site
+        run: npm run build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/dist
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
