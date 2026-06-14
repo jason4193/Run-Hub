@@ -1,0 +1,24 @@
+/* Self-hosted variable fonts (docs/DESIGN.md §4).
+   Bundled as Vite assets (relative url()) so they pick up the deploy base path
+   (e.g. /Run-Hub/ on GitHub Pages). If a file is ever missing the stack falls
+   back to system-ui (declared in tokens.css).
+
+   Anybody — display/headline; the `wdth` + `wght` axes power the kinetic effect.
+   Inter   — body/UI; `opsz` + `wght`. */
+
+@font-face {
+  font-family: "Anybody";
+  src: url("./fonts/Anybody-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts/Inter-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

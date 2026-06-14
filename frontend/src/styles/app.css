@@ -1,0 +1,464 @@
+/* Layout + component styling for the Run Hub surfaces (docs/DESIGN.md §2, §6). */
+
+.app {
+  position: relative;
+}
+
+/* --- shared fixed map backdrop --- */
+.map-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+/* --- Atmosphere: cinematic scrim + vignette + film grain over the map --- */
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* Vignette (darken edges) + top/bottom scrims for text legibility. */
+  background:
+    radial-gradient(
+      130% 90% at 50% 42%,
+      transparent 38%,
+      rgba(18, 34, 47, 0.55) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(18, 34, 47, 0.7) 0%,
+      transparent 22%,
+      transparent 70%,
+      rgba(18, 34, 47, 0.85) 100%
+    );
+}
+
+/* Fine film grain — an inline SVG turbulence, blended subtly for filmic texture. */
+.atmosphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* --- Hero --- */
+.hero {
+  position: relative;
+  z-index: 2;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* Push the block slightly above the vertical centre. */
+  padding-bottom: 12vh;
+  pointer-events: none; /* let map show through; children re-enable as needed */
+}
+
+/* Focused scrim behind the hero text so the title/tagline read over the map. */
+.hero::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(1150px, 94vw);
+  height: min(640px, 72vh);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(18, 34, 47, 0.78) 0%,
+    rgba(18, 34, 47, 0.48) 46%,
+    transparent 72%
+  );
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Name + "established" year, directly under the title. */
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-top: 1.1rem;
+  animation: fade-up 0.9s ease 0.55s backwards;
+}
+
+/* Name and "From <year>" share the same display form/size; name is the theme
+   coral, the year is the light/white text colour. */
+.hero__name,
+.hero__from {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.4vw, 1.85rem);
+  font-variation-settings: "wdth" 100, "wght" 600;
+  text-shadow: 0 2px 16px rgba(18, 34, 47, 0.98);
+}
+
+.hero__name {
+  color: var(--accent);
+}
+
+.hero__from {
+  color: var(--text);
+}
+
+.hero__divider {
+  width: 1px;
+  height: 1.1em;
+  background: var(--accent);
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  margin: 0;
+  font-size: clamp(3.2rem, 14vw, 12rem);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  font-variation-settings: "wdth" 118, "wght" 800;
+  text-transform: uppercase;
+  text-shadow: 0 0 40px rgba(18, 34, 47, 0.8);
+}
+
+.hero__letter {
+  display: inline-block;
+  will-change: font-variation-settings, transform;
+  /* Staggered load reveal; per-letter delay set inline in Hero.tsx. */
+  animation: letter-rise 0.85s cubic-bezier(0.16, 0.84, 0.3, 1) backwards;
+}
+
+.hero__space {
+  display: inline-block;
+  width: 0.28em;
+}
+
+@keyframes letter-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.42em) scaleY(1.18);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+    filter: blur(0);
+  }
+}
+
+.hero__title .hero__accent {
+  color: var(--accent);
+  /* Neon bloom matching the trail color. */
+  text-shadow:
+    0 0 18px rgba(217, 112, 89, 0.55),
+    0 0 50px rgba(217, 112, 89, 0.3);
+}
+
+.hero__tagline {
+  font-family: var(--font-ui);
+  margin: 1.5rem 0 0;
+  font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-shadow: 0 2px 16px rgba(18, 34, 47, 0.95);
+  /* Hairline rules flanking the tagline — instrument-panel cue. */
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  animation: fade-up 0.9s ease 0.65s backwards;
+}
+
+.hero__tagline::before,
+.hero__tagline::after {
+  content: "";
+  width: clamp(1.5rem, 6vw, 4rem);
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--accent-2));
+}
+
+.hero__tagline::after {
+  background: linear-gradient(to left, transparent, var(--accent-2));
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero__cue {
+  position: absolute;
+  bottom: 2.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--text);
+  opacity: 0.55;
+  animation:
+    fade-up 0.9s ease 1s backwards,
+    cue-bob 2.4s ease-in-out 1.2s infinite;
+}
+
+.hero__cue::after {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 26px;
+  margin: 0.6rem auto 0;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+}
+
+@keyframes cue-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+/* --- Map section (pinned scrub) --- */
+.map-section {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+}
+
+.map-captions {
+  position: absolute;
+  right: 5vw;
+  bottom: 12vh;
+  z-index: 3;
+  text-align: right;
+  pointer-events: none;
+}
+
+.map-caption {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  color: var(--text);
+  margin: 0;
+  opacity: 0;
+  transform: translateY(12px);
+  font-variation-settings: "wdth" 100, "wght" 600;
+}
+
+.map-caption strong {
+  color: var(--accent);
+}
+
+/* --- Interactive explore viewport (post-scrub) --- */
+.map-explore {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  /* Transparent to pointer input so the fixed map underneath receives pan/zoom. */
+  pointer-events: none;
+}
+
+/* When unlocked, lighten the atmosphere so the runs read clearly while exploring. */
+.atmosphere {
+  transition: opacity 0.6s ease;
+}
+.app[data-interactive="true"] .atmosphere {
+  opacity: 0.45;
+}
+
+/* --- Control panel (top-left HUD) --- */
+.control-panel {
+  position: fixed;
+  top: 1.25rem;
+  left: 1.25rem;
+  z-index: 5;
+  width: min(320px, 80vw);
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  color: var(--text);
+  font-family: var(--font-ui);
+  overflow: hidden;
+  pointer-events: auto;
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(164, 179, 191, 0.08);
+  animation: fade-up 0.8s ease 0.4s backwards;
+}
+
+/* Coral accent edge — reads as a live instrument readout. */
+.control-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--accent), transparent 70%);
+}
+
+.control-panel__toggle {
+  display: none;
+  position: fixed;
+  top: 1.25rem;
+  left: 1.25rem;
+  z-index: 6;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 0.5rem 0.75rem;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.control-panel__heading {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin: 0 0 0.5rem;
+}
+
+.control-panel__section + .control-panel__section {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--panel-border);
+}
+
+.best-efforts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.best-efforts__row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.5rem;
+  align-items: baseline;
+  padding: 0.18rem 0;
+  font-size: 0.9rem;
+}
+
+.best-efforts__label {
+  color: var(--text);
+}
+
+.best-efforts__time {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.best-efforts__pace {
+  color: var(--accent-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.lifetime-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem 0.9rem;
+}
+
+.lifetime-stats__value {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--accent-2);
+  font-variation-settings: "wdth" 100, "wght" 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.lifetime-stats__label {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  opacity: 0.7;
+}
+
+/* --- Footer --- */
+.footer {
+  position: relative;
+  z-index: 2;
+  /* Thin scrim that fades up → map stays visible above it, no solid block. */
+  background: linear-gradient(
+    to top,
+    rgba(18, 34, 47, 0.9) 40%,
+    rgba(18, 34, 47, 0)
+  );
+  padding: 2.5rem 1.5rem 1.1rem;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  color: var(--text);
+  pointer-events: none; /* only the links need to be clickable */
+}
+
+.footer p {
+  margin: 0.15rem 0;
+}
+
+.footer a {
+  pointer-events: auto;
+}
+
+.footer__meta {
+  opacity: 0.6;
+}
+
+/* --- loading / error --- */
+.status-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* --- mobile: collapse the panel behind a toggle --- */
+@media (max-width: 640px) {
+  .control-panel__toggle {
+    display: block;
+  }
+  .control-panel {
+    width: min(300px, 86vw);
+    top: 4.2rem;
+  }
+  .control-panel[data-collapsed="true"] {
+    display: none;
+  }
+}
+
+/* --- Reduced motion: drop decorative load reveals, keep final state --- */
+@media (prefers-reduced-motion: reduce) {
+  .hero__meta,
+  .hero__letter,
+  .hero__tagline,
+  .hero__cue,
+  .control-panel {
+    animation: none !important;
+  }
+  .hero__letter {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}

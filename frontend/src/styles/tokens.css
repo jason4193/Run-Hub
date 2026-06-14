@@ -1,0 +1,18 @@
+/* Design tokens — single source of truth for the Run Hub palette & type stacks.
+   See docs/DESIGN.md §5 (color) and §4 (typography). */
+:root {
+  /* Palette */
+  --bg: #12222f; /* page background + map base */
+  --accent: #d97059; /* primary accent — the neon trail color + key highlights */
+  --accent-2: #19656f; /* secondary accent — panel borders, captions, links, count-ups */
+  --text: #a4b3bf; /* primary body/UI text on dark */
+  --muted: #a6554e; /* tertiary/muted — dimmed states, dividers, coral's partner */
+
+  /* Derived surfaces */
+  --panel-bg: rgba(18, 34, 47, 0.72); /* dark translucent navy HUD surface */
+  --panel-border: rgba(25, 101, 111, 0.55);
+
+  /* Type stacks */
+  --font-display: "Anybody", system-ui, sans-serif;
+  --font-ui: "Inter", system-ui, sans-serif;
+}
