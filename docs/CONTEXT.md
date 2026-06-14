@@ -9,7 +9,7 @@ This file is a **glossary only** — canonical terms and their agreed meanings. 
 - **Athlete** — the single account owner (one `athlete/{id}` on intervals.icu). This site is single-athlete by design.
 - **Activity** — one recorded run pulled from intervals.icu (`/athlete/{id}/activities`). Run Hub displays runs only unless decided otherwise.
 - **Snapshot** — the pre-fetched static JSON that the site reads at runtime. The browser **never** calls intervals.icu directly; it only reads the Snapshot. Built by a fetch script using the API key, which lives only in the build environment.
-- **Route Heatmap** — the aggregate visual of all Activities' GPS paths. Source data is each Activity's decimated `latlngs` from `/activity/{id}/map`.
+- **Route Heatmap** — the visual of all Activities' GPS paths over the map. Rendered as **animated neon comet trails** (one moving comet per Activity), not a static raster; the aggregate "heatmap" emerges where trails overlap (additive blending → white-hot cores). Source data is each Activity's decimated `latlngs` from `/activity/{id}/map`.
 - **Best Effort / Pace Curve** — the Athlete's all-time best pace over a range of durations/distances, from `/athlete/{id}/pace-curves`. Shown in a side popover.
 
 ## Resolved decisions (see docs/adr/ for rationale once recorded)
@@ -24,3 +24,4 @@ This file is a **glossary only** — canonical terms and their agreed meanings. 
 - Snapshot persisted by **committing JSON back into the git repo** (versioned store of record + the data the build ships).
 - Hosting: **v1 = GitHub Pages**; **final target = Cloudflare Pages + Workers** (where Option B lives). Build output is host-agnostic static files.
 - "Run" = run-family activity types: `Run`, `TrailRun`, `VirtualRun` (the activities list has no sport filter, so the script filters by `type` client-side).
+- **Map framing = Sydney CBD (fixed)**: the Snapshot is **multi-region** — it includes travel/race runs spanning the country (observed extent ~lat −43 to −17). The default camera is therefore **pinned to Sydney CBD** at a city zoom rather than fitting all Activities (which zooms out to a continent view). The site is framed as "over Sydney"; out-of-region runs simply fall outside the default frame. Reversible later via a Sydney-only extent fit (see `lib/bounds.ts`).
