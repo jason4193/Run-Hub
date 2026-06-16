@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-15T11:47:44.462Z",
+  "generatedAt": "2026-06-16T10:55:44.664Z",
   "pace": [
     {
       "distance": 400,
@@ -13,18 +13,18 @@
     {
       "distance": 1000,
       "label": "1 km",
-      "timeSeconds": 289,
-      "paceSecPerKm": 289,
-      "activityId": "i157090487",
-      "date": "2026-04-12T17:50:02"
+      "timeSeconds": 237,
+      "paceSecPerKm": 237,
+      "activityId": "i157652894",
+      "date": "2026-06-16T15:47:11"
     },
     {
       "distance": 1609,
       "label": "1 mile",
-      "timeSeconds": 478,
-      "paceSecPerKm": 297.01616811860765,
-      "activityId": "i157090487",
-      "date": "2026-04-12T17:50:02"
+      "timeSeconds": 467,
+      "paceSecPerKm": 290.18106801545974,
+      "activityId": "i157652894",
+      "date": "2026-06-16T15:47:11"
     },
     {
       "distance": 5000,
