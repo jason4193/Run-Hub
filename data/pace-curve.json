@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-26T08:51:13.123Z",
+  "generatedAt": "2026-06-27T08:27:04.372Z",
   "pace": [
     {
       "distance": 400,
@@ -79,10 +79,10 @@
     {
       "distance": 10000,
       "label": "10 km",
-      "timeSeconds": 3493,
-      "paceSecPerKm": 349.3,
-      "activityId": "i157090469",
-      "date": "2026-03-29T08:00:17"
+      "timeSeconds": 3364,
+      "paceSecPerKm": 336.4,
+      "activityId": "i160625204",
+      "date": "2026-06-27T09:56:43"
     }
   ]
 }
