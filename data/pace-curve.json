@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-17T07:53:11.493Z",
+  "generatedAt": "2026-07-18T07:28:10.138Z",
   "pace": [
     {
       "distance": 400,
@@ -41,6 +41,14 @@
       "paceSecPerKm": 357.2,
       "activityId": "i157090469",
       "date": "2026-03-29T08:00:17"
+    },
+    {
+      "distance": 21100,
+      "label": "Half",
+      "timeSeconds": 7897,
+      "paceSecPerKm": 374.3097523403247,
+      "activityId": "i166747572",
+      "date": "2026-07-18T08:03:11"
     }
   ],
   "gap": [
@@ -83,6 +91,14 @@
       "paceSecPerKm": 336.4,
       "activityId": "i160625204",
       "date": "2026-06-27T09:56:43"
+    },
+    {
+      "distance": 21100,
+      "label": "Half",
+      "timeSeconds": 7642,
+      "paceSecPerKm": 362.2230122052376,
+      "activityId": "i166747572",
+      "date": "2026-07-18T08:03:11"
     }
   ]
 }
