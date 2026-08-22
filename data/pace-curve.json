@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-21T06:29:45.274Z",
+  "generatedAt": "2026-08-22T06:22:46.596Z",
   "pace": [
     {
       "distance": 400,
       "label": "400 m",
-      "timeSeconds": 88,
-      "paceSecPerKm": 220,
-      "activityId": "i157090431",
-      "date": "2026-02-02T07:34:07"
+      "timeSeconds": 82,
+      "paceSecPerKm": 205,
+      "activityId": "i178197937",
+      "date": "2026-08-21T17:23:08"
     },
     {
       "distance": 1000,
@@ -79,10 +79,10 @@
     {
       "distance": 5000,
       "label": "5 km",
-      "timeSeconds": 1473,
-      "paceSecPerKm": 294.6,
-      "activityId": "i157090462",
-      "date": "2026-03-27T07:37:19"
+      "timeSeconds": 1237,
+      "paceSecPerKm": 247.4,
+      "activityId": "i178197937",
+      "date": "2026-08-21T17:23:08"
     },
     {
       "distance": 10000,
