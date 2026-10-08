@@ -1,0 +1,42 @@
+name: CI
+
+# Checks only — no Sync, no secrets, no deploy (build.yml owns those on main).
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true # a newer push to the same PR supersedes the old check
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # pnpm version comes from devEngines.packageManager in package.json (npm is blocked).
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Typecheck sync scripts
+        run: pnpm run typecheck:scripts
+
+      - name: Test sync scripts
+        run: pnpm run test:scripts
+
+      - name: Typecheck frontend
+        run: pnpm run typecheck
+
+      - name: Build site
+        run: pnpm run build
