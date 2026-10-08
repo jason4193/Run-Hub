@@ -58,3 +58,4 @@ frontend/public/data/
 # Documentation drafts / grill logs / plan markdown
 docs/questions.md
 *plan*.md
+.grill/
