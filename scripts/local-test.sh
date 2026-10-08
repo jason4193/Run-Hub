@@ -3,8 +3,8 @@
 # Builds the Snapshot from the live intervals.icu API, typechecks, builds the
 # site, then serves the production build so you can eyeball it locally.
 #
-# Usage:  npm run local-test       (or:  bash scripts/local-test.sh)
-#         npm run local-test -- --no-fetch    # skip the API call, reuse data/*.json
+# Usage:  pnpm run local-test       (or:  bash scripts/local-test.sh)
+#         pnpm run local-test --no-fetch    # skip the API call, reuse data/*.json
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -31,22 +31,22 @@ fi
 
 # 2. Dependencies
 if [[ ! -d node_modules ]]; then
-  step "Installing dependencies (npm install)"
-  npm install
+  step "Installing dependencies (pnpm install)"
+  pnpm install --frozen-lockfile
 fi
 
 # 3. Build the Snapshot from the live API
 if [[ "$SKIP_FETCH" -eq 0 ]]; then
-  step "Fetching Snapshot from intervals.icu (npm run fetch)"
-  npm run fetch
+  step "Fetching Snapshot from intervals.icu (pnpm run fetch)"
+  pnpm run fetch
 else
   step "Skipping fetch — reusing existing data/*.json"
 fi
 
 # 4. Typecheck + production build (also copies data/ into dist/)
-step "Building site (npm run build)"
-npm run build
+step "Building site (pnpm run build)"
+pnpm run build
 
 # 5. Serve the production build
 step "Serving production build — open the printed URL, Ctrl+C to stop"
-npm run preview
+pnpm run preview
