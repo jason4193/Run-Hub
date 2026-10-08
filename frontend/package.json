@@ -30,6 +30,7 @@
     "react-map-gl": "^8.1.1"
   },
   "devDependencies": {
+    "@luma.gl/core": "^9.4.2",
     "@types/node": "^24.19.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

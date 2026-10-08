@@ -224,6 +224,9 @@ importers:
         specifier: ^8.1.1
         version: 8.1.1(maplibre-gl@5.24.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
     devDependencies:
+      '@luma.gl/core':
+        specifier: ^9.4.2
+        version: 9.4.2
       '@types/node':
         specifier: ^24.19.1
         version: 24.19.1
