@@ -13,6 +13,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { activityListPath, paceCurvePath } from "./lib/intervals.ts";
 
 // ---- Types (kept in sync with frontend/src/types/snapshot.ts) -----------------------
 type LatLng = [number, number];
@@ -59,7 +60,6 @@ const API_BASE = "https://intervals.icu";
 const RUN_TYPES = new Set(["Run", "TrailRun", "VirtualRun"]);
 const LIST_FIELDS = "id,name,type,start_date_local,distance,moving_time,pace,route_id";
 const MAP_CONCURRENCY = 3;
-const BACKFILL_OLDEST = "2000-01-01";
 
 const TARGET_DISTANCES: { distance: number; label: string }[] = [
   { distance: 400, label: "400 m" },
@@ -107,7 +107,6 @@ async function apiGet(pathAndQuery: string, attempt = 0): Promise<Response> {
 
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 const round5 = (n: number) => Math.round(n * 1e5) / 1e5;
-const today = () => new Date().toISOString().slice(0, 10);
 
 // ---- Steps -----------------------------------------------------------------
 async function readPriorSnapshot(): Promise<Map<string, SnapshotActivity>> {
@@ -132,7 +131,7 @@ interface RawActivity {
 }
 
 async function fetchActivityList(): Promise<RawActivity[]> {
-  const q = `/api/v1/athlete/${ATHLETE_ID}/activities?oldest=${BACKFILL_OLDEST}&newest=${today()}&fields=${encodeURIComponent(LIST_FIELDS)}`;
+  const q = activityListPath(ATHLETE_ID, LIST_FIELDS);
   const res = await apiGet(q);
   if (!res.ok) throw new Error(`activity list ${res.status}: ${await res.text()}`);
   const all = (await res.json()) as RawActivity[];
@@ -262,7 +261,6 @@ function bestEffortsFromCurve(
 async function fetchPaceCurves(dateById: Map<string, string>): Promise<PaceCurveSnapshot> {
   // ⚠️ plan.md §8(1): `curves` defaults to "last year". For true all-time bests this
   // window likely needs adjusting once verified against a live payload.
-  const base = `/api/v1/athlete/${ATHLETE_ID}/pace-curves.json?type=Run&newest=${today()}`;
   const empty: PaceCurveSnapshot = {
     schemaVersion: 1,
     generatedAt: new Date().toISOString(),
@@ -270,7 +268,7 @@ async function fetchPaceCurves(dateById: Map<string, string>): Promise<PaceCurve
     gap: [],
   };
   try {
-    const [paceRes, gapRes] = await Promise.all([apiGet(base), apiGet(`${base}&gap=true`)]);
+    const [paceRes, gapRes] = await Promise.all([apiGet(paceCurvePath(ATHLETE_ID, false)), apiGet(paceCurvePath(ATHLETE_ID, true))]);
     const pace = paceRes.ok ? ((await paceRes.json()) as DataCurveSet).list?.[0] : undefined;
     const gap = gapRes.ok ? ((await gapRes.json()) as DataCurveSet).list?.[0] : undefined;
     return {

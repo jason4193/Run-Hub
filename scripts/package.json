@@ -10,7 +10,9 @@
     }
   },
   "scripts": {
-    "fetch": "tsx fetch-snapshot.ts"
+    "fetch": "tsx fetch-snapshot.ts",
+    "test": "tsx --test lib/*.test.ts",
+    "typecheck": "tsc -p ."
   },
   "devDependencies": {
     "@types/node": "^24.19.1",
