@@ -1,7 +1,16 @@
 {
   "name": "run-hub-root",
   "private": true,
-  "packageManager": "pnpm@12.10.1",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.10.1",
+      "onFail": "download"
+    }
+  },
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "dev": "pnpm --filter frontend run dev",
     "build": "pnpm --filter frontend run build",
