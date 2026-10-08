@@ -13,7 +13,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { activityListPath, paceCurvePath } from "./lib/intervals.ts";
+import { activityListPath, paceCurvePath, describeListFailure, asErrorAnnotation, SyncError } from "./lib/intervals.ts";
 
 // ---- Types (kept in sync with frontend/src/types/snapshot.ts) -----------------------
 type LatLng = [number, number];
@@ -131,9 +131,16 @@ interface RawActivity {
 }
 
 async function fetchActivityList(): Promise<RawActivity[]> {
-  const q = activityListPath(ATHLETE_ID, LIST_FIELDS);
-  const res = await apiGet(q);
-  if (!res.ok) throw new Error(`activity list ${res.status}: ${await res.text()}`);
+  let res: Response;
+  try {
+    res = await apiGet(activityListPath(ATHLETE_ID, LIST_FIELDS));
+  } catch (e) {
+    throw new SyncError(describeListFailure({ networkError: (e as Error).message }));
+  }
+  if (!res.ok) {
+    console.error(`activity list response body: ${(await res.text()).slice(0, 500)}`);
+    throw new SyncError(describeListFailure({ status: res.status }));
+  }
   const all = (await res.json()) as RawActivity[];
   return all.filter((a) => a.type != null && RUN_TYPES.has(a.type));
 }
@@ -338,7 +345,11 @@ async function main() {
 }
 
 main().catch((e) => {
-  // Unhandled error after building → exit non-zero WITHOUT writing (preserve last good Snapshot).
-  console.error("Snapshot build failed:", e);
+  // Any failure → exit non-zero WITHOUT writing (preserve last good Snapshot).
+  if (e instanceof SyncError) {
+    console.error(asErrorAnnotation(e.message, process.env.GITHUB_ACTIONS === "true"));
+  } else {
+    console.error("Snapshot build failed:", e);
+  }
   process.exit(1);
 });
