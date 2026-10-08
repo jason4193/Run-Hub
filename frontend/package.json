@@ -6,10 +6,8 @@
   "description": "Personal frontend-only website that displays running logs from intervals.icu.",
   "scripts": {
     "copy-data": "node -e \"require('fs').cpSync('../data','public/data',{recursive:true})\"",
-    "predev": "npm run copy-data",
-    "dev": "vite",
-    "prebuild": "npm run copy-data",
-    "build": "tsc -b && vite build",
+    "dev": "pnpm run copy-data && vite",
+    "build": "pnpm run copy-data && tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit"
   },
@@ -32,8 +30,5 @@
     "@vitejs/plugin-react": "^4.3.4",
     "typescript": "^5.7.2",
     "vite": "^6.0.5"
-  },
-  "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.62.0"
   }
 }

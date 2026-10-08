@@ -1,0 +1,6 @@
+packages:
+  - frontend
+  - scripts
+allowBuilds:
+  '@vaadin/vaadin-usage-statistics': false
+  esbuild: true
