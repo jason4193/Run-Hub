@@ -14,6 +14,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { activityListPath, paceCurvePath, describeListFailure, asErrorAnnotation, SyncError } from "./lib/intervals.ts";
+import { shouldWriteSnapshot, type SnapshotPair } from "./lib/snapshot.ts";
 
 // ---- Types (kept in sync with frontend/src/types/snapshot.ts) -----------------------
 type LatLng = [number, number];
@@ -296,9 +297,23 @@ async function writeJsonAtomic(file: string, value: unknown): Promise<void> {
   await fs.rename(tmp, file);
 }
 
+/** The committed Snapshot pair, or null when either file is missing or unreadable. */
+async function readPriorFiles(): Promise<SnapshotPair | null> {
+  try {
+    const [activities, pace] = await Promise.all([
+      fs.readFile(ACTIVITIES_FILE, "utf8").then((t) => JSON.parse(t) as ActivitiesSnapshot),
+      fs.readFile(PACE_FILE, "utf8").then((t) => JSON.parse(t) as PaceCurveSnapshot),
+    ]);
+    return { activities, pace };
+  } catch {
+    return null;
+  }
+}
+
 // ---- Main ------------------------------------------------------------------
 async function main() {
   await fs.mkdir(DATA_DIR, { recursive: true });
+  const priorFiles = await readPriorFiles();
 
   const prior = await readPriorSnapshot();
   const list = await fetchActivityList();
@@ -334,6 +349,15 @@ async function main() {
   );
   const paceSnapshot = await fetchPaceCurves(dateById);
 
+  // One shared timestamp for both files; skip the write entirely when only it would change
+  // and the committed one is < HEARTBEAT_HOURS old (→ no commit). See lib/snapshot.ts.
+  const now = new Date().toISOString();
+  activitiesSnapshot.generatedAt = now;
+  paceSnapshot.generatedAt = now;
+  if (!shouldWriteSnapshot(priorFiles, { activities: activitiesSnapshot, pace: paceSnapshot }, now)) {
+    console.log("No changes and the heartbeat is under 20 h old — Snapshot left untouched.");
+    return;
+  }
   await writeJsonAtomic(ACTIVITIES_FILE, activitiesSnapshot);
   await writeJsonAtomic(PACE_FILE, paceSnapshot);
 
