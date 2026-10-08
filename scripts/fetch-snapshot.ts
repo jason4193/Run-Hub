@@ -8,7 +8,7 @@
  *
  * The browser never runs this. The API key lives only in the build env.
  *
- * Run: npm run fetch   (npx tsx scripts/fetch-snapshot.ts)
+ * Run: pnpm run fetch   (never `pnpm fetch` — that is a built-in pnpm command)
  */
 import { promises as fs } from "node:fs";
 import path from "node:path";

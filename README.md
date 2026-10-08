@@ -47,8 +47,9 @@ versioned store of record.
 
 | Concern | Choice |
 |---|---|
-| Frontend | TypeScript · React 19 · Vite 6 |
-| Fetch script | Node + TypeScript (`tsx`), zero runtime deps (native `fetch`) |
+| Frontend | TypeScript 7 · React 19 · Vite 8 |
+| Fetch script | Node 24 + TypeScript (`tsx`), zero runtime deps (native `fetch`) |
+| Package manager | **pnpm only** (version pinned in `devEngines`; npm is blocked) |
 | Data source | intervals.icu API (HTTP Basic, API key) |
 | Hosting (v1) | GitHub Pages — cron + manual rebuild via GitHub Actions |
 | Hosting (target) | Cloudflare Pages + Workers |
@@ -95,35 +96,40 @@ intervals.icu.openapi-spec.json   vendored API spec
 
 ```bash
 cp .env.example .env     # add INTERVALS_API_KEY (+ INTERVALS_ATHLETE_ID; 0 = self)
-npm install
-npm run fetch            # build data/*.json from the live API
-npm run dev              # Vite dev server, reads the static Snapshot
+pnpm install
+pnpm run fetch           # build data/*.json from the live API
+pnpm run dev             # Vite dev server, reads the static Snapshot
 ```
 
 ### Test locally before pushing
 
-`npm run local-test` runs the full pipeline end-to-end — fetch the live
+`pnpm run local-test` runs the full pipeline end-to-end — fetch the live
 Snapshot → typecheck → production build → serve it — so you can verify
 everything works before anything reaches GitHub:
 
 ```bash
-npm run local-test              # fetch + build + preview the production bundle
-npm run local-test -- --no-fetch  # reuse existing data/*.json (no API call)
+pnpm run local-test             # fetch + build + preview the production bundle
+pnpm run local-test --no-fetch  # reuse existing data/*.json (no API call)
 ```
 
 It installs dependencies if needed and fails fast with a clear message if `.env`
 is missing. Open the printed preview URL; Ctrl+C to stop.
 
-### npm scripts
+### Scripts
 
 | Script | Does |
 |---|---|
-| `npm run dev` | Vite dev server (reads `data/*.json`) |
-| `npm run fetch` | Build the Snapshot from the live API into `data/*.json` |
-| `npm run build` | Typecheck + production build into `dist/` |
-| `npm run preview` | Serve the production `dist/` build |
-| `npm run local-test` | Full local pipeline: fetch → build → preview |
-| `npm run typecheck` | Type-check only |
+| `pnpm run dev` | Vite dev server (reads `data/*.json`) |
+| `pnpm run fetch` | Build the Snapshot from the live API into `data/*.json` |
+| `pnpm run build` | Typecheck + production build into `dist/` |
+| `pnpm run preview` | Serve the production `dist/` build |
+| `pnpm run local-test` | Full local pipeline: fetch → build → preview |
+| `pnpm run typecheck` | Type-check only |
+
+Always write `pnpm run <script>`. `pnpm fetch` is a built-in pnpm command
+(it pre-downloads packages) and would silently skip the Sync. Any `npm`
+command in this repo fails immediately with `EBADDEVENGINES`, before it
+downloads anything.
 
 ## Deploying
 

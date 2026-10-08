@@ -1,17 +1,22 @@
 {
   "name": "run-hub-root",
   "private": true,
-  "workspaces": [
-    "frontend",
-    "scripts"
-  ],
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.10.1",
+      "onFail": "download"
+    }
+  },
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
-    "dev": "npm run dev --workspace=frontend",
-    "build": "npm run build --workspace=frontend",
-    "preview": "npm run preview --workspace=frontend",
-    "fetch": "npm run fetch --workspace=scripts",
-    "typecheck": "npm run typecheck --workspace=frontend",
+    "dev": "pnpm --filter frontend run dev",
+    "build": "pnpm --filter frontend run build",
+    "preview": "pnpm --filter frontend run preview",
+    "fetch": "pnpm --filter scripts run fetch",
+    "typecheck": "pnpm --filter frontend run typecheck",
     "local-test": "bash scripts/local-test.sh"
   }
 }
-
