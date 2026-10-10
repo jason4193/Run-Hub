@@ -13,6 +13,8 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { activityListPath, paceCurvePath, describeListFailure, asErrorAnnotation, SyncError } from "./lib/intervals.ts";
+import { shouldWriteSnapshot, type SnapshotPair } from "./lib/snapshot.ts";
 
 // ---- Types (kept in sync with frontend/src/types/snapshot.ts) -----------------------
 type LatLng = [number, number];
@@ -59,7 +61,6 @@ const API_BASE = "https://intervals.icu";
 const RUN_TYPES = new Set(["Run", "TrailRun", "VirtualRun"]);
 const LIST_FIELDS = "id,name,type,start_date_local,distance,moving_time,pace,route_id";
 const MAP_CONCURRENCY = 3;
-const BACKFILL_OLDEST = "2000-01-01";
 
 const TARGET_DISTANCES: { distance: number; label: string }[] = [
   { distance: 400, label: "400 m" },
@@ -107,7 +108,6 @@ async function apiGet(pathAndQuery: string, attempt = 0): Promise<Response> {
 
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 const round5 = (n: number) => Math.round(n * 1e5) / 1e5;
-const today = () => new Date().toISOString().slice(0, 10);
 
 // ---- Steps -----------------------------------------------------------------
 async function readPriorSnapshot(): Promise<Map<string, SnapshotActivity>> {
@@ -132,9 +132,16 @@ interface RawActivity {
 }
 
 async function fetchActivityList(): Promise<RawActivity[]> {
-  const q = `/api/v1/athlete/${ATHLETE_ID}/activities?oldest=${BACKFILL_OLDEST}&newest=${today()}&fields=${encodeURIComponent(LIST_FIELDS)}`;
-  const res = await apiGet(q);
-  if (!res.ok) throw new Error(`activity list ${res.status}: ${await res.text()}`);
+  let res: Response;
+  try {
+    res = await apiGet(activityListPath(ATHLETE_ID, LIST_FIELDS));
+  } catch (e) {
+    throw new SyncError(describeListFailure({ networkError: (e as Error).message }));
+  }
+  if (!res.ok) {
+    console.error(`activity list response body: ${(await res.text()).slice(0, 500)}`);
+    throw new SyncError(describeListFailure({ status: res.status }));
+  }
   const all = (await res.json()) as RawActivity[];
   return all.filter((a) => a.type != null && RUN_TYPES.has(a.type));
 }
@@ -262,7 +269,6 @@ function bestEffortsFromCurve(
 async function fetchPaceCurves(dateById: Map<string, string>): Promise<PaceCurveSnapshot> {
   // ⚠️ plan.md §8(1): `curves` defaults to "last year". For true all-time bests this
   // window likely needs adjusting once verified against a live payload.
-  const base = `/api/v1/athlete/${ATHLETE_ID}/pace-curves.json?type=Run&newest=${today()}`;
   const empty: PaceCurveSnapshot = {
     schemaVersion: 1,
     generatedAt: new Date().toISOString(),
@@ -270,7 +276,7 @@ async function fetchPaceCurves(dateById: Map<string, string>): Promise<PaceCurve
     gap: [],
   };
   try {
-    const [paceRes, gapRes] = await Promise.all([apiGet(base), apiGet(`${base}&gap=true`)]);
+    const [paceRes, gapRes] = await Promise.all([apiGet(paceCurvePath(ATHLETE_ID, false)), apiGet(paceCurvePath(ATHLETE_ID, true))]);
     const pace = paceRes.ok ? ((await paceRes.json()) as DataCurveSet).list?.[0] : undefined;
     const gap = gapRes.ok ? ((await gapRes.json()) as DataCurveSet).list?.[0] : undefined;
     return {
@@ -291,9 +297,23 @@ async function writeJsonAtomic(file: string, value: unknown): Promise<void> {
   await fs.rename(tmp, file);
 }
 
+/** The committed Snapshot pair, or null when either file is missing or unreadable. */
+async function readPriorFiles(): Promise<SnapshotPair | null> {
+  try {
+    const [activities, pace] = await Promise.all([
+      fs.readFile(ACTIVITIES_FILE, "utf8").then((t) => JSON.parse(t) as ActivitiesSnapshot),
+      fs.readFile(PACE_FILE, "utf8").then((t) => JSON.parse(t) as PaceCurveSnapshot),
+    ]);
+    return { activities, pace };
+  } catch {
+    return null;
+  }
+}
+
 // ---- Main ------------------------------------------------------------------
 async function main() {
   await fs.mkdir(DATA_DIR, { recursive: true });
+  const priorFiles = await readPriorFiles();
 
   const prior = await readPriorSnapshot();
   const list = await fetchActivityList();
@@ -329,6 +349,15 @@ async function main() {
   );
   const paceSnapshot = await fetchPaceCurves(dateById);
 
+  // One shared timestamp for both files; skip the write entirely when only it would change
+  // and the committed one is < HEARTBEAT_HOURS old (→ no commit). See lib/snapshot.ts.
+  const now = new Date().toISOString();
+  activitiesSnapshot.generatedAt = now;
+  paceSnapshot.generatedAt = now;
+  if (!shouldWriteSnapshot(priorFiles, { activities: activitiesSnapshot, pace: paceSnapshot }, now)) {
+    console.log("No changes and the heartbeat is under 20 h old — Snapshot left untouched.");
+    return;
+  }
   await writeJsonAtomic(ACTIVITIES_FILE, activitiesSnapshot);
   await writeJsonAtomic(PACE_FILE, paceSnapshot);
 
@@ -340,7 +369,11 @@ async function main() {
 }
 
 main().catch((e) => {
-  // Unhandled error after building → exit non-zero WITHOUT writing (preserve last good Snapshot).
-  console.error("Snapshot build failed:", e);
+  // Any failure → exit non-zero WITHOUT writing (preserve last good Snapshot).
+  if (e instanceof SyncError) {
+    console.error(asErrorAnnotation(e.message, process.env.GITHUB_ACTIONS === "true"));
+  } else {
+    console.error("Snapshot build failed:", e);
+  }
   process.exit(1);
 });
