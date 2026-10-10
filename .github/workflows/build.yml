@@ -3,9 +3,10 @@ name: Build & deploy Run Hub
 on:
   workflow_dispatch: {} # manual "refresh after a run" button
   schedule:
-    # Twice a day; GitHub usually starts these 1–5 h late.
-    - cron: "0 23 * * *" # Sydney morning (10:00 AEDT / 09:00 AEST) — after a morning run
-    - cron: "0 6 * * *" # Sydney evening (17:00 AEDT / 16:00 AEST)
+    # Once a day at 21:00 Sydney (DST-aware), after both morning and evening runs.
+    # GitHub may start it late.
+    - cron: "0 21 * * *"
+      timezone: "Australia/Sydney"
   push:
     branches: [main]
     # Plan, site and sync sources only. Never data/**: the Sync owns it, and its

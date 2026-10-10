@@ -19,7 +19,7 @@ This file is a **glossary only** — canonical terms and their agreed meanings. 
 
 - Data reaches the site as a pre-built **Snapshot**, not via live browser API calls (resolves CORS + key exposure + heatmap N+1).
 - Auth: **API Key (HTTP Basic)**, stored as `.env` / CI secret — never shipped to the browser.
-- No public webhook exists in the personal API; data freshness is handled by rebuilding the Snapshot. v1 triggers = GitHub Actions cron twice a day (Sydney morning + evening) + manual run + a push to `main` that changes the plan, site or sync sources (never a Snapshot-only change). **Final target = Option B**: webhook → serverless relay → rebuild. The fetch script stays B-ready.
+- No public webhook exists in the personal API; data freshness is handled by rebuilding the Snapshot. v1 triggers = GitHub Actions cron once a day at 21:00 Sydney (after both morning and evening runs) + manual run + a push to `main` that changes the plan, site or sync sources (never a Snapshot-only change). **Final target = Option B**: webhook → serverless relay → rebuild. The fetch script stays B-ready.
 - **Incremental = list-full, map-incremental**: every rebuild fetches the full activity list (one slim request), diffs by activity `id`, and calls `/map` only for unseen ids. Catches backfilled past-dated runs; never re-pays map cost.
 - Scope: runs only, ~2 records/week, growing both forward and backward in time. Snapshot scales by **year-sharding** once large; fetch logic unchanged.
 - Units: **metric** (km / m / cm). Pace shown as mm:ss /km.

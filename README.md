@@ -61,8 +61,8 @@ lightweight SPA on a free static host is the right fit.
 ## Data freshness & auto-update
 
 intervals.icu has **no webhook in the personal API**, and a static site can't
-receive one anyway. v1 refreshes via a twice-daily GitHub Actions cron (Sydney
-morning and evening), a manual "just finished a run" trigger, and any push to
+receive one anyway. v1 refreshes via a daily GitHub Actions cron (21:00 Sydney,
+after both morning and evening runs), a manual "just finished a run" trigger, and any push to
 `main` that touches `training/`, `frontend/`, `scripts/`, the root
 `package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml` or the workflow
 (Snapshot-only `data/` commits never trigger a rebuild). The planned **Option B** (final target) adds a
@@ -139,7 +139,7 @@ downloads anything.
 Pushing to GitHub is **not** required to develop locally. When ready: create the
 repo, add `INTERVALS_API_KEY` and `INTERVALS_ATHLETE_ID` as Actions secrets, and
 enable Pages (source: GitHub Actions). The workflow then rebuilds the Snapshot on
-the twice-daily cron, a manual run or a source push, commits it back with the
+the daily cron, a manual run or a source push, commits it back with the
 built-in `GITHUB_TOKEN` (no personal access token needed) when a run changed or
 as the once-a-day heartbeat, and deploys. Update
 `frontend/vite.config.ts` `base` (or `BASE_PATH`) to match the repo name.
