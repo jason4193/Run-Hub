@@ -51,8 +51,8 @@ export interface DetailInterval {
 
 export interface RunDetail {
   id: string;
-  start_date_local: string;
-  type: string;
+  start_date_local: string | null;
+  type: string | null;
   name: string | null;
   distance: number | null;
   moving_time: number | null;
@@ -89,7 +89,7 @@ export function isRecent(startDateLocal: string, today: string): boolean {
 export function intervalsFetchReason(run: ListRun, prior: RunDetail | undefined, today: string): FetchReason | null {
   if (!prior || prior.icu_intervals === null) return "new";
   if ((run.analyzed ?? null) !== prior.analyzed) return "edited";
-  if (isRecent(run.start_date_local ?? "", today)) return "recent";
+  if (run.start_date_local && isRecent(run.start_date_local, today)) return "recent";
   return null;
 }
 
@@ -108,8 +108,8 @@ export function toDetailInterval(raw: RawInterval): DetailInterval {
 export function toRunDetail(run: ListRun, intervals: DetailInterval[] | null, analyzed: string | null): RunDetail {
   return {
     id: run.id,
-    start_date_local: run.start_date_local ?? "",
-    type: run.type ?? "",
+    start_date_local: blankToNull(run.start_date_local),
+    type: blankToNull(run.type),
     name: blankToNull(run.name),
     distance: run.distance ?? null,
     moving_time: run.moving_time ?? null,
@@ -143,5 +143,5 @@ export function mergeRunDetails(
       const old = prior.get(run.id);
       return toRunDetail(run, old?.icu_intervals ?? null, old?.analyzed ?? null);
     })
-    .sort((a, b) => b.start_date_local.localeCompare(a.start_date_local));
+    .sort((a, b) => (b.start_date_local ?? "").localeCompare(a.start_date_local ?? ""));
 }

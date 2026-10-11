@@ -107,13 +107,15 @@ test("a row keeps intervals.icu names and only the agreed fields", () => {
   });
 });
 
-test("no HR, no RPE, no feel and blank text are null, never 0 or empty", () => {
+test("no HR, no RPE, no feel, no type or start date and blank text are null, never 0 or empty", () => {
   const row = toRunDetail(
     run({
       average_heartrate: undefined,
       max_heartrate: undefined,
       icu_hr_zone_times: undefined,
       icu_rpe: undefined,
+      type: undefined,
+      start_date_local: undefined,
       name: "",
       description: "  \n",
     }),
@@ -125,6 +127,8 @@ test("no HR, no RPE, no feel and blank text are null, never 0 or empty", () => {
   assert.equal(row.icu_hr_zone_times, null);
   assert.equal(row.icu_rpe, null);
   assert.equal(row.feel, null);
+  assert.equal(row.type, null);
+  assert.equal(row.start_date_local, null);
   assert.equal(row.name, null);
   assert.equal(row.description, null);
 });
