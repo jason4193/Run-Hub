@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 import { parse } from "yaml";
 import { z } from "zod";
 import { addDays, daysBetween, isMonday } from "./dates.ts";
+import { weekEnd, weekStart } from "./plan-view.ts";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
 export const PLAN_FILE = path.join(ROOT, "training", "plan.yaml");
@@ -112,7 +113,7 @@ function formatPath(keys: readonly PropertyKey[]): string {
 export function checkPlan(plan: Plan): string[] {
   const problems: string[] = [];
   const { weeks } = plan;
-  const weekRange = (n: number) => `${addDays(plan.block.start, 7 * n)} to ${addDays(plan.block.start, 7 * n + 6)}`;
+  const weekRange = (n: number) => `${weekStart(plan, n)} to ${weekEnd(plan, n)}`;
 
   if (!isMonday(plan.block.start)) problems.push("block.start: must be a Monday");
   if (plan.block.lap_m[0] > plan.block.lap_m[1]) problems.push("block.lap_m: min must not exceed max");
@@ -133,7 +134,7 @@ export function checkPlan(plan: Plan): string[] {
       return;
     }
     const n = found[0].n;
-    const offset = daysBetween(addDays(plan.block.start, 7 * n), plan.goals[goal].date);
+    const offset = daysBetween(weekStart(plan, n), plan.goals[goal].date);
     if (offset < 0 || offset > 6) {
       problems.push(`goals.${goal}.date: must fall inside Week ${n} (${weekRange(n)}), the week with ${marker}`);
     }
