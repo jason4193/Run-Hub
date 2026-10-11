@@ -3,7 +3,7 @@
  * resolved paces, lap times and session text. Pure, no I/O. The Plan comes from lib/plan.ts.
  */
 import { addDays, daysBetween } from "./dates.ts";
-import type { LongTarget, Phase, Plan, QualityPace, QualityTarget, Week } from "./plan.ts";
+import type { LongTarget, NamedPace, Phase, Plan, QualityPace, QualityTarget, Week } from "./plan.ts";
 
 export type SessionKind = "quality" | "long";
 
@@ -57,12 +57,18 @@ export function phaseOf(plan: Plan, n: number): Phase {
   return plan.phases.filter((p) => p.from_week <= n).at(-1) ?? plan.phases[0];
 }
 
+/** Each named quality pace: its words in session text, and its "m:ss" from the Plan (null while unset, and for max_even). */
+const NAMED_PACES: Record<NamedPace, { words: string; value: (plan: Plan) => string | null }> = {
+  threshold: { words: "threshold", value: (plan) => plan.block.threshold.pace },
+  test: { words: "test pace", value: (plan) => plan.goals.four_lap.pace },
+  max_even: { words: "max even", value: () => null },
+};
+
+const isNamedPace = (pace: string): pace is NamedPace => Object.hasOwn(NAMED_PACES, pace);
+
 /** A quality pace as "m:ss": threshold and test resolve from the Plan; null while unset, and for max_even. */
 export function resolvePace(plan: Plan, pace: QualityPace): string | null {
-  if (pace === "threshold") return plan.block.threshold.pace;
-  if (pace === "test") return plan.goals.four_lap.pace;
-  if (pace === "max_even") return null;
-  return pace;
+  return isNamedPace(pace) ? NAMED_PACES[pace].value(plan) : pace;
 }
 
 /** "4:10" → 250 seconds per km. */
@@ -77,8 +83,6 @@ export function lapRange(plan: Plan, pace: string): [number, number] {
   return [Math.round((perKm * plan.block.lap_m[0]) / 1000), Math.round((perKm * plan.block.lap_m[1]) / 1000)];
 }
 
-const PACE_WORDS: Record<string, string> = { threshold: "threshold", test: "test pace", max_even: "max even" };
-
 const duration = (s: number) => (s % 60 === 0 ? `${s / 60} min` : `${s} s`);
 
 function repSize(t: QualityTarget): string {
@@ -91,7 +95,7 @@ function repSize(t: QualityTarget): string {
 export function describeQuality(t: QualityTarget): string {
   const size = t.reps === 1 ? repSize(t) : `${t.reps} × ${repSize(t)}`;
   const rest = t.rest_s === undefined ? "" : `, ${duration(t.rest_s)} rest`;
-  return `${size} @ ${PACE_WORDS[t.pace] ?? t.pace}${rest}`;
+  return `${size} @ ${isNamedPace(t.pace) ? NAMED_PACES[t.pace].words : t.pace}${rest}`;
 }
 
 /** "12 km easy", "18 km @ 7:00–7:15", "42.2 km @ 7:00". */

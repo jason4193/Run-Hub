@@ -25,7 +25,8 @@ const pace = z.string().regex(/^\d{1,2}:[0-5]\d$/, 'must be a quoted "m:ss" pace
 const count = z.number().int().positive();
 const whole = z.number().int().nonnegative();
 
-const qualityPaceSchema = z.union([pace, z.enum(["threshold", "test", "max_even"])]);
+const namedPaceSchema = z.enum(["threshold", "test", "max_even"]);
+const qualityPaceSchema = z.union([pace, namedPaceSchema]);
 const longPaceSchema = z.union([z.literal("easy"), pace, z.tuple([pace, pace])]);
 const qualityTargetSchema = z.strictObject({
   reps: count,
@@ -98,6 +99,7 @@ export type Phase = Plan["phases"][number];
 export type QualityTarget = z.infer<typeof qualityTargetSchema>;
 export type LongTarget = z.infer<typeof longTargetSchema>;
 export type QualityPace = z.infer<typeof qualityPaceSchema>;
+export type NamedPace = z.infer<typeof namedPaceSchema>;
 export type LongPace = z.infer<typeof longPaceSchema>;
 
 export class PlanError extends Error {
