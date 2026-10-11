@@ -3,7 +3,22 @@ name: Build & deploy Run Hub
 on:
   workflow_dispatch: {} # manual "refresh after a run" button
   schedule:
-    - cron: "0 6 * * *" # daily ~06:00 UTC
+    # Once a day at 21:00 Sydney (DST-aware), after both morning and evening runs.
+    # GitHub may start it late.
+    - cron: "0 21 * * *"
+      timezone: "Australia/Sydney"
+  push:
+    branches: [main]
+    # Plan, site and sync sources only. Never data/**: the Sync owns it, and its
+    # GITHUB_TOKEN commits can't trigger runs anyway.
+    paths:
+      - "training/**"
+      - "frontend/**"
+      - "scripts/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - ".github/workflows/build.yml"
   # Option B (future): an external relay calling repository_dispatch fires the same job.
   repository_dispatch:
     types: [intervals-activity]
@@ -15,7 +30,9 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  # A running Sync always finishes; a newer trigger waits (at most one waiter — a later
+  # one replaces it, which is harmless because every run syncs everything from latest main).
+  cancel-in-progress: false
 
 jobs:
   build-deploy:
@@ -25,6 +42,8 @@ jobs:
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: main # build the latest main, not the (possibly older) triggering SHA
 
       # pnpm version comes from devEngines.packageManager in package.json (npm is blocked).
       - uses: pnpm/action-setup@v6
@@ -49,6 +68,8 @@ jobs:
           if ! git diff --quiet -- data; then
             git add data
             git commit -m "chore: refresh snapshot"
+            # A push may have landed mid-run; data/ never conflicts with source edits.
+            git pull --rebase origin main
             git push
           else
             echo "No snapshot changes."

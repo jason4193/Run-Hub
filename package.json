@@ -17,6 +17,8 @@
     "preview": "pnpm --filter frontend run preview",
     "fetch": "pnpm --filter scripts run fetch",
     "typecheck": "pnpm --filter frontend run typecheck",
+    "typecheck:scripts": "pnpm --filter scripts run typecheck",
+    "test:scripts": "pnpm --filter scripts run test",
     "local-test": "bash scripts/local-test.sh"
   }
 }

@@ -11,12 +11,15 @@ This file is a **glossary only** — canonical terms and their agreed meanings. 
 - **Snapshot** — the pre-fetched static JSON that the site reads at runtime. The browser **never** calls intervals.icu directly; it only reads the Snapshot. Built by a fetch script using the API key, which lives only in the build environment.
 - **Route Heatmap** — the visual of all Activities' GPS paths over the map. Rendered as **animated neon comet trails** (one moving comet per Activity), not a static raster; the aggregate "heatmap" emerges where trails overlap (additive blending → white-hot cores). Source data is each Activity's decimated `latlngs` from `/activity/{id}/map`.
 - **Best Effort / Pace Curve** — the Athlete's all-time best pace over a range of durations/distances, from `/athlete/{id}/pace-curves`. Shown in a side popover.
+- **Sync** — one rebuild: pull the Athlete's runs from intervals.icu into the Snapshot, commit it when an Activity changed, and redeploy the site. A failed Sync changes nothing and leaves the last good Snapshot live.
+- **Heartbeat** — a Snapshot commit whose only change is its generation time. At most one a day, so a quiet stretch with no runs is distinguishable from a broken Sync.
+- **Today** — the current date in Australia/Sydney, never the UTC date. An Activity's date is its local start date where it was run, so a morning run counts on the day it happened.
 
 ## Resolved decisions (see docs/adr/ for rationale once recorded)
 
 - Data reaches the site as a pre-built **Snapshot**, not via live browser API calls (resolves CORS + key exposure + heatmap N+1).
 - Auth: **API Key (HTTP Basic)**, stored as `.env` / CI secret — never shipped to the browser.
-- No public webhook exists in the personal API; data freshness is handled by rebuilding the Snapshot. v1 trigger = GitHub Actions cron + manual run. **Final target = Option B**: webhook → serverless relay → rebuild. The fetch script stays B-ready.
+- No public webhook exists in the personal API; data freshness is handled by rebuilding the Snapshot. v1 triggers = GitHub Actions cron once a day at 21:00 Sydney (after both morning and evening runs) + manual run + a push to `main` that changes the plan, site or sync sources (never a Snapshot-only change). **Final target = Option B**: webhook → serverless relay → rebuild. The fetch script stays B-ready.
 - **Incremental = list-full, map-incremental**: every rebuild fetches the full activity list (one slim request), diffs by activity `id`, and calls `/map` only for unseen ids. Catches backfilled past-dated runs; never re-pays map cost.
 - Scope: runs only, ~2 records/week, growing both forward and backward in time. Snapshot scales by **year-sharding** once large; fetch logic unchanged.
 - Units: **metric** (km / m / cm). Pace shown as mm:ss /km.
