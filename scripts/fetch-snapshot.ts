@@ -5,6 +5,8 @@
  *   - Fetch the full activity list every run (one slim request) → catches backfilled past runs.
  *   - Diff by activity id; only call the expensive /map endpoint for runs not already stored.
  *   - Write atomically (temp file then rename); on failure, preserve the last good Snapshot.
+ *   - Run Details (data/run-details.json): list fields refresh every run; /intervals only when due
+ *     (new, edited or recent — see lib/details.ts). Activity messages are not fetched.
  *
  * The browser never runs this. The API key lives only in the build env.
  *
@@ -14,7 +16,19 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { activityListPath, paceCurvePath, describeListFailure, asErrorAnnotation, SyncError } from "./lib/intervals.ts";
-import { shouldWriteSnapshot, type SnapshotPair } from "./lib/snapshot.ts";
+import { shouldWriteSnapshot, type SnapshotFiles } from "./lib/snapshot.ts";
+import { sydneyToday } from "./lib/dates.ts";
+import {
+  intervalsFetchReason,
+  mergeRunDetails,
+  toDetailInterval,
+  type DetailInterval,
+  type FetchReason,
+  type ListRun,
+  type RawInterval,
+  type RunDetail,
+  type RunDetailsSnapshot,
+} from "./lib/details.ts";
 
 // ---- Types (kept in sync with frontend/src/types/snapshot.ts) -----------------------
 type LatLng = [number, number];
@@ -59,7 +73,9 @@ interface PaceCurveSnapshot {
 // ---- Config ----------------------------------------------------------------
 const API_BASE = "https://intervals.icu";
 const RUN_TYPES = new Set(["Run", "TrailRun", "VirtualRun"]);
-const LIST_FIELDS = "id,name,type,start_date_local,distance,moving_time,pace,route_id";
+const LIST_FIELDS =
+  "id,name,type,start_date_local,distance,moving_time,pace,route_id," +
+  "average_heartrate,max_heartrate,icu_hr_zone_times,icu_hr_zones,icu_rpe,feel,description,analyzed";
 const MAP_CONCURRENCY = 3;
 
 const TARGET_DISTANCES: { distance: number; label: string }[] = [
@@ -75,6 +91,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DATA_DIR = path.join(ROOT, "data");
 const ACTIVITIES_FILE = path.join(DATA_DIR, "activities.json");
 const PACE_FILE = path.join(DATA_DIR, "pace-curve.json");
+const DETAILS_FILE = path.join(DATA_DIR, "run-details.json");
 
 // ---- Env -------------------------------------------------------------------
 // Load .env if present (local runs). In CI the vars come from the real environment.
@@ -120,13 +137,7 @@ async function readPriorSnapshot(): Promise<Map<string, SnapshotActivity>> {
   }
 }
 
-interface RawActivity {
-  id: string;
-  name?: string;
-  type?: string;
-  start_date_local?: string;
-  distance?: number;
-  moving_time?: number;
+interface RawActivity extends ListRun {
   pace?: number | null;
   route_id?: number | null;
 }
@@ -194,6 +205,32 @@ function toSnapshotActivity(raw: RawActivity, map: Pick<SnapshotActivity, "latln
     latlngs: map.latlngs,
     bounds: map.bounds,
   };
+}
+
+/** The committed Run Details by id, or an empty map on the first run. */
+async function readPriorRunDetails(): Promise<Map<string, RunDetail>> {
+  try {
+    const snap = JSON.parse(await fs.readFile(DETAILS_FILE, "utf8")) as RunDetailsSnapshot;
+    return new Map(snap.runs.map((r) => [r.id, r]));
+  } catch {
+    return new Map(); // first run / initial backfill
+  }
+}
+
+/** Fetch one run's detected intervals. Returns null on any failure (kept as before, retried next run). */
+async function fetchIntervals(id: string): Promise<DetailInterval[] | null> {
+  try {
+    const res = await apiGet(`/api/v1/activity/${id}/intervals`);
+    if (!res.ok) {
+      console.warn(`  intervals ${id}: ${res.status}, skipping`);
+      return null;
+    }
+    const data = (await res.json()) as { icu_intervals?: RawInterval[] | null };
+    return (data.icu_intervals ?? []).map(toDetailInterval); // no key at all = none detected
+  } catch (e) {
+    console.warn(`  intervals ${id}: ${(e as Error).message}, skipping`);
+    return null;
+  }
 }
 
 /** Run an async mapper over items with a small concurrency limit. */
@@ -297,14 +334,15 @@ async function writeJsonAtomic(file: string, value: unknown): Promise<void> {
   await fs.rename(tmp, file);
 }
 
-/** The committed Snapshot pair, or null when either file is missing or unreadable. */
-async function readPriorFiles(): Promise<SnapshotPair | null> {
+/** The committed Snapshot files, or null when any of them is missing or unreadable. */
+async function readPriorFiles(): Promise<SnapshotFiles | null> {
   try {
-    const [activities, pace] = await Promise.all([
+    const [activities, pace, details] = await Promise.all([
       fs.readFile(ACTIVITIES_FILE, "utf8").then((t) => JSON.parse(t) as ActivitiesSnapshot),
       fs.readFile(PACE_FILE, "utf8").then((t) => JSON.parse(t) as PaceCurveSnapshot),
+      fs.readFile(DETAILS_FILE, "utf8").then((t) => JSON.parse(t) as RunDetailsSnapshot),
     ]);
-    return { activities, pace };
+    return { activities, pace, details };
   } catch {
     return null;
   }
@@ -343,6 +381,30 @@ async function main() {
     activities,
   };
 
+  // Run Details: list fields refresh every Sync; intervals only for runs that are due.
+  const priorDetails = await readPriorRunDetails();
+  const today = sydneyToday(new Date());
+  const due = list
+    .map((run) => ({ run, reason: intervalsFetchReason(run, priorDetails.get(run.id), today) }))
+    .filter((d): d is { run: RawActivity; reason: FetchReason } => d.reason !== null);
+  const fetchedList = await mapPool(due, MAP_CONCURRENCY, async ({ run }) => ({
+    id: run.id,
+    intervals: await fetchIntervals(run.id),
+  }));
+  const fetched = new Map<string, DetailInterval[]>();
+  for (const f of fetchedList) if (f.intervals) fetched.set(f.id, f.intervals);
+  const detailsSnapshot: RunDetailsSnapshot = {
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    runs: mergeRunDetails(list, priorDetails, fetched),
+  };
+  const dueFor = (reason: FetchReason) => due.filter((d) => d.reason === reason).length;
+  console.log(
+    `details: ${list.length} runs; intervals ${due.length} fetched ` +
+      `(${dueFor("new")} new, ${dueFor("edited")} edited, ${dueFor("recent")} recent), ` +
+      `${list.length - due.length} kept, ${due.length - fetched.size} failed`,
+  );
+
   // Resolve each PB to the date of the activity that set it (curve carries the id).
   const dateById = new Map<string, string>(
     list.filter((a) => a.start_date_local).map((a) => [a.id, a.start_date_local as string]),
@@ -354,17 +416,19 @@ async function main() {
   const now = new Date().toISOString();
   activitiesSnapshot.generatedAt = now;
   paceSnapshot.generatedAt = now;
-  if (!shouldWriteSnapshot(priorFiles, { activities: activitiesSnapshot, pace: paceSnapshot }, now)) {
+  detailsSnapshot.generatedAt = now;
+  if (!shouldWriteSnapshot(priorFiles, { activities: activitiesSnapshot, pace: paceSnapshot, details: detailsSnapshot }, now)) {
     console.log("No changes and the heartbeat is under 20 h old — Snapshot left untouched.");
     return;
   }
   await writeJsonAtomic(ACTIVITIES_FILE, activitiesSnapshot);
   await writeJsonAtomic(PACE_FILE, paceSnapshot);
+  await writeJsonAtomic(DETAILS_FILE, detailsSnapshot);
 
   const skipped = newRaws.length - built.filter(Boolean).length;
   console.log(
     `Wrote ${activities.length} activities (${built.filter(Boolean).length} new, ${skipped} skipped) ` +
-      `and ${paceSnapshot.pace.length} pace efforts.`,
+      `and ${paceSnapshot.pace.length} pace efforts, plus ${detailsSnapshot.runs.length} run details.`,
   );
 }
 
