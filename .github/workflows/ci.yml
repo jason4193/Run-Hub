@@ -3,7 +3,7 @@ name: CI
 # Checks only — no Sync, no secrets, no deploy (build.yml owns those on main).
 on:
   pull_request:
-    branches: [main]
+    branches: [main, "feature/**"]
   workflow_dispatch: {}
 
 permissions:
