@@ -9,6 +9,8 @@ This file is a **glossary only** — canonical terms and their agreed meanings. 
 - **Athlete** — the single account owner (one `athlete/{id}` on intervals.icu). This site is single-athlete by design.
 - **Activity** — one recorded run pulled from intervals.icu (`/athlete/{id}/activities`). Run Hub displays runs only unless decided otherwise.
 - **Snapshot** — the pre-fetched static JSON that the site reads at runtime. The browser **never** calls intervals.icu directly; it only reads the Snapshot. Built by a fetch script using the API key, which lives only in the build environment.
+- **Run Details** — the part of the Snapshot that records how each Activity went: heart rate, effort, the Athlete's notes and its Intervals, with no GPS. Kept as intervals.icu reports it; the training log is derived from it and never edited by hand.
+- **Interval** — a segment of an Activity as intervals.icu detected it (or the Athlete edited it), typed work or recovery. Not a rep: an Interval can as easily be a warm-up, a rest or a cool-down.
 - **Route Heatmap** — the visual of all Activities' GPS paths over the map. Rendered as **animated neon comet trails** (one moving comet per Activity), not a static raster; the aggregate "heatmap" emerges where trails overlap (additive blending → white-hot cores). Source data is each Activity's decimated `latlngs` from `/activity/{id}/map`.
 - **Best Effort / Pace Curve** — the Athlete's all-time best pace over a range of durations/distances, from `/athlete/{id}/pace-curves`. Shown in a side popover.
 - **Sync** — one rebuild: pull the Athlete's runs from intervals.icu into the Snapshot, commit it when an Activity changed, and redeploy the site. A failed Sync changes nothing and leaves the last good Snapshot live.

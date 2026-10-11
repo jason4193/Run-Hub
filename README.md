@@ -43,6 +43,13 @@ are caught), diffs by activity `id`, and pays the per-activity `/map` cost only
 for runs not already stored. The Snapshot is committed back to the repo as the
 versioned store of record.
 
+The same list call also carries each run's heart rate, HR zones, RPE, feel,
+name and description, so `data/run-details.json` refreshes those on every
+rebuild at no extra cost — a note or RPE added days later is picked up. Its
+detected intervals come from `/activity/{id}/intervals`, fetched only for a run
+that is new, whose intervals.icu `analyzed` time has moved since it was stored,
+or that is under 14 days old. Keys keep intervals.icu's own field names.
+
 ## Tech stack
 
 | Concern | Choice |
@@ -81,6 +88,9 @@ scripts/
   fetch-snapshot.ts   Snapshot builder (the data layer)
   local-test.sh       one-shot local end-to-end check
 data/             committed Snapshot JSON (store of record)
+  activities.json   GPS paths per run (heatmap only)
+  pace-curve.json   best efforts
+  run-details.json  Run Details: HR, effort, notes and intervals per run, no GPS
 frontend/         Vite + React frontend workspace
   public/         Vite static root (build copies data/ → public/data/)
   src/
