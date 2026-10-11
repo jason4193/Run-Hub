@@ -1,7 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  RECENT_DAYS,
   isRecent,
   intervalsFetchReason,
   toDetailInterval,
@@ -42,10 +41,6 @@ const iv: DetailInterval = {
   max_heartrate: 170,
 };
 const stored = (over: Partial<RunDetail> = {}): RunDetail => ({ ...toRunDetail(run(), [iv], A), ...over });
-
-test("the recent window is 14 days", () => {
-  assert.equal(RECENT_DAYS, 14);
-});
 
 test("a run from Today or the 13 days before is recent; 14 days before is not", () => {
   assert.equal(isRecent("2026-10-11T06:00:00", TODAY), true);
@@ -120,7 +115,7 @@ test("no HR, no RPE, no feel and blank text are null, never 0 or empty", () => {
       icu_hr_zone_times: undefined,
       icu_rpe: undefined,
       name: "",
-      description: "",
+      description: "  \n",
     }),
     [],
     A,
