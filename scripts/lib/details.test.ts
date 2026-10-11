@@ -7,10 +7,10 @@ import {
   toRunDetail,
   mergeRunDetails,
   type DetailInterval,
-  type ListRun,
   type RawInterval,
   type RunDetail,
 } from "./details.ts";
+import type { ListRun } from "./intervals.ts";
 
 const TODAY = "2026-10-11";
 const A = "2026-09-01T00:00:00.000+00:00";

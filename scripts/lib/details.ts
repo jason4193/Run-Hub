@@ -8,25 +8,9 @@
  * list call and refreshes on every Sync. The marker is intervals.icu's `analyzed`, never our fetch
  * time, so an unchanged run leaves the file byte-identical (see lib/snapshot.ts).
  */
-export const RECENT_DAYS = 14;
+import type { ListRun } from "./intervals.ts";
 
-/** A list-call row, as far as Run Details reads it. The list omits null fields. */
-export interface ListRun {
-  id: string;
-  type?: string;
-  name?: string;
-  start_date_local?: string;
-  distance?: number;
-  moving_time?: number;
-  average_heartrate?: number;
-  max_heartrate?: number;
-  icu_hr_zone_times?: number[];
-  icu_hr_zones?: number[];
-  icu_rpe?: number;
-  feel?: number;
-  description?: string;
-  analyzed?: string;
-}
+export const RECENT_DAYS = 14;
 
 /** One interval from `/activity/{id}/intervals` (only the fields Run Details keeps). */
 export interface RawInterval {

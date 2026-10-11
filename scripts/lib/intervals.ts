@@ -11,6 +11,26 @@ export function activityListPath(athleteId: string, fields: string): string {
   return `/api/v1/athlete/${athleteId}/activities?oldest=${BACKFILL_OLDEST}&fields=${encodeURIComponent(fields)}`;
 }
 
+/** One row of the activity list call — the fields the Sync asks for. The list omits null fields. */
+export interface ListRun {
+  id: string;
+  type?: string;
+  name?: string;
+  start_date_local?: string;
+  distance?: number;
+  moving_time?: number;
+  pace?: number | null;
+  route_id?: number | null;
+  average_heartrate?: number;
+  max_heartrate?: number;
+  icu_hr_zone_times?: number[];
+  icu_hr_zones?: number[];
+  icu_rpe?: number;
+  feel?: number;
+  description?: string;
+  analyzed?: string;
+}
+
 /** Pace-curve query up to "now" (athlete timezone). No `newest`, for the same reason. */
 export function paceCurvePath(athleteId: string, gap: boolean): string {
   const base = `/api/v1/athlete/${athleteId}/pace-curves.json?type=Run`;

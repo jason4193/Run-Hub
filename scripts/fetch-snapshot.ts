@@ -15,7 +15,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { activityListPath, paceCurvePath, describeListFailure, asErrorAnnotation, SyncError } from "./lib/intervals.ts";
+import { activityListPath, paceCurvePath, describeListFailure, asErrorAnnotation, SyncError, type ListRun } from "./lib/intervals.ts";
 import { shouldWriteSnapshot, type SnapshotFiles } from "./lib/snapshot.ts";
 import { sydneyToday } from "./lib/dates.ts";
 import {
@@ -24,7 +24,6 @@ import {
   toDetailInterval,
   type DetailInterval,
   type FetchReason,
-  type ListRun,
   type RawInterval,
   type RunDetailsSnapshot,
 } from "./lib/details.ts";
@@ -126,12 +125,7 @@ const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 const round5 = (n: number) => Math.round(n * 1e5) / 1e5;
 
 // ---- Steps -----------------------------------------------------------------
-interface RawActivity extends ListRun {
-  pace?: number | null;
-  route_id?: number | null;
-}
-
-async function fetchActivityList(): Promise<RawActivity[]> {
+async function fetchActivityList(): Promise<ListRun[]> {
   let res: Response;
   try {
     res = await apiGet(activityListPath(ATHLETE_ID, LIST_FIELDS));
@@ -142,7 +136,7 @@ async function fetchActivityList(): Promise<RawActivity[]> {
     console.error(`activity list response body: ${(await res.text()).slice(0, 500)}`);
     throw new SyncError(describeListFailure({ status: res.status }));
   }
-  const all = (await res.json()) as RawActivity[];
+  const all = (await res.json()) as ListRun[];
   return all.filter((a) => a.type != null && RUN_TYPES.has(a.type));
 }
 
@@ -181,7 +175,7 @@ async function fetchMap(id: string): Promise<Pick<SnapshotActivity, "latlngs" | 
   }
 }
 
-function toSnapshotActivity(raw: RawActivity, map: Pick<SnapshotActivity, "latlngs" | "bounds">): SnapshotActivity {
+function toSnapshotActivity(raw: ListRun, map: Pick<SnapshotActivity, "latlngs" | "bounds">): SnapshotActivity {
   return {
     id: raw.id,
     name: raw.name ?? "",
@@ -369,7 +363,7 @@ async function main() {
   const today = sydneyToday(new Date());
   const due = list
     .map((run) => ({ run, reason: intervalsFetchReason(run, priorDetails.get(run.id), today) }))
-    .filter((d): d is { run: RawActivity; reason: FetchReason } => d.reason !== null);
+    .filter((d): d is { run: ListRun; reason: FetchReason } => d.reason !== null);
   const fetchedList = await mapPool(due, MAP_CONCURRENCY, async ({ run }) => ({
     id: run.id,
     intervals: await fetchIntervals(run.id),
