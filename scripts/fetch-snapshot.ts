@@ -26,7 +26,6 @@ import {
   type FetchReason,
   type ListRun,
   type RawInterval,
-  type RunDetail,
   type RunDetailsSnapshot,
 } from "./lib/details.ts";
 
@@ -127,16 +126,6 @@ const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 const round5 = (n: number) => Math.round(n * 1e5) / 1e5;
 
 // ---- Steps -----------------------------------------------------------------
-async function readPriorSnapshot(): Promise<Map<string, SnapshotActivity>> {
-  try {
-    const raw = await fs.readFile(ACTIVITIES_FILE, "utf8");
-    const snap = JSON.parse(raw) as ActivitiesSnapshot;
-    return new Map(snap.activities.map((a) => [a.id, a]));
-  } catch {
-    return new Map(); // first run / initial backfill
-  }
-}
-
 interface RawActivity extends ListRun {
   pace?: number | null;
   route_id?: number | null;
@@ -205,16 +194,6 @@ function toSnapshotActivity(raw: RawActivity, map: Pick<SnapshotActivity, "latln
     latlngs: map.latlngs,
     bounds: map.bounds,
   };
-}
-
-/** The committed Run Details by id, or an empty map on the first run. */
-async function readPriorRunDetails(): Promise<Map<string, RunDetail>> {
-  try {
-    const snap = JSON.parse(await fs.readFile(DETAILS_FILE, "utf8")) as RunDetailsSnapshot;
-    return new Map(snap.runs.map((r) => [r.id, r]));
-  } catch {
-    return new Map(); // first run / initial backfill
-  }
 }
 
 /** Fetch one run's detected intervals. Returns null on any failure (kept as before, retried next run). */
@@ -334,15 +313,10 @@ async function writeJsonAtomic(file: string, value: unknown): Promise<void> {
   await fs.rename(tmp, file);
 }
 
-/** The committed Snapshot files, or null when any of them is missing or unreadable. */
-async function readPriorFiles(): Promise<SnapshotFiles | null> {
+/** One committed Snapshot file, or null when it is missing or unreadable (first run / initial backfill). */
+async function readPriorFile<T>(file: string): Promise<T | null> {
   try {
-    const [activities, pace, details] = await Promise.all([
-      fs.readFile(ACTIVITIES_FILE, "utf8").then((t) => JSON.parse(t) as ActivitiesSnapshot),
-      fs.readFile(PACE_FILE, "utf8").then((t) => JSON.parse(t) as PaceCurveSnapshot),
-      fs.readFile(DETAILS_FILE, "utf8").then((t) => JSON.parse(t) as RunDetailsSnapshot),
-    ]);
-    return { activities, pace, details };
+    return JSON.parse(await fs.readFile(file, "utf8")) as T;
   } catch {
     return null;
   }
@@ -351,9 +325,18 @@ async function readPriorFiles(): Promise<SnapshotFiles | null> {
 // ---- Main ------------------------------------------------------------------
 async function main() {
   await fs.mkdir(DATA_DIR, { recursive: true });
-  const priorFiles = await readPriorFiles();
+  const [priorActivities, priorPace, priorRunDetails] = await Promise.all([
+    readPriorFile<ActivitiesSnapshot>(ACTIVITIES_FILE),
+    readPriorFile<PaceCurveSnapshot>(PACE_FILE),
+    readPriorFile<RunDetailsSnapshot>(DETAILS_FILE),
+  ]);
+  // The heartbeat compares all three files, or treats the Snapshot as new when any is missing.
+  const priorFiles: SnapshotFiles | null =
+    priorActivities && priorPace && priorRunDetails
+      ? { activities: priorActivities, pace: priorPace, details: priorRunDetails }
+      : null;
 
-  const prior = await readPriorSnapshot();
+  const prior = new Map((priorActivities?.activities ?? []).map((a) => [a.id, a]));
   const list = await fetchActivityList();
   const listedIds = new Set(list.map((a) => a.id));
   console.log(`Activity list: ${list.length} runs; ${prior.size} already stored.`);
@@ -382,7 +365,7 @@ async function main() {
   };
 
   // Run Details: list fields refresh every Sync; intervals only for runs that are due.
-  const priorDetails = await readPriorRunDetails();
+  const priorDetails = new Map((priorRunDetails?.runs ?? []).map((r) => [r.id, r]));
   const today = sydneyToday(new Date());
   const due = list
     .map((run) => ({ run, reason: intervalsFetchReason(run, priorDetails.get(run.id), today) }))
