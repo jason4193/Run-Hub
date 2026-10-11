@@ -55,7 +55,7 @@ or that is under 14 days old. Keys keep intervals.icu's own field names.
 | Concern | Choice |
 |---|---|
 | Frontend | TypeScript 7 · React 19 · Vite 8 |
-| Fetch script | Node 24 + TypeScript (`tsx`), zero runtime deps (native `fetch`) |
+| Fetch script | Node 24 + TypeScript (`tsx`), native `fetch`; `yaml` + `zod` to read the Plan |
 | Package manager | **pnpm only** (version pinned in `devEngines`; npm is blocked) |
 | Data source | intervals.icu API (HTTP Basic, API key) |
 | Hosting (v1) | GitHub Pages — cron, manual and source-push rebuilds via GitHub Actions |
@@ -87,6 +87,10 @@ docs/
 scripts/
   fetch-snapshot.ts   Snapshot builder (the data layer)
   local-test.sh       one-shot local end-to-end check
+  lib/plan.ts         reads and checks training/plan.yaml (format only, never values)
+  lib/plan-view.ts    what the Plan implies: week dates, session ids, phase, session text, lap times
+training/         Inputs: settings agreed with the Coach, hand-edited only via a Change Brief
+  plan.yaml         the Plan: goals, phases, weekly targets, checkpoints, standing rules
 data/             committed Snapshot JSON (store of record)
   activities.json   GPS paths per run (heatmap only)
   pace-curve.json   best efforts
