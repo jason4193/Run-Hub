@@ -7,6 +7,15 @@ import type { LongTarget, Phase, Plan, QualityPace, QualityTarget, Week } from "
 
 export type SessionKind = "quality" | "long";
 
+/** One of a Week's two sessions, as a reader needs it. `date` is set only for the test and the race. */
+export interface Session<Kind extends string, Target> {
+  id: string;
+  kind: Kind;
+  date: string | null;
+  target: Target;
+  text: string;
+}
+
 export interface WeekView {
   n: number;
   start: string;
@@ -17,8 +26,8 @@ export interface WeekView {
   runs: [number, number];
   strength: number;
   notes: string[];
-  quality: { id: string; kind: "quality" | "test"; date: string | null; target: QualityTarget; text: string };
-  long: { id: string; kind: "long" | "race"; date: string | null; target: LongTarget; text: string };
+  quality: Session<"quality" | "test", QualityTarget>;
+  long: Session<"long" | "race", LongTarget>;
 }
 
 /** Monday of Week n (YYYY-MM-DD). */
@@ -92,29 +101,28 @@ export function describeLong(t: LongTarget): string {
   return `${t.distance_km} km @ ${t.pace}`;
 }
 
+/** Week n's Quality Session; the test resolves from goals.four_lap. */
+function qualitySession(plan: Plan, n: number, quality: Week["quality"]): WeekView["quality"] {
+  const id = sessionId(n, "quality");
+  if (quality !== "test") return { id, kind: "quality", date: null, target: quality, text: describeQuality(quality) };
+  const { date, reps, laps_per_rep, rest_s } = plan.goals.four_lap;
+  const target: QualityTarget = { reps, laps_per_rep, pace: "test", rest_s };
+  return { id, kind: "test", date, target, text: `Test: ${describeQuality(target)}` };
+}
+
+/** Week n's Long Run; the race resolves from goals.osaka. */
+function longSession(plan: Plan, n: number, long: Week["long"]): WeekView["long"] {
+  const id = sessionId(n, "long");
+  if (long !== "race") return { id, kind: "long", date: null, target: long, text: describeLong(long) };
+  const { date, distance_km, pace } = plan.goals.osaka;
+  const target: LongTarget = { distance_km, pace };
+  return { id, kind: "race", date, target, text: `Race: ${describeLong(target)}` };
+}
+
 /** Everything about Week n, with the test and the race resolved from goals. Throws when there is no Week n. */
 export function weekView(plan: Plan, n: number): WeekView {
   const week = plan.weeks[n];
   if (!week) throw new RangeError(`No Week ${n} in the Plan`);
-  const fourLap = plan.goals.four_lap;
-  const osaka = plan.goals.osaka;
-
-  const quality: WeekView["quality"] =
-    week.quality === "test"
-      ? (() => {
-          const target: QualityTarget = { reps: fourLap.reps, laps_per_rep: fourLap.laps_per_rep, pace: "test", rest_s: fourLap.rest_s };
-          return { id: sessionId(n, "quality"), kind: "test", date: fourLap.date, target, text: `Test: ${describeQuality(target)}` };
-        })()
-      : { id: sessionId(n, "quality"), kind: "quality", date: null, target: week.quality, text: describeQuality(week.quality) };
-
-  const long: WeekView["long"] =
-    week.long === "race"
-      ? (() => {
-          const target: LongTarget = { distance_km: osaka.distance_km, pace: osaka.pace };
-          return { id: sessionId(n, "long"), kind: "race", date: osaka.date, target, text: `Race: ${describeLong(target)}` };
-        })()
-      : { id: sessionId(n, "long"), kind: "long", date: null, target: week.long, text: describeLong(week.long) };
-
   return {
     n,
     start: weekStart(plan, n),
@@ -125,7 +133,7 @@ export function weekView(plan: Plan, n: number): WeekView {
     runs: week.runs,
     strength: week.strength,
     notes: week.notes,
-    quality,
-    long,
+    quality: qualitySession(plan, n, week.quality),
+    long: longSession(plan, n, week.long),
   };
 }
