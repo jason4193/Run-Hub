@@ -1,7 +1,203 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-17T13:31:30.643Z",
+  "generatedAt": "2026-10-18T13:50:19.946Z",
   "runs": [
+    {
+      "id": "i198516161",
+      "start_date_local": "2026-10-18T09:11:44",
+      "type": "Run",
+      "name": "Run",
+      "distance": 16643.42,
+      "moving_time": 7918,
+      "average_heartrate": 143,
+      "max_heartrate": 162,
+      "icu_hr_zone_times": [
+        4658,
+        2346,
+        926,
+        0,
+        0,
+        0,
+        0
+      ],
+      "icu_hr_zones": [
+        145,
+        153,
+        162,
+        171,
+        176,
+        181,
+        192
+      ],
+      "icu_rpe": 5,
+      "feel": null,
+      "description": null,
+      "analyzed": "2026-10-18T05:23:43.721+00:00",
+      "icu_intervals": [
+        {
+          "type": "RECOVERY",
+          "label": null,
+          "distance": null,
+          "moving_time": 1,
+          "elapsed_time": 1,
+          "average_heartrate": 93,
+          "max_heartrate": 93
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1001.36,
+          "moving_time": 525,
+          "elapsed_time": 525,
+          "average_heartrate": 127,
+          "max_heartrate": 142
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 997.63,
+          "moving_time": 473,
+          "elapsed_time": 590,
+          "average_heartrate": 138,
+          "max_heartrate": 149
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1000.55005,
+          "moving_time": 433,
+          "elapsed_time": 459,
+          "average_heartrate": 141,
+          "max_heartrate": 148
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1001.25,
+          "moving_time": 473,
+          "elapsed_time": 501,
+          "average_heartrate": 143,
+          "max_heartrate": 152
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 997.98,
+          "moving_time": 485,
+          "elapsed_time": 504,
+          "average_heartrate": 134,
+          "max_heartrate": 145
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1000.66016,
+          "moving_time": 488,
+          "elapsed_time": 526,
+          "average_heartrate": 132,
+          "max_heartrate": 144
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1000.56006,
+          "moving_time": 428,
+          "elapsed_time": 428,
+          "average_heartrate": 143,
+          "max_heartrate": 149
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1000.8799,
+          "moving_time": 480,
+          "elapsed_time": 480,
+          "average_heartrate": 147,
+          "max_heartrate": 155
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 999.29004,
+          "moving_time": 431,
+          "elapsed_time": 431,
+          "average_heartrate": 144,
+          "max_heartrate": 150
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 999.16016,
+          "moving_time": 530,
+          "elapsed_time": 530,
+          "average_heartrate": 146,
+          "max_heartrate": 157
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1000.3701,
+          "moving_time": 471,
+          "elapsed_time": 499,
+          "average_heartrate": 137,
+          "max_heartrate": 147
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1000.83984,
+          "moving_time": 434,
+          "elapsed_time": 434,
+          "average_heartrate": 146,
+          "max_heartrate": 152
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 999.04004,
+          "moving_time": 475,
+          "elapsed_time": 475,
+          "average_heartrate": 143,
+          "max_heartrate": 153
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1000.33984,
+          "moving_time": 458,
+          "elapsed_time": 458,
+          "average_heartrate": 149,
+          "max_heartrate": 160
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1000.7002,
+          "moving_time": 586,
+          "elapsed_time": 630,
+          "average_heartrate": 151,
+          "max_heartrate": 162
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 998.6201,
+          "moving_time": 461,
+          "elapsed_time": 514,
+          "average_heartrate": 148,
+          "max_heartrate": 162
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 644.18945,
+          "moving_time": 288,
+          "elapsed_time": 288,
+          "average_heartrate": 151,
+          "max_heartrate": 157
+        }
+      ]
+    },
     {
       "id": "i197510215",
       "start_date_local": "2026-10-15T19:16:59",
