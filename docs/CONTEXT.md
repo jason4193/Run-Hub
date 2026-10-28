@@ -22,7 +22,8 @@ This file is a **glossary only** — canonical terms and their agreed meanings. 
 - **Coach** — the Claude Project the Athlete trains with. It reads this repo and never writes to it.
 - **Inputs** — the training settings the Athlete and the Coach agreed on, kept as hand-edited files so a new Coach session starts from the same settings. They change only when a plan or goal changes. _Avoid_: config, settings files.
 - **Plan** — the Input holding the goals, phases, weekly targets, checkpoints and standing rules for the block. _Avoid_: schedule, training-plan.html.
-- **Change Brief** — a written instruction from the Coach to change the Inputs; the only way a Plan value, a checkpoint verdict or the Threshold Pace changes.
+- **Change Brief** — a written instruction from the Coach to change the Inputs; the only way a Plan value, a checkpoint verdict, the Threshold Pace or a Note changes.
+- **Note** — an Input entry adding to one run's log, keyed by its date: reps, a remark for the Coach, or which session the run was. Optional and rare: a run needs none to be matched. _Avoid_: log entry, override.
 - **Outputs** — files derived from the Snapshot and the Inputs, regenerated on every Sync and never edited by hand. Distinct from the Snapshot, which holds only what intervals.icu reported.
 - **Week** — a Monday-to-Sunday week of the Plan, numbered from Week 0 (5–11 Oct 2026) to Week 20 (race week). _Avoid_: training week, block week.
 - **Weekly Target** — what a Week asks for: kilometres, a run-count range, one Quality Session, one Long Run and a strength count, on any days. The Bagels Run is the one run with a fixed day. _Avoid_: schedule, planned session.
