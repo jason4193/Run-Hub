@@ -38,6 +38,26 @@ test("changing values keeps the Plan valid", () => {
   assert.equal(plan.weeks[0].km, 40);
 });
 
+test("a Bagels Run is optional and parses when given", () => {
+  assert.equal(parsePlan(fixtureYaml(), FILE).block.bagels_run, undefined);
+  const plan = parsePlan(
+    fixtureYaml(
+      (p) =>
+        (p.block.bagels_run = { weekday: "Tue", distance_km: 8, effort: "moderate", from: "2026-10-20", note: "Run club." }),
+    ),
+    FILE,
+  );
+  assert.equal(plan.block.bagels_run?.weekday, "Tue");
+});
+
+test("a Bagels Run on an unknown weekday fails, naming the key", () => {
+  rejects(
+    (p) =>
+      (p.block.bagels_run = { weekday: "Tues", distance_km: 8, effort: "moderate", from: "2026-10-20", note: "Run club." }),
+    `${FILE}: block.bagels_run.weekday: `,
+  );
+});
+
 test("a quality target needs exactly one of laps_per_rep, distance_m, duration_s", () => {
   const msg = `${FILE}: weeks[0].quality: needs exactly one of laps_per_rep, distance_m, duration_s`;
   rejects((p) => (p.weeks[0].quality.duration_s = 600), msg);
