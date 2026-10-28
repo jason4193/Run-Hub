@@ -4,7 +4,7 @@
 import type { RunDetail } from "./details.ts";
 import type { Notes, NoteEntry } from "./notes.ts";
 import type { Plan, QualityTarget } from "./plan.ts";
-import { paceSeconds, resolvePace, weekOf, weekView } from "./plan-view.ts";
+import { paceSeconds, resolvePace, weekEnd, weekOf, weekView } from "./plan-view.ts";
 import { formatSeconds, noteReps, shapeReps, type Rep, type RepSize, type ShapeTarget } from "./reps.ts";
 
 export type SessionType = "quality" | "long" | "easy" | "bagels" | "test" | "race" | "unplanned";
@@ -44,6 +44,8 @@ const BAGELS_BEFORE = "10:00";
 const BAGELS_MIN_M = 6000;
 const BAGELS_MAX_M = 10000;
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+/** In the week still running, the longest run is the Long Run only from this share of its target (the Coach's "done" line). */
+const LONG_SO_FAR_SHARE = 0.8;
 
 /** A run with its local date, clock and Week, computed once. */
 interface Timed {
@@ -100,8 +102,11 @@ function testDayRun(onDate: Timed[], st: ShapeTarget | null): Timed | null {
   return longest(passing.length >= 2 ? passing : onDate);
 }
 
-/** Every run as a row, newest first, matched to the Plan's sessions. Throws DeriveError on a Note pointing at the wrong run. */
-export function deriveSessions(runs: RunDetail[], plan: Plan, notes: Notes): Derived {
+/**
+ * Every run as a row, newest first, matched to the Plan's sessions. `today` (Sydney YYYY-MM-DD) tells a finished
+ * week from the one still running. Throws DeriveError on a Note pointing at the wrong run.
+ */
+export function deriveSessions(runs: RunDetail[], plan: Plan, notes: Notes, today: string): Derived {
   const log: string[] = [];
 
   const valid: Timed[] = [];
@@ -191,6 +196,7 @@ export function deriveSessions(runs: RunDetail[], plan: Plan, notes: Notes): Der
     }
 
     const rest = weekRuns.filter((t) => t !== qualityRun && !isBagels(t));
+    const longEnough = today > weekEnd(plan, n) ? rest : rest.filter((t) => distanceOf(t) >= LONG_SO_FAR_SHARE * view.long.target.distance_km * 1000);
     const longRun = firstMatch(
       n,
       "long",
@@ -200,7 +206,7 @@ export function deriveSessions(runs: RunDetail[], plan: Plan, notes: Notes): Der
           label: "race date",
           runs: view.long.kind === "race" ? longestAsList(rest.filter((t) => t.date === view.long.date)) : [],
         },
-        { label: "distance", runs: longestAsList(rest) },
+        { label: "distance", runs: longestAsList(longEnough) },
       ],
       log,
     );

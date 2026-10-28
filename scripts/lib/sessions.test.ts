@@ -21,8 +21,10 @@ function notesWith(edit: (entries: Notes["entries"]) => void): Notes {
   edit(copy.entries);
   return copy;
 }
-function derive(runs: RunDetail[] = fixture.runs, n: Notes = notes) {
-  return deriveSessions(runs, plan, n);
+/** Today for every real-data check: the Wednesday of Week 3, so Weeks 0–2 are over. */
+const TODAY = "2026-10-28";
+function derive(runs: RunDetail[] = fixture.runs, n: Notes = notes, today = TODAY) {
+  return deriveSessions(runs, plan, n, today);
 }
 function row(rows: SessionRow[], id: string): SessionRow {
   const r = rows.find((s) => s.id === id);
@@ -102,15 +104,17 @@ test("under_cap uses the cap in force on the run's date", () => {
   assert.equal(row(sessions, "i202207443").under_cap, false);
 });
 
-test("in the week still running, the longest run so far is the long run", () => {
-  const r = row(derive().sessions, "i202207443");
-  assert.equal(r.type, "long");
-  assert.equal(r.plan_session_id, "w03-long");
+test("in the week still running, a short run is not the long run yet", () => {
+  const { sessions } = derive();
+  const r = row(sessions, "i202207443");
+  assert.equal(r.type, "easy");
+  assert.equal(r.plan_session_id, null);
+  assert.ok(!sessions.some((s) => s.plan_session_id === "w03-long"));
 });
 
-test("every plan week has one long run, no shorter than any easy run", () => {
+test("every finished plan week has one long run, no shorter than any easy run", () => {
   const { sessions } = derive();
-  for (let n = 0; n <= 3; n++) {
+  for (let n = 0; n <= 2; n++) {
     const start = weekStart(plan, n);
     const end = weekEnd(plan, n);
     const inWeek = sessions.filter((s) => s.date >= start && s.date <= end);
@@ -249,6 +253,21 @@ test("a time rep uses elapsed time, auto-pause and all", () => {
   assert.equal(r.type, "quality");
   assert.equal(r.plan_session_id, "w12-quality");
   assert.deepEqual(r.reps.map((x) => x.time_s), [720, 720]);
+});
+
+test("in the week still running, a run becomes the long run at 80% of the target", () => {
+  const easyPace = (id: string, distance: number) => made(id, "2026-10-31T08:00:00", [seg(distance, Math.round(distance * 0.35))]);
+  assert.equal(row(derive([easyPace("x6", 11000), ...fixture.runs]).sessions, "x6").type, "easy");
+  const r = row(derive([easyPace("x7", 11300), ...fixture.runs]).sessions, "x7");
+  assert.equal(r.type, "long");
+  assert.equal(r.plan_session_id, "w03-long");
+});
+
+test("a finished week's longest run is its long run, even when short", () => {
+  const runs = fixture.runs.filter((r) => r.id !== "i201433574");
+  const r = row(derive(runs).sessions, "i200625554");
+  assert.equal(r.type, "long");
+  assert.equal(r.plan_session_id, "w02-long");
 });
 
 test("every rep found is kept, more than planned too", () => {

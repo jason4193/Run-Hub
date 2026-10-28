@@ -5,7 +5,7 @@
     {
       "date": "2026-10-27",
       "id": "i202207443",
-      "type": "long",
+      "type": "easy",
       "distance_m": 4953,
       "moving_s": 1849,
       "pace_s_per_km": 373,
@@ -25,7 +25,7 @@
       "feel": null,
       "name": "Run",
       "note": null,
-      "plan_session_id": "w03-long",
+      "plan_session_id": null,
       "under_cap": false,
       "reps": []
     },

@@ -7,6 +7,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { RunDetailsSnapshot } from "./lib/details.ts";
+import { sydneyToday } from "./lib/dates.ts";
 import { asErrorAnnotation } from "./lib/intervals.ts";
 import { loadNotes, NotesError } from "./lib/notes.ts";
 import { loadPlan, PlanError } from "./lib/plan.ts";
@@ -27,7 +28,8 @@ async function main() {
   const details = JSON.parse(await fs.readFile(DETAILS_FILE, "utf8")) as RunDetailsSnapshot;
   const plan = await loadPlan();
   const notes = await loadNotes(plan);
-  const { sessions, log } = deriveSessions(details.runs, plan, notes);
+  // Today is the Snapshot's own date, not the clock's, so the same inputs still give the same bytes.
+  const { sessions, log } = deriveSessions(details.runs, plan, notes, sydneyToday(new Date(details.generatedAt)));
   for (const line of log) console.log(line);
   const text = JSON.stringify({ schemaVersion: 1, generatedAt: details.generatedAt, sessions }, null, 2) + "\n";
   await fs.mkdir(OUT_DIR, { recursive: true });
