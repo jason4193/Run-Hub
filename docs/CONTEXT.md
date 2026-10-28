@@ -7,7 +7,7 @@ This file is a **glossary only** — canonical terms and their agreed meanings. 
 ## Terms
 
 - **Athlete** — the single account owner (one `athlete/{id}` on intervals.icu). This site is single-athlete by design.
-- **Activity** — one recorded run pulled from intervals.icu (`/athlete/{id}/activities`). Run Hub displays runs only unless decided otherwise.
+- **Activity** — one recorded run pulled from intervals.icu (`/athlete/{id}/activities`). intervals.icu holds only the Athlete's runs; nothing else they do is recorded there.
 - **Snapshot** — the pre-fetched static JSON that the site reads at runtime. The browser **never** calls intervals.icu directly; it only reads the Snapshot. Built by a fetch script using the API key, which lives only in the build environment.
 - **Run Details** — the part of the Snapshot that records how each Activity went: heart rate, effort, the Athlete's notes and its Intervals, with no GPS. Kept as intervals.icu reports it; the training log is derived from it and never edited by hand.
 - **Interval** — a segment of an Activity as intervals.icu detected it (or the Athlete edited it), typed work or recovery. Not a rep: an Interval can as easily be a warm-up, a rest or a cool-down.
@@ -16,6 +16,23 @@ This file is a **glossary only** — canonical terms and their agreed meanings. 
 - **Sync** — one rebuild: pull the Athlete's runs from intervals.icu into the Snapshot, commit it when an Activity changed, and redeploy the site. A failed Sync changes nothing and leaves the last good Snapshot live.
 - **Heartbeat** — a Snapshot commit whose only change is its generation time. At most one a day, so a quiet stretch with no runs is distinguishable from a broken Sync.
 - **Today** — the current date in Australia/Sydney, never the UTC date. An Activity's date is its local start date where it was run, so a morning run counts on the day it happened.
+
+### Training
+
+- **Coach** — the Claude Project the Athlete trains with. It reads this repo and never writes to it.
+- **Inputs** — the training settings the Athlete and the Coach agreed on, kept as hand-edited files so a new Coach session starts from the same settings. They change only when a plan or goal changes. _Avoid_: config, settings files.
+- **Plan** — the Input holding the goals, phases, weekly targets, checkpoints and standing rules for the block. _Avoid_: schedule, training-plan.html.
+- **Change Brief** — a written instruction from the Coach to change the Inputs; the only way a Plan value, a checkpoint verdict, the Threshold Pace or a Note changes.
+- **Note** — an Input entry adding to one run's log, keyed by its date: reps, a remark for the Coach, or which session the run was. Optional and rare: a run needs none to be matched. _Avoid_: log entry, override.
+- **Outputs** — files derived from the Snapshot and the Inputs, regenerated on every Sync and never edited by hand. Distinct from the Snapshot, which holds only what intervals.icu reported.
+- **Week** — a Monday-to-Sunday week of the Plan, numbered from Week 0 (5–11 Oct 2026) to Week 20 (race week). _Avoid_: training week, block week.
+- **Weekly Target** — what a Week asks for: kilometres, a run-count range, one Quality Session, one Long Run and a strength count, on any days. The Bagels Run is the one run with a fixed day. The strength count is a target only: strength is never recorded, so it has no actual. _Avoid_: schedule, planned session.
+- **Quality Session** — the Week's one structured hard session (reps at a pace, or a timed effort). The 4-lap Test is the Quality Session of its Week.
+- **Long Run** — the Week's longest run, at a set distance. The Osaka Marathon is the Long Run of race week.
+- **Bagels Run** — the run club's Tuesday-morning run of about 8 km at moderate effort. The Athlete keeps it by choice, so it is planned, never the Quality Session or the Long Run, and not held to the HR cap. _Avoid_: fun run.
+- **Threshold Pace** — the pace set by the Week 1 time trial; unset until a Change Brief records it. _Avoid_: tempo pace.
+- **Test Pace** — the pace the 4-lap Test is run at; working until Checkpoint B confirms or revises it.
+- **Checkpoint** — a Quality Session whose result decides what comes next (A in Week 4, B in Week 7). Its verdict is set by a Change Brief, never by code.
 
 ## Resolved decisions (see docs/adr/ for rationale once recorded)
 

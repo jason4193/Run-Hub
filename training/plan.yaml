@@ -1,0 +1,300 @@
+# Training plan: weekly targets, Week 0 (5 Oct 2026) to Week 20 (Osaka, 28 Feb 2027).
+# Changed only by a Change Brief from the Coach. Each fact is stored once; readers compute the rest:
+#   Week n runs Mon to Sun (Sydney): block.start + 7n days, to + 6 days. Session ids: w04-quality, w04-long.
+#   A week's phase is the last phase whose from_week <= n. Lap time = pace x lap length (block.lap_m).
+# Units are in key names (_km, _m, _s, _bpm, _h). Paces are min:sec per km, always quoted ("4:10").
+#   quality.pace: "m:ss" | threshold | test | max_even      long.pace: easy | "m:ss" | ["m:ss", "m:ss"]
+#   quality has exactly one of laps_per_rep, distance_m, duration_s.
+#   quality: test -> goals.four_lap      long: race -> goals.osaka
+# Checkpoint verdicts, goals.four_lap.pace and block.threshold change only through a Change Brief.
+# block.bagels_run is the one run on a fixed weekday, stored once here; every other run can fall on any day.
+
+block:
+  start: "2026-10-05"
+  lap_m: [450, 480]
+  hr_cap:
+    - { from: "2026-10-05", bpm: 155, reason: "Until the Week 1 time trial; then ~85% of threshold HR." }
+    - { from: "2026-10-16", bpm: 150, reason: "85% of threshold HR 177 from the 15 Oct time trial." }
+  threshold: { pace: "4:57", hr_bpm: 177, measured_at: "2026-10-15" }
+  bagels_run:
+    weekday: Tue
+    distance_km: 8
+    effort: moderate
+    from: "2026-10-20"
+    note: "The run club's Tuesday-morning run. Kept by choice; moderate HR is expected."
+
+goals:
+  four_lap:
+    date: "2026-12-15"
+    reps: 5
+    laps_per_rep: 4
+    rest_s: 600
+    max_spread_s: 5
+    original_pace: "4:00"
+    pace: "4:10"
+    pace_status: working
+    pace_rule: "Set at Checkpoint B: 4:15 if a checkpoint fails; 4:05 only if B passes with room to spare."
+  osaka:
+    date: "2027-02-28"
+    start: "09:15"
+    limit_h: 7
+    distance_km: 42.2
+    pace: "7:00"
+    best_case_pace: "4:30"
+    note: "First marathon, run with a friend. Finishing together is the goal, not the time. Don't start ahead of your block."
+
+phases:
+  - { name: Transition, from_week: 0, note: "Finishing the old block." }
+  - { name: Build the engine, from_week: 1, note: "More easy kilometres; quality reps get longer before they get faster." }
+  - { name: Four laps at pace, from_week: 5, note: "Full 4-lap reps; rest stretches to test conditions." }
+  - { name: Osaka, from_week: 11, note: "The marathon is the only goal. Long run to 30 km, then three weeks of taper." }
+
+weeks:
+  - n: 0
+    km: 28
+    runs: [4, 5]
+    strength: 2
+    quality: { reps: 4, distance_m: 1000, pace: "4:10", rest_s: 180 }
+    long: { distance_km: 12, pace: easy }
+
+  - n: 1
+    km: 32
+    runs: [4, 5]
+    strength: 2
+    quality: { reps: 1, duration_s: 1800, pace: max_even }
+    long: { distance_km: 12, pace: easy }
+    notes:
+      - "Time trial on the field, on fresh legs. Count the laps: laps x ~465 m gives threshold pace."
+      - "Average HR over the last 20 minutes is threshold HR. The easy cap becomes ~85% of it; until then, keep 155."
+
+  - n: 2
+    km: 34
+    runs: [4, 5]
+    strength: 2
+    quality: { reps: 6, laps_per_rep: 2, pace: "4:15", rest_s: 90 }
+    long: { distance_km: 13, pace: easy }
+    notes:
+      - "Two laps you can already hold. The point is six even reps, not one fast one."
+
+  - n: 3
+    km: 36
+    runs: [4, 5]
+    strength: 2
+    quality: { reps: 4, laps_per_rep: 3, pace: "4:20", rest_s: 120 }
+    long: { distance_km: 14, pace: easy }
+    notes:
+      - "The third lap is the wall right now. Slower pace on purpose, to practise running through it."
+
+  - n: 4
+    km: 32
+    runs: [3, 4]
+    strength: 2
+    flag: down
+    quality: { reps: 3, laps_per_rep: 4, pace: "4:20", rest_s: 180 }
+    long: { distance_km: 12, pace: easy }
+
+  - n: 5
+    km: 39
+    runs: [4, 5]
+    strength: 2
+    quality: { reps: 4, laps_per_rep: 4, pace: "4:15", rest_s: 240 }
+    long: { distance_km: 15, pace: easy }
+
+  - n: 6
+    km: 39
+    runs: [4, 5]
+    strength: 2
+    quality: { reps: 3, laps_per_rep: 4, pace: "4:10", rest_s: 360 }
+    long: { distance_km: 16, pace: easy }
+    notes:
+      - "First time at 4:10 over the full 4 laps. Rest is longer so the pace is honest."
+
+  - n: 7
+    km: 42
+    runs: [4, 5]
+    strength: 2
+    quality: { reps: 4, laps_per_rep: 4, pace: "4:10", rest_s: 480 }
+    long: { distance_km: 18, pace: easy }
+
+  - n: 8
+    km: 40
+    runs: [4, 5]
+    strength: 2
+    quality: { reps: 4, laps_per_rep: 4, pace: test, rest_s: 600 }
+    long: { distance_km: 16, pace: easy }
+    notes:
+      - "Test conditions from here: full 10-minute rest."
+
+  - n: 9
+    km: 34
+    runs: [3, 4]
+    strength: 1
+    flag: taper
+    quality: { reps: 3, laps_per_rep: 4, pace: test, rest_s: 600 }
+    long: { distance_km: 14, pace: easy }
+    notes:
+      - "Last hard session before the test. Stop while it still feels good."
+      - "The long run stays at 14 km, easy: the marathon still needs it."
+
+  - n: 10
+    km: 31
+    runs: [3, 4]
+    strength: 0
+    quality: test
+    long: { distance_km: 16, pace: easy }
+    notes:
+      - "Rep one should feel almost too easy. Every rep within 5 s of the last."
+      - "Easy runs before the test are very easy. The day after it is rest or a 20-minute walk."
+      - "The long run starts the marathon block."
+      - "The test replaces the Bagels Run this week."
+
+  - n: 11
+    km: 39
+    runs: [4, 5]
+    strength: 2
+    quality: { reps: 1, duration_s: 1200, pace: threshold }
+    long: { distance_km: 18, pace: ["7:00", "7:15"] }
+    notes:
+      - "Christmas week. If a run goes, cut easy kilometres, never the long run."
+
+  - n: 12
+    km: 43
+    runs: [4, 5]
+    strength: 2
+    quality: { reps: 2, duration_s: 720, pace: threshold, rest_s: 180 }
+    long: { distance_km: 20, pace: ["7:00", "7:15"] }
+    notes:
+      - "Start practising fuel on long runs over 90 minutes: a gel or chews every 35-40 min."
+
+  - n: 13
+    km: 47
+    runs: [4, 5]
+    strength: 2
+    quality: { reps: 6, laps_per_rep: 4, pace: "4:30", rest_s: 120 }
+    long: { distance_km: 23, pace: ["7:00", "7:15"] }
+    notes:
+      - "January heat: long runs start at first light. Hold the HR cap and let pace drift."
+
+  - n: 14
+    km: 36
+    runs: [3, 4]
+    strength: 2
+    flag: down
+    quality: { reps: 1, duration_s: 1200, pace: threshold }
+    long: { distance_km: 16, pace: ["7:00", "7:15"] }
+    notes:
+      - "Volume drops on purpose. Don't top it up."
+
+  - n: 15
+    km: 51
+    runs: [4, 5]
+    strength: 2
+    quality: { reps: 3, duration_s: 600, pace: threshold, rest_s: 120 }
+    long: { distance_km: 26, pace: ["7:00", "7:15"] }
+    notes:
+      - "Run long runs with your race friend where you can, at their race pace."
+
+  - n: 16
+    km: 53
+    runs: [4, 5]
+    strength: 2
+    quality: { reps: 6, laps_per_rep: 4, pace: "4:30", rest_s: 120 }
+    long: { distance_km: 28, pace: ["7:00", "7:15"] }
+    notes:
+      - "Wear race shoes and race kit on the long run."
+
+  - n: 17
+    km: 54
+    runs: [4, 5]
+    strength: 2
+    quality: { reps: 1, duration_s: 1500, pace: threshold }
+    long: { distance_km: 30, pace: ["7:00", "7:15"] }
+    notes:
+      - "Long run: 30 km or 3 h 30, whichever comes first. Full race-day fuel and breakfast rehearsal."
+      - "Longest run of the block. Nothing after this makes you fitter for Osaka; it only has to not make you tired."
+
+  - n: 18
+    km: 41
+    runs: [3, 4]
+    strength: 2
+    flag: taper
+    quality: { reps: 1, duration_s: 900, pace: threshold }
+    long: { distance_km: 21, pace: ["7:00", "7:15"] }
+
+  - n: 19
+    km: 33
+    runs: [3, 4]
+    strength: 1
+    flag: taper
+    quality: { reps: 4, laps_per_rep: 4, pace: "4:30", rest_s: 120 }
+    long: { distance_km: 14, pace: ["7:00", "7:15"] }
+
+  - n: 20
+    km: 58
+    runs: [4, 5]
+    strength: 0
+    quality: { reps: 4, laps_per_rep: 1, pace: "7:00" }
+    long: race
+    notes:
+      - "Quality: inside an easy 6 km, early in the week, at race pace."
+      - "Other runs: a very easy 2.5 km early in the week and a 20-minute shake-out in Osaka. Travel days count as rest."
+      - "The day before: rest, bib pick-up, carb-heavy dinner, early night."
+      - "The first 10 km should feel too slow. If you both feel good at 30 km, that's when 4:30 decides itself."
+
+checkpoints:
+  A:
+    week: 4
+    pass: "All three reps at 4:15-4:25 and the last no slower than the first -> advance to Week 5."
+    fail: "Otherwise -> repeat Week 3's targets next week instead of advancing; the December target moves to 4:15."
+    verdict: pending
+    note: null
+  B:
+    week: 7
+    pass: "All four within 5 s and controlled -> test at 4:10. Last rep the fastest and still in control -> may try 4:05."
+    fail: "Can't hold 4:10 for four reps -> test at 4:15. 4:00 is back only if this session feels easy."
+    verdict: pending
+    note: null
+
+rules:
+  weekly-shape:
+    title: Weekly shape
+    lines:
+      - "One quality session and one long run per week, never on consecutive days (a Sunday long run then a Monday quality session counts)."
+      - "Until 15 Dec the quality session builds to the 4-lap test; a tempo or a social run doesn't replace it."
+      - "Everything else is easy, under the HR cap, judged by HR rather than pace, except the Bagels Run. Any day works."
+      - "The quality session is never the day after the Bagels Run."
+      - "If something has to give, cut easy kilometres first and the long run last."
+  laps:
+    title: Laps, not kilometres
+    lines:
+      - "A lap is roughly 450-480 m, so 4 laps is about 1.8-1.9 km. The goal is 4 laps, whatever they measure."
+      - "Run to the average pace on your watch and count laps."
+  quality-session:
+    title: Every quality session
+    lines:
+      - "12-15 minutes easy, then 4 x 20 s strides, then the work. Ten minutes easy after."
+      - "Hold the target pace on every rep. If you want a max effort, make it the last rep."
+      - "Threshold is the pace from the Week 1 time trial. Test pace is the pace set at Checkpoint B."
+  easy-means-easy:
+    title: Easy means easy
+    lines:
+      - "Easy runs and long runs stay under the HR cap, whatever pace that takes."
+      - "Until 16 Dec the long-run distance is the plan's number, not a minimum. Extra moderate kilometres get paid for at the next quality session."
+  strength:
+    title: Strength, 20 minutes
+    lines:
+      - "As many times as the week says, on any days; best straight after the quality session or an easy run."
+      - "Three rounds, 60 s between rounds: squats x 15, split squats x 10 each leg, single-leg calf raises x 15 each side, single-leg glute bridge x 12 each side, pogo hops x 20."
+      - "Skip the circuit if you're sore enough that your squat depth suffers."
+  marathon-long-runs:
+    title: Marathon long runs
+    lines:
+      - "7:00-7:15/km, ideally with your race friend. Their pace is the race pace."
+      - "Over 90 minutes: fuel every 35-40 minutes with what you'll use in Osaka."
+      - "January heat: start at first light, keep the HR cap, let pace slow."
+      - "Osaka will be cold at the 9:15 start. Rehearse race kit on the 28 and 30 km runs."
+  bad-session:
+    title: If a session goes badly
+    lines:
+      - "One bad session is information. Cut it short, note what happened, carry on."
+      - "Three in a row means volume is climbing faster than you're absorbing it: repeat the previous week's targets instead of advancing."

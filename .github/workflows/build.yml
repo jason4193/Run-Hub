@@ -61,12 +61,15 @@ jobs:
           INTERVALS_ATHLETE_ID: ${{ secrets.INTERVALS_ATHLETE_ID }}
         run: pnpm run fetch # never `pnpm fetch`: that is a built-in pnpm command
 
+      - name: Derive training Outputs
+        run: pnpm run derive # offline: data/run-details.json + training/*.yaml → data/training/
+
       - name: Commit refreshed Snapshot
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if ! git diff --quiet -- data; then
-            git add data
+          git add data # stage first: new files under data/training/ are untracked
+          if ! git diff --cached --quiet -- data; then
             git commit -m "chore: refresh snapshot"
             # A push may have landed mid-run; data/ never conflicts with source edits.
             git pull --rebase origin main

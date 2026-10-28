@@ -16,6 +16,7 @@
     "build": "pnpm --filter frontend run build",
     "preview": "pnpm --filter frontend run preview",
     "fetch": "pnpm --filter scripts run fetch",
+    "derive": "pnpm --filter scripts run derive",
     "typecheck": "pnpm --filter frontend run typecheck",
     "typecheck:scripts": "pnpm --filter scripts run typecheck",
     "test:scripts": "pnpm --filter scripts run test",
