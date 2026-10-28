@@ -27,10 +27,12 @@ export interface ShapeTarget {
   size: RepSize;
 }
 
-/** 254 → "4:14", 1395 → "23:15". Rounds first. */
+/** 254 → "4:14", 1395 → "23:15", 18000 → "5:00:00". Rounds first. */
 export function formatSeconds(s: number): string {
   const whole = Math.round(s);
-  return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, "0")}`;
+  const ss = String(whole % 60).padStart(2, "0");
+  if (whole < 3600) return `${Math.floor(whole / 60)}:${ss}`;
+  return `${Math.floor(whole / 3600)}:${String(Math.floor(whole / 60) % 60).padStart(2, "0")}:${ss}`;
 }
 
 /** Reps found in a run's segments for a target (rules below). [] when none fit. */

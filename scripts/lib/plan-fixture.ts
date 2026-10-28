@@ -31,7 +31,7 @@ export function fixturePlan(): any {
         limit_h: 7,
         distance_km: 42.2,
         pace: "7:00",
-        best_case_pace: "4:30",
+        goal_finish_s: 18000,
         note: "With a friend.",
       },
     },

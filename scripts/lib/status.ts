@@ -56,7 +56,7 @@ export interface Status {
   } | null;
   goals: {
     four_lap: { date: string; days_left: number; test_pace: string; test_pace_status: string };
-    osaka: { date: string; days_left: number };
+    osaka: { date: string; days_left: number; goal_finish_s: number; goal_finish: string };
   };
   checkpoints: { id: string; week: WeekSpan; verdict: string; note: string | null }[];
   last_4_weeks: SlimWeek[];
@@ -147,7 +147,7 @@ export function deriveStatus(weeks: WeekRow[], sessions: SessionRow[], plan: Pla
         test_pace: four_lap.pace,
         test_pace_status: four_lap.pace_status,
       },
-      osaka: { date: osaka.date, days_left: daysBetween(today, osaka.date) },
+      osaka: { date: osaka.date, days_left: daysBetween(today, osaka.date), goal_finish_s: osaka.goal_finish_s, goal_finish: formatSeconds(osaka.goal_finish_s) },
     },
     checkpoints: Object.entries(plan.checkpoints).map(([id, c]) => ({
       id,
