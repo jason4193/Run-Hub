@@ -1,0 +1,30 @@
+# Training notes: optional additions to the log, keyed by the run's Sydney date. Nothing breaks when a
+# run has no entry: the Sync finds each week's quality session and its reps from the watch's segments.
+# A note is reference for the Coach. Writing it in the run's intervals.icu description works the same way.
+#
+# Add an entry from a phone (GitHub app or github.com → this file → pencil icon):
+#   1. Under `entries:`, add the date in quotes, indented two spaces: "2026-11-04":
+#   2. Under it, indented four spaces, add only the fields you need:
+#        note: "How it went."                 text for the Coach
+#        session: w04-quality                 this run is that week's quality session or long run (wNN-long)
+#        reps: ["4:14", "4:13"]               rep times, m:ss in quotes; they replace the watch's segments
+#        all_out: [2]                         rep numbers from reps that were deliberate all-out pushes
+#        activity_id: i197510215              which run, on a day with two (the id is in the intervals.icu URL)
+#   3. Commit to main. The next Sync checks the file; a session that isn't in the plan stops the Sync.
+# Days with no data go under `gaps:`, shown as "not logged", never as zero km:
+#   - { from: "2026-12-24", to: "2026-12-27", note: "Watch left at home." }
+
+entries:
+  "2026-10-07":
+    session: w00-quality
+    reps: ["4:14", "4:13", "3:44", "4:12"]
+    all_out: [3]
+    note: "Run in place of the 6 Oct checkpoint (old plan Week 4, 4 × 1 km). Rep 3 deliberate all-out — new 1 km best. Out of breath on the last two reps."
+  "2026-10-15":
+    activity_id: i197510215 # the 18:51 run that day (i197510190) is the warm-up
+    note: "30-min time trial: 13 laps + a partial. Threshold pace 4:57, threshold HR 177 (last 20 min). Uneven: laps 2–5 at 5:08–5:22, last laps 4:36–4:44."
+  "2026-10-21":
+    activity_id: i199861035
+    note: "5 of 6 planned 2-lap reps (GPS 922–950 m each). Recoveries 1:34–1:48 against 90 s planned. Faded from rep 2."
+
+gaps: []

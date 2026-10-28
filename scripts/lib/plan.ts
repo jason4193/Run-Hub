@@ -16,7 +16,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", ".
 export const PLAN_FILE = path.join(ROOT, "training", "plan.yaml");
 const PLAN_LABEL = "training/plan.yaml";
 
-const isoDate = z
+export const isoDate = z
   .string()
   .regex(/^\d{4}-\d{2}-\d{2}$/, 'must be a quoted "YYYY-MM-DD" date')
   .refine((s) => !Number.isNaN(Date.parse(`${s}T00:00:00Z`)) && addDays(s, 0) === s, "must be a real date");
@@ -116,7 +116,7 @@ export class PlanError extends Error {
 }
 
 /** `["weeks", 4, "quality"]` → `weeks[4].quality`. */
-function formatPath(keys: readonly PropertyKey[]): string {
+export function formatPath(keys: readonly PropertyKey[]): string {
   return keys.map((k, i) => (typeof k === "number" ? `[${k}]` : i === 0 ? String(k) : `.${String(k)}`)).join("");
 }
 
