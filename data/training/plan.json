@@ -48,8 +48,8 @@
       "limit_h": 7,
       "distance_km": 42.2,
       "pace": "7:00",
-      "best_case_pace": "4:30",
-      "note": "First marathon, run with a friend. Finishing together is the goal, not the time. Don't start ahead of your block."
+      "goal_finish_s": 18000,
+      "note": "First marathon, run with a friend. Finish together, under 5 hours. 7:00/km is ≈ 4:55 with little margin for GPS overread and aid stations."
     }
   },
   "phases": [
@@ -565,7 +565,7 @@
         "Quality: inside an easy 6 km, early in the week, at race pace.",
         "Other runs: a very easy 2.5 km early in the week and a 20-minute shake-out in Osaka. Travel days count as rest.",
         "The day before: rest, bib pick-up, carb-heavy dinner, early night.",
-        "The first 10 km should feel too slow. If you both feel good at 30 km, that's when 4:30 decides itself."
+        "The first 10 km should feel too slow. If you both feel good at 30 km, hold 7:00. The margin under 5 h comes from not slowing down, not from speeding up."
       ]
     }
   ],
