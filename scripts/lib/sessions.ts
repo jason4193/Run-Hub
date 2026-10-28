@@ -3,9 +3,9 @@
  */
 import type { RunDetail } from "./details.ts";
 import type { Notes, NoteEntry } from "./notes.ts";
-import type { Plan } from "./plan.ts";
-import { weekOf, weekView } from "./plan-view.ts";
-import { formatSeconds, noteReps, type Rep } from "./reps.ts";
+import type { Plan, QualityTarget } from "./plan.ts";
+import { paceSeconds, resolvePace, weekOf, weekView } from "./plan-view.ts";
+import { formatSeconds, noteReps, shapeReps, type Rep, type RepSize, type ShapeTarget } from "./reps.ts";
 
 export type SessionType = "quality" | "long" | "easy" | "bagels" | "test" | "race" | "unplanned";
 
@@ -75,6 +75,31 @@ function firstMatch(n: number, kind: string, levels: { label: string; runs: Time
   return null;
 }
 
+/** A quality target as the shape it must show in a run's segments; null while its pace is unset (max even). */
+function shapeTarget(plan: Plan, target: QualityTarget): ShapeTarget | null {
+  const pace = resolvePace(plan, target.pace);
+  if (pace === null) return null;
+  let size: RepSize;
+  if (target.distance_m !== undefined) size = { kind: "distance", distance_m: target.distance_m };
+  else if (target.duration_s !== undefined) size = { kind: "duration", duration_s: target.duration_s };
+  else if (target.laps_per_rep !== undefined) size = { kind: "laps", laps_per_rep: target.laps_per_rep, lap_m: plan.block.lap_m };
+  else return null;
+  return { reps: target.reps, pace_s_per_km: paceSeconds(pace), size };
+}
+
+/** A run has the test's or quality's shape when it holds at least half the planned reps (one at least). */
+function fits(t: Timed, st: ShapeTarget): boolean {
+  return shapeReps(t.run.icu_intervals ?? [], st).length >= Math.max(1, Math.ceil(st.reps / 2));
+}
+
+/** The test day's run: the only run that day, else the one run passing the shape, else the longest. Null when none that day. */
+function testDayRun(onDate: Timed[], st: ShapeTarget | null): Timed | null {
+  if (onDate.length <= 1) return onDate[0] ?? null;
+  const passing = st ? onDate.filter((t) => fits(t, st)) : [];
+  if (passing.length === 1) return passing[0];
+  return longest(passing.length >= 2 ? passing : onDate);
+}
+
 /** Every run as a row, newest first, matched to the Plan's sessions. Throws DeriveError on a Note pointing at the wrong run. */
 export function deriveSessions(runs: RunDetail[], plan: Plan, notes: Notes): Derived {
   const log: string[] = [];
@@ -114,12 +139,16 @@ export function deriveSessions(runs: RunDetail[], plan: Plan, notes: Notes): Der
   plan.weeks.forEach((_, n) => {
     const view = weekView(plan, n);
     const weekRuns = valid.filter((t) => t.week === n);
+    const st = shapeTarget(plan, view.quality.target);
+    const dayRun = view.quality.kind === "test" ? testDayRun(weekRuns.filter((t) => t.date === view.quality.date), st) : null;
 
     const qualityRun = firstMatch(
       n,
       "quality",
       [
         { label: "note", runs: weekRuns.filter((t) => noteFor.get(t.run.id)?.session === view.quality.id) },
+        { label: "test date", runs: dayRun ? [dayRun] : [] },
+        { label: "shape", runs: st ? weekRuns.filter((t) => fits(t, st)) : [] },
         {
           label: "keyword",
           runs: weekRuns.filter((t) => KEYWORDS.test(`${t.run.name ?? ""}\n${t.run.description ?? ""}`)),
@@ -127,7 +156,25 @@ export function deriveSessions(runs: RunDetail[], plan: Plan, notes: Notes): Der
       ],
       log,
     );
-    if (qualityRun) assigned.set(qualityRun.run.id, { type: view.quality.kind, plan_session_id: view.quality.id });
+    if (qualityRun) {
+      assigned.set(qualityRun.run.id, { type: view.quality.kind, plan_session_id: view.quality.id });
+      const target = view.quality.target;
+      const { lap_m } = plan.block;
+      const noteDistance =
+        target.distance_m ?? (target.laps_per_rep !== undefined ? Math.round((target.laps_per_rep * (lap_m[0] + lap_m[1])) / 2) : null);
+      const entry = noteFor.get(qualityRun.run.id);
+      const reps = entry?.reps
+        ? noteReps(entry.reps, entry.all_out ?? [], noteDistance)
+        : st
+          ? shapeReps(qualityRun.run.icu_intervals ?? [], st)
+          : [];
+      repsFor.set(qualityRun.run.id, reps);
+      if (reps.length !== target.reps) {
+        log.push(
+          `${qualityRun.date} ${qualityRun.run.id} ${view.quality.id}: ${reps.length} reps against ${target.reps} planned`,
+        );
+      }
+    }
 
     const bagels = plan.block.bagels_run;
     const isBagels = (t: Timed) =>
@@ -172,7 +219,7 @@ export function deriveSessions(runs: RunDetail[], plan: Plan, notes: Notes): Der
     const entry = noteFor.get(run.id);
     const tag = assigned.get(run.id) ?? { type: "unplanned" as SessionType, plan_session_id: null };
     const cap = hrCap(t.date);
-    const reps = entry?.reps ? noteReps(entry.reps, entry.all_out ?? [], null) : [];
+    const reps = repsFor.get(run.id) ?? (entry?.reps ? noteReps(entry.reps, entry.all_out ?? [], null) : []);
     const pace_s_per_km =
       run.distance !== null && run.moving_time !== null && run.distance > 0
         ? Math.round((run.moving_time / run.distance) * 1000)

@@ -35,9 +35,65 @@ export function formatSeconds(s: number): string {
 
 /** Reps found in a run's segments for a target (rules below). [] when none fit. */
 export function shapeReps(intervals: DetailInterval[], target: ShapeTarget): Rep[] {
-  void intervals;
-  void target;
-  return [];
+  const { size } = target;
+  const inPace = (s: DetailInterval): boolean =>
+    s.distance !== null &&
+    s.elapsed_time !== null &&
+    s.distance > 0 &&
+    s.elapsed_time > 0 &&
+    Math.abs((s.elapsed_time / s.distance) * 1000 - target.pace_s_per_km) <= 0.15 * target.pace_s_per_km;
+
+  let groups: DetailInterval[][];
+  if (size.kind === "distance") {
+    const D = size.distance_m;
+    groups = intervals.filter((s) => inPace(s) && s.distance !== null && Math.abs(s.distance - D) <= 0.1 * D).map((s) => [s]);
+  } else if (size.kind === "duration") {
+    const T = size.duration_s;
+    groups = intervals
+      .filter((s) => inPace(s) && s.elapsed_time !== null && Math.abs(s.elapsed_time - T) <= 0.1 * T)
+      .map((s) => [s]);
+  } else {
+    const lo = size.laps_per_rep * size.lap_m[0] * 0.9;
+    const hi = size.laps_per_rep * size.lap_m[1] * 1.1;
+    groups = [];
+    let group: DetailInterval[] = [];
+    for (const s of intervals) {
+      if (!inPace(s)) {
+        group = [];
+        continue;
+      }
+      group.push(s);
+      const total = group.reduce((a, g) => a + (g.distance ?? 0), 0);
+      if (total >= lo && total <= hi) {
+        groups.push(group);
+        group = [];
+      } else if (total > hi) {
+        group = [];
+      }
+    }
+  }
+  return groups.map((g, i) => repFrom(g, i + 1));
+}
+
+/** One rep from the segments it joins: summed time and distance, elapsed-time pace, HR weighted by elapsed time. */
+function repFrom(segments: DetailInterval[], n: number): Rep {
+  const time_s = segments.reduce((a, s) => a + (s.elapsed_time ?? 0), 0);
+  const distance_m = segments.reduce((a, s) => a + (s.distance ?? 0), 0);
+  const withHr = segments.filter((s) => s.average_heartrate !== null);
+  const hrTime = withHr.reduce((a, s) => a + (s.elapsed_time ?? 0), 0);
+  const pace_s_per_km = Math.round((time_s / distance_m) * 1000);
+  return {
+    n,
+    time_s: Math.round(time_s),
+    distance_m: Math.round(distance_m),
+    pace_s_per_km,
+    pace: formatSeconds(pace_s_per_km),
+    avg_hr_bpm:
+      withHr.length === 0
+        ? null
+        : Math.round(withHr.reduce((a, s) => a + (s.average_heartrate ?? 0) * (s.elapsed_time ?? 0), 0) / hrTime),
+    all_out: false,
+  };
 }
 
 /** Reps from a Note: "m:ss" times; `allOut` lists 1-based rep numbers; one distance for every rep (null allowed). avg_hr_bpm is null. */
