@@ -1,0 +1,1326 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-27T11:25:51.374Z",
+  "weeks": [
+    {
+      "n": 0,
+      "from": "2026-10-05",
+      "to": "2026-10-11",
+      "phase": "Transition",
+      "state": "finished",
+      "km": {
+        "planned": 28,
+        "actual": 37.5
+      },
+      "runs": {
+        "count": 3,
+        "min": 4,
+        "max": 5
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w00-quality",
+        "kind": "quality",
+        "text": "4 × 1 km @ 4:10, 3 min rest",
+        "status": "done",
+        "run_id": "i194473587",
+        "date": "2026-10-07",
+        "reps": 4,
+        "reps_planned": 4,
+        "spread_s": 2,
+        "avg_pace_s_per_km": 253,
+        "avg_pace": "4:13",
+        "target_pace_s_per_km": 250,
+        "target_pace": "4:10",
+        "delta_s": 3,
+        "all_out": [
+          3
+        ]
+      },
+      "long": {
+        "id": "w00-long",
+        "kind": "long",
+        "text": "12 km easy",
+        "status": "done",
+        "planned_km": 12,
+        "actual_km": 21.3,
+        "run_id": "i195709793",
+        "date": "2026-10-10"
+      },
+      "bagels": {
+        "status": null,
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": 0,
+      "moderate_share": null,
+      "easy_zones": {
+        "bounds_bpm": [
+          145,
+          153,
+          162,
+          171,
+          176,
+          181,
+          192
+        ],
+        "s": [
+          1277,
+          1256,
+          5132,
+          3540,
+          30,
+          0,
+          0
+        ]
+      },
+      "flags": [
+        {
+          "kind": "over_cap",
+          "week": 0,
+          "date": "2026-10-06",
+          "run_id": "i194214652",
+          "text": "Easy run over the HR cap: 158 > 155 bpm.",
+          "zone_s": [
+            256,
+            232,
+            406,
+            921,
+            30,
+            0,
+            0
+          ]
+        },
+        {
+          "kind": "long_over_plan",
+          "week": 0,
+          "date": "2026-10-10",
+          "run_id": "i195709793",
+          "text": "Long run 21.3 km against 12 planned (+78%)."
+        },
+        {
+          "kind": "over_cap",
+          "week": 0,
+          "date": "2026-10-10",
+          "run_id": "i195709793",
+          "text": "Long run over the HR cap: 157 > 155 bpm.",
+          "zone_s": [
+            1021,
+            1024,
+            4726,
+            2619,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "kind": "week_km",
+          "week": 0,
+          "date": null,
+          "run_id": null,
+          "text": "Week 0: 37.5 km against 28 (+34%)."
+        }
+      ]
+    },
+    {
+      "n": 1,
+      "from": "2026-10-12",
+      "to": "2026-10-18",
+      "phase": "Build the engine",
+      "state": "finished",
+      "km": {
+        "planned": 32,
+        "actual": 34.8
+      },
+      "runs": {
+        "count": 4,
+        "min": 4,
+        "max": 5
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w01-quality",
+        "kind": "quality",
+        "text": "30 min @ max even",
+        "status": "done",
+        "run_id": "i197510215",
+        "date": "2026-10-15",
+        "reps": 0,
+        "reps_planned": 1,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": null,
+        "target_pace": null,
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w01-long",
+        "kind": "long",
+        "text": "12 km easy",
+        "status": "done",
+        "planned_km": 12,
+        "actual_km": 16.6,
+        "run_id": "i198516161",
+        "date": "2026-10-18"
+      },
+      "bagels": {
+        "status": null,
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": 1,
+      "moderate_share": null,
+      "easy_zones": {
+        "bounds_bpm": [
+          145,
+          153,
+          162,
+          171,
+          176,
+          181,
+          192
+        ],
+        "s": [
+          7397,
+          4248,
+          1544,
+          90,
+          1,
+          0,
+          0
+        ]
+      },
+      "flags": [
+        {
+          "kind": "long_over_plan",
+          "week": 1,
+          "date": "2026-10-18",
+          "run_id": "i198516161",
+          "text": "Long run 16.6 km against 12 planned (+38%)."
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "from": "2026-10-19",
+      "to": "2026-10-25",
+      "phase": "Build the engine",
+      "state": "finished",
+      "km": {
+        "planned": 34,
+        "actual": 34.3
+      },
+      "runs": {
+        "count": 5,
+        "min": 4,
+        "max": 5
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w02-quality",
+        "kind": "quality",
+        "text": "6 × 2 laps @ 4:15, 90 s rest",
+        "status": "done",
+        "run_id": "i199861035",
+        "date": "2026-10-21",
+        "reps": 5,
+        "reps_planned": 6,
+        "spread_s": 28,
+        "avg_pace_s_per_km": 260,
+        "avg_pace": "4:20",
+        "target_pace_s_per_km": 255,
+        "target_pace": "4:15",
+        "delta_s": 5,
+        "all_out": []
+      },
+      "long": {
+        "id": "w02-long",
+        "kind": "long",
+        "text": "13 km easy",
+        "status": "done",
+        "planned_km": 13,
+        "actual_km": 12.3,
+        "run_id": "i201433574",
+        "date": "2026-10-25"
+      },
+      "bagels": {
+        "status": "done",
+        "run_id": "i199236577",
+        "date": "2026-10-20"
+      },
+      "easy_share": 1,
+      "moderate_share": 0.21,
+      "easy_zones": {
+        "bounds_bpm": [
+          145,
+          153,
+          162,
+          171,
+          176,
+          181,
+          192
+        ],
+        "s": [
+          6701,
+          1169,
+          180,
+          53,
+          0,
+          0,
+          0
+        ]
+      },
+      "flags": [
+        {
+          "kind": "day_after_bagels",
+          "week": 2,
+          "date": "2026-10-21",
+          "run_id": "i199861035",
+          "text": "Quality session (21 Oct) the day after the Bagels Run (20 Oct)."
+        },
+        {
+          "kind": "spread",
+          "week": 2,
+          "date": "2026-10-21",
+          "run_id": "i199861035",
+          "text": "Rep spread 28 s, over 5 s."
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "from": "2026-10-26",
+      "to": "2026-11-01",
+      "phase": "Build the engine",
+      "state": "current",
+      "km": {
+        "planned": 36,
+        "actual": 13
+      },
+      "runs": {
+        "count": 2,
+        "min": 4,
+        "max": 5
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w03-quality",
+        "kind": "quality",
+        "text": "4 × 3 laps @ 4:20, 2 min rest",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 4,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 260,
+        "target_pace": "4:20",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w03-long",
+        "kind": "long",
+        "text": "14 km easy",
+        "status": "pending",
+        "planned_km": 14,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "done",
+        "run_id": "i202079533",
+        "date": "2026-10-27"
+      },
+      "easy_share": 0,
+      "moderate_share": 0.6,
+      "easy_zones": {
+        "bounds_bpm": [
+          145,
+          153,
+          162,
+          171,
+          176,
+          181,
+          192
+        ],
+        "s": [
+          217,
+          67,
+          1059,
+          509,
+          0,
+          0,
+          0
+        ]
+      },
+      "flags": [
+        {
+          "kind": "over_cap",
+          "week": 3,
+          "date": "2026-10-27",
+          "run_id": "i202207443",
+          "text": "Easy run over the HR cap: 157 > 150 bpm.",
+          "zone_s": [
+            217,
+            67,
+            1059,
+            509,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "from": "2026-11-02",
+      "to": "2026-11-08",
+      "phase": "Build the engine",
+      "state": "future",
+      "km": {
+        "planned": 32,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 3,
+        "max": 4
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w04-quality",
+        "kind": "quality",
+        "text": "3 × 4 laps @ 4:20, 3 min rest",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 3,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 260,
+        "target_pace": "4:20",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w04-long",
+        "kind": "long",
+        "text": "12 km easy",
+        "status": "pending",
+        "planned_km": 12,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 5,
+      "from": "2026-11-09",
+      "to": "2026-11-15",
+      "phase": "Four laps at pace",
+      "state": "future",
+      "km": {
+        "planned": 39,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 4,
+        "max": 5
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w05-quality",
+        "kind": "quality",
+        "text": "4 × 4 laps @ 4:15, 4 min rest",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 4,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 255,
+        "target_pace": "4:15",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w05-long",
+        "kind": "long",
+        "text": "15 km easy",
+        "status": "pending",
+        "planned_km": 15,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 6,
+      "from": "2026-11-16",
+      "to": "2026-11-22",
+      "phase": "Four laps at pace",
+      "state": "future",
+      "km": {
+        "planned": 39,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 4,
+        "max": 5
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w06-quality",
+        "kind": "quality",
+        "text": "3 × 4 laps @ 4:10, 6 min rest",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 3,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 250,
+        "target_pace": "4:10",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w06-long",
+        "kind": "long",
+        "text": "16 km easy",
+        "status": "pending",
+        "planned_km": 16,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 7,
+      "from": "2026-11-23",
+      "to": "2026-11-29",
+      "phase": "Four laps at pace",
+      "state": "future",
+      "km": {
+        "planned": 42,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 4,
+        "max": 5
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w07-quality",
+        "kind": "quality",
+        "text": "4 × 4 laps @ 4:10, 8 min rest",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 4,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 250,
+        "target_pace": "4:10",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w07-long",
+        "kind": "long",
+        "text": "18 km easy",
+        "status": "pending",
+        "planned_km": 18,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 8,
+      "from": "2026-11-30",
+      "to": "2026-12-06",
+      "phase": "Four laps at pace",
+      "state": "future",
+      "km": {
+        "planned": 40,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 4,
+        "max": 5
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w08-quality",
+        "kind": "quality",
+        "text": "4 × 4 laps @ test pace, 10 min rest",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 4,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 250,
+        "target_pace": "4:10",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w08-long",
+        "kind": "long",
+        "text": "16 km easy",
+        "status": "pending",
+        "planned_km": 16,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 9,
+      "from": "2026-12-07",
+      "to": "2026-12-13",
+      "phase": "Four laps at pace",
+      "state": "future",
+      "km": {
+        "planned": 34,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 3,
+        "max": 4
+      },
+      "strength": {
+        "planned": 1
+      },
+      "quality": {
+        "id": "w09-quality",
+        "kind": "quality",
+        "text": "3 × 4 laps @ test pace, 10 min rest",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 3,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 250,
+        "target_pace": "4:10",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w09-long",
+        "kind": "long",
+        "text": "14 km easy",
+        "status": "pending",
+        "planned_km": 14,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 10,
+      "from": "2026-12-14",
+      "to": "2026-12-20",
+      "phase": "Four laps at pace",
+      "state": "future",
+      "km": {
+        "planned": 31,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 3,
+        "max": 4
+      },
+      "strength": {
+        "planned": 0
+      },
+      "quality": {
+        "id": "w10-quality",
+        "kind": "test",
+        "text": "Test: 5 × 4 laps @ test pace, 10 min rest",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 5,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 250,
+        "target_pace": "4:10",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w10-long",
+        "kind": "long",
+        "text": "16 km easy",
+        "status": "pending",
+        "planned_km": 16,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": null,
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 11,
+      "from": "2026-12-21",
+      "to": "2026-12-27",
+      "phase": "Osaka",
+      "state": "future",
+      "km": {
+        "planned": 39,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 4,
+        "max": 5
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w11-quality",
+        "kind": "quality",
+        "text": "20 min @ threshold",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 1,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 297,
+        "target_pace": "4:57",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w11-long",
+        "kind": "long",
+        "text": "18 km @ 7:00–7:15",
+        "status": "pending",
+        "planned_km": 18,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 12,
+      "from": "2026-12-28",
+      "to": "2027-01-03",
+      "phase": "Osaka",
+      "state": "future",
+      "km": {
+        "planned": 43,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 4,
+        "max": 5
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w12-quality",
+        "kind": "quality",
+        "text": "2 × 12 min @ threshold, 3 min rest",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 2,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 297,
+        "target_pace": "4:57",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w12-long",
+        "kind": "long",
+        "text": "20 km @ 7:00–7:15",
+        "status": "pending",
+        "planned_km": 20,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 13,
+      "from": "2027-01-04",
+      "to": "2027-01-10",
+      "phase": "Osaka",
+      "state": "future",
+      "km": {
+        "planned": 47,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 4,
+        "max": 5
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w13-quality",
+        "kind": "quality",
+        "text": "6 × 4 laps @ 4:30, 2 min rest",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 6,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 270,
+        "target_pace": "4:30",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w13-long",
+        "kind": "long",
+        "text": "23 km @ 7:00–7:15",
+        "status": "pending",
+        "planned_km": 23,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 14,
+      "from": "2027-01-11",
+      "to": "2027-01-17",
+      "phase": "Osaka",
+      "state": "future",
+      "km": {
+        "planned": 36,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 3,
+        "max": 4
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w14-quality",
+        "kind": "quality",
+        "text": "20 min @ threshold",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 1,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 297,
+        "target_pace": "4:57",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w14-long",
+        "kind": "long",
+        "text": "16 km @ 7:00–7:15",
+        "status": "pending",
+        "planned_km": 16,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 15,
+      "from": "2027-01-18",
+      "to": "2027-01-24",
+      "phase": "Osaka",
+      "state": "future",
+      "km": {
+        "planned": 51,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 4,
+        "max": 5
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w15-quality",
+        "kind": "quality",
+        "text": "3 × 10 min @ threshold, 2 min rest",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 3,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 297,
+        "target_pace": "4:57",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w15-long",
+        "kind": "long",
+        "text": "26 km @ 7:00–7:15",
+        "status": "pending",
+        "planned_km": 26,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 16,
+      "from": "2027-01-25",
+      "to": "2027-01-31",
+      "phase": "Osaka",
+      "state": "future",
+      "km": {
+        "planned": 53,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 4,
+        "max": 5
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w16-quality",
+        "kind": "quality",
+        "text": "6 × 4 laps @ 4:30, 2 min rest",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 6,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 270,
+        "target_pace": "4:30",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w16-long",
+        "kind": "long",
+        "text": "28 km @ 7:00–7:15",
+        "status": "pending",
+        "planned_km": 28,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 17,
+      "from": "2027-02-01",
+      "to": "2027-02-07",
+      "phase": "Osaka",
+      "state": "future",
+      "km": {
+        "planned": 54,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 4,
+        "max": 5
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w17-quality",
+        "kind": "quality",
+        "text": "25 min @ threshold",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 1,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 297,
+        "target_pace": "4:57",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w17-long",
+        "kind": "long",
+        "text": "30 km @ 7:00–7:15",
+        "status": "pending",
+        "planned_km": 30,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 18,
+      "from": "2027-02-08",
+      "to": "2027-02-14",
+      "phase": "Osaka",
+      "state": "future",
+      "km": {
+        "planned": 41,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 3,
+        "max": 4
+      },
+      "strength": {
+        "planned": 2
+      },
+      "quality": {
+        "id": "w18-quality",
+        "kind": "quality",
+        "text": "15 min @ threshold",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 1,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 297,
+        "target_pace": "4:57",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w18-long",
+        "kind": "long",
+        "text": "21 km @ 7:00–7:15",
+        "status": "pending",
+        "planned_km": 21,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 19,
+      "from": "2027-02-15",
+      "to": "2027-02-21",
+      "phase": "Osaka",
+      "state": "future",
+      "km": {
+        "planned": 33,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 3,
+        "max": 4
+      },
+      "strength": {
+        "planned": 1
+      },
+      "quality": {
+        "id": "w19-quality",
+        "kind": "quality",
+        "text": "4 × 4 laps @ 4:30, 2 min rest",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 4,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 270,
+        "target_pace": "4:30",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w19-long",
+        "kind": "long",
+        "text": "14 km @ 7:00–7:15",
+        "status": "pending",
+        "planned_km": 14,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    },
+    {
+      "n": 20,
+      "from": "2027-02-22",
+      "to": "2027-02-28",
+      "phase": "Osaka",
+      "state": "future",
+      "km": {
+        "planned": 58,
+        "actual": 0
+      },
+      "runs": {
+        "count": 0,
+        "min": 4,
+        "max": 5
+      },
+      "strength": {
+        "planned": 0
+      },
+      "quality": {
+        "id": "w20-quality",
+        "kind": "quality",
+        "text": "4 × 1 lap @ 7:00",
+        "status": "pending",
+        "run_id": null,
+        "date": null,
+        "reps": 0,
+        "reps_planned": 4,
+        "spread_s": null,
+        "avg_pace_s_per_km": null,
+        "avg_pace": null,
+        "target_pace_s_per_km": 420,
+        "target_pace": "7:00",
+        "delta_s": null,
+        "all_out": []
+      },
+      "long": {
+        "id": "w20-long",
+        "kind": "race",
+        "text": "Race: 42.2 km @ 7:00",
+        "status": "pending",
+        "planned_km": 42.2,
+        "actual_km": null,
+        "run_id": null,
+        "date": null
+      },
+      "bagels": {
+        "status": "pending",
+        "run_id": null,
+        "date": null
+      },
+      "easy_share": null,
+      "moderate_share": null,
+      "easy_zones": null,
+      "flags": []
+    }
+  ]
+}
