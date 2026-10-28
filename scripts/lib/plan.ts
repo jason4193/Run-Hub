@@ -55,6 +55,15 @@ const planSchema = z.strictObject({
     lap_m: z.tuple([count, count]),
     hr_cap: z.array(z.strictObject({ from: isoDate, bpm: count, reason: z.string().min(1) })).min(1),
     threshold: z.strictObject({ pace: pace.nullable(), hr_bpm: count.nullable(), measured_at: isoDate.nullable() }),
+    bagels_run: z
+      .strictObject({
+        weekday: z.enum(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]),
+        distance_km: z.number().positive(),
+        effort: z.string().min(1),
+        from: isoDate,
+        note: z.string().min(1),
+      })
+      .optional(),
   }),
   goals: z.strictObject({
     four_lap: z.strictObject({

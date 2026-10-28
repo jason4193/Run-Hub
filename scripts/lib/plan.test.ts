@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { loadPlan, parsePlan, PlanError } from "./plan.ts";
 import { fixtureYaml } from "./plan-fixture.ts";
+import { lapRange, resolvePace } from "./plan-view.ts";
 
 const FILE = "training/plan.yaml";
 
@@ -16,6 +17,15 @@ function rejects(edit: Parameters<typeof fixtureYaml>[0], expected: string) {
 test("the committed training/plan.yaml passes the format check", async () => {
   const plan = await loadPlan();
   assert.ok(plan.weeks.length > 0);
+});
+
+test("the committed Plan's threshold sessions resolve to 4:57 from the Week 1 time trial", async () => {
+  const plan = await loadPlan();
+  const w11 = plan.weeks[11].quality;
+  assert.notEqual(w11, "test");
+  const pace = resolvePace(plan, (w11 as Exclude<typeof w11, "test">).pace);
+  assert.equal(pace, "4:57");
+  assert.deepEqual(lapRange(plan, pace!), [134, 143]);
 });
 
 test("a valid Plan parses, with flag null and notes [] where the file leaves them out", () => {
@@ -36,6 +46,26 @@ test("changing values keeps the Plan valid", () => {
     FILE,
   );
   assert.equal(plan.weeks[0].km, 40);
+});
+
+test("a Bagels Run is optional and parses when given", () => {
+  assert.equal(parsePlan(fixtureYaml(), FILE).block.bagels_run, undefined);
+  const plan = parsePlan(
+    fixtureYaml(
+      (p) =>
+        (p.block.bagels_run = { weekday: "Tue", distance_km: 8, effort: "moderate", from: "2026-10-20", note: "Run club." }),
+    ),
+    FILE,
+  );
+  assert.equal(plan.block.bagels_run?.weekday, "Tue");
+});
+
+test("a Bagels Run on an unknown weekday fails, naming the key", () => {
+  rejects(
+    (p) =>
+      (p.block.bagels_run = { weekday: "Tues", distance_km: 8, effort: "moderate", from: "2026-10-20", note: "Run club." }),
+    `${FILE}: block.bagels_run.weekday: `,
+  );
 });
 
 test("a quality target needs exactly one of laps_per_rep, distance_m, duration_s", () => {

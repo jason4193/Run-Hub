@@ -25,9 +25,10 @@ This file is a **glossary only** — canonical terms and their agreed meanings. 
 - **Change Brief** — a written instruction from the Coach to change the Inputs; the only way a Plan value, a checkpoint verdict or the Threshold Pace changes.
 - **Outputs** — files derived from the Snapshot and the Inputs, regenerated on every Sync and never edited by hand. Distinct from the Snapshot, which holds only what intervals.icu reported.
 - **Week** — a Monday-to-Sunday week of the Plan, numbered from Week 0 (5–11 Oct 2026) to Week 20 (race week). _Avoid_: training week, block week.
-- **Weekly Target** — what a Week asks for: kilometres, a run-count range, one Quality Session, one Long Run and a strength count, on any days. _Avoid_: schedule, planned session.
+- **Weekly Target** — what a Week asks for: kilometres, a run-count range, one Quality Session, one Long Run and a strength count, on any days. The Bagels Run is the one run with a fixed day. _Avoid_: schedule, planned session.
 - **Quality Session** — the Week's one structured hard session (reps at a pace, or a timed effort). The 4-lap Test is the Quality Session of its Week.
 - **Long Run** — the Week's longest run, at a set distance. The Osaka Marathon is the Long Run of race week.
+- **Bagels Run** — the run club's Tuesday-morning run of about 8 km at moderate effort. The Athlete keeps it by choice, so it is planned, never the Quality Session or the Long Run, and not held to the HR cap. _Avoid_: fun run.
 - **Threshold Pace** — the pace set by the Week 1 time trial; unset until a Change Brief records it. _Avoid_: tempo pace.
 - **Test Pace** — the pace the 4-lap Test is run at; working until Checkpoint B confirms or revises it.
 - **Checkpoint** — a Quality Session whose result decides what comes next (A in Week 4, B in Week 7). Its verdict is set by a Change Brief, never by code.
