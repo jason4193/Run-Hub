@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { loadPlan, parsePlan, PlanError } from "./plan.ts";
 import { fixtureYaml } from "./plan-fixture.ts";
+import { lapRange, resolvePace } from "./plan-view.ts";
 
 const FILE = "training/plan.yaml";
 
@@ -16,6 +17,15 @@ function rejects(edit: Parameters<typeof fixtureYaml>[0], expected: string) {
 test("the committed training/plan.yaml passes the format check", async () => {
   const plan = await loadPlan();
   assert.ok(plan.weeks.length > 0);
+});
+
+test("the committed Plan's threshold sessions resolve to 4:57 from the Week 1 time trial", async () => {
+  const plan = await loadPlan();
+  const w11 = plan.weeks[11].quality;
+  assert.notEqual(w11, "test");
+  const pace = resolvePace(plan, (w11 as Exclude<typeof w11, "test">).pace);
+  assert.equal(pace, "4:57");
+  assert.deepEqual(lapRange(plan, pace!), [134, 143]);
 });
 
 test("a valid Plan parses, with flag null and notes [] where the file leaves them out", () => {

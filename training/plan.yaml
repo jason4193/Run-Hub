@@ -7,13 +7,21 @@
 #   quality has exactly one of laps_per_rep, distance_m, duration_s.
 #   quality: test -> goals.four_lap      long: race -> goals.osaka
 # Checkpoint verdicts, goals.four_lap.pace and block.threshold change only through a Change Brief.
+# block.bagels_run is the one run on a fixed weekday, stored once here; every other run can fall on any day.
 
 block:
   start: "2026-10-05"
   lap_m: [450, 480]
   hr_cap:
     - { from: "2026-10-05", bpm: 155, reason: "Until the Week 1 time trial; then ~85% of threshold HR." }
-  threshold: { pace: null, hr_bpm: null, measured_at: null }
+    - { from: "2026-10-16", bpm: 150, reason: "85% of threshold HR 177 from the 15 Oct time trial." }
+  threshold: { pace: "4:57", hr_bpm: 177, measured_at: "2026-10-15" }
+  bagels_run:
+    weekday: Tue
+    distance_km: 8
+    effort: moderate
+    from: "2026-10-20"
+    note: "The run club's Tuesday-morning run. Kept by choice; moderate HR is expected."
 
 goals:
   four_lap:
@@ -138,6 +146,7 @@ weeks:
       - "Rep one should feel almost too easy. Every rep within 5 s of the last."
       - "Easy runs before the test are very easy. The day after it is rest or a 20-minute walk."
       - "The long run starts the marathon block."
+      - "The test replaces the Bagels Run this week."
 
   - n: 11
     km: 39
@@ -252,7 +261,8 @@ rules:
     lines:
       - "One quality session and one long run per week, never on consecutive days (a Sunday long run then a Monday quality session counts)."
       - "Until 15 Dec the quality session builds to the 4-lap test; a tempo or a social run doesn't replace it."
-      - "Everything else is easy, under the HR cap, judged by HR rather than pace. Any day works."
+      - "Everything else is easy, under the HR cap, judged by HR rather than pace, except the Bagels Run. Any day works."
+      - "The quality session is never the day after the Bagels Run."
       - "If something has to give, cut easy kilometres first and the long run last."
   laps:
     title: Laps, not kilometres
