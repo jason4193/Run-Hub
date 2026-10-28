@@ -2,15 +2,16 @@
 # run has no entry: the Sync finds each week's quality session and its reps from the watch's segments.
 # A note is reference for the Coach. Writing it in the run's intervals.icu description works the same way.
 #
-# Add an entry from a phone (GitHub app or github.com → this file → pencil icon):
-#   1. Under `entries:`, add the date in quotes, indented two spaces: "2026-11-04":
-#   2. Under it, indented four spaces, add only the fields you need:
+# Entries change only through a Change Brief from the Coach, like the Plan. Each entry:
+#   1. Under `entries:`, the run's date in quotes, indented two spaces: "2026-11-04":
+#   2. Under it, indented four spaces, only the fields needed:
 #        note: "How it went."                 text for the Coach
 #        session: w04-quality                 this run is that week's quality session or long run (wNN-long)
 #        reps: ["4:14", "4:13"]               rep times, m:ss in quotes; they replace the watch's segments
 #        all_out: [2]                         rep numbers from reps that were deliberate all-out pushes
 #        activity_id: i197510215              which run, on a day with two (the id is in the intervals.icu URL)
-#   3. Commit to main. The next Sync checks the file; a session that isn't in the plan stops the Sync.
+#   The next Sync checks the file; a session that isn't in the plan, or an activity_id from another date, stops it.
+#   On a day with two runs and no activity_id, the entry goes to the longer run.
 # Days with no data go under `gaps:`, shown as "not logged", never as zero km:
 #   - { from: "2026-12-24", to: "2026-12-27", note: "Watch left at home." }
 
