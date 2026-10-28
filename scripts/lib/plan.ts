@@ -83,7 +83,7 @@ const planSchema = z.strictObject({
       limit_h: z.number().positive(),
       distance_km: z.number().positive(),
       pace,
-      best_case_pace: pace,
+      goal_finish_s: count,
       note: z.string(),
     }),
   }),

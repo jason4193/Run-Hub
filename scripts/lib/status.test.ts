@@ -36,7 +36,7 @@ test("8 Oct: Week 0 current, quality done, next is Week 1", () => {
   assert.deepEqual(s.next_quality.week, { n: 1, from: "2026-10-12", to: "2026-10-18" });
   assert.equal(s.next_quality.rep_range, null);
   assert.equal(s.goals.four_lap.days_left, 68);
-  assert.equal(s.goals.osaka.days_left, 143);
+  assert.deepEqual(s.goals.osaka, { date: "2027-02-28", days_left: 143, goal_finish_s: 18000, goal_finish: "5:00:00" });
   assert.deepEqual(s.sync, {
     last_activity_date: "2026-10-07",
     days_since_last_run: 1,
