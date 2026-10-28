@@ -3,6 +3,7 @@
  */
 import { daysBetween } from "./dates.ts";
 import type { RunDetail } from "./details.ts";
+import { deriveFlags, type Flag } from "./flags.ts";
 import type { Plan } from "./plan.ts";
 import { paceSeconds, resolvePace, weekOf, weekView } from "./plan-view.ts";
 import { formatSeconds } from "./reps.ts";
@@ -62,7 +63,7 @@ export interface WeekRow {
   easy_share: number | null;
   moderate_share: number | null;
   easy_zones: EasyZones | null;
-  flags: never[];
+  flags: Flag[];
 }
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -89,7 +90,7 @@ function countRuns(rows: SessionRow[], byId: Map<string, RunDetail>): number {
 /** One row per Plan week, W0 first. `sessions` from deriveSessions, `runs` the same Run Details it was given. */
 export function deriveWeeks(sessions: SessionRow[], runs: RunDetail[], plan: Plan, today: string): WeekRow[] {
   const byId = new Map(runs.map((r) => [r.id, r]));
-  return plan.weeks.map((_, n): WeekRow => {
+  const rows = plan.weeks.map((_, n): WeekRow => {
     const view = weekView(plan, n);
     const from = view.start;
     const to = view.end;
@@ -195,4 +196,7 @@ export function deriveWeeks(sessions: SessionRow[], runs: RunDetail[], plan: Pla
       flags: [],
     };
   });
+  const flags = deriveFlags(rows, sessions, runs, plan);
+  for (const row of rows) row.flags = flags.filter((f) => f.week === row.n);
+  return rows;
 }
