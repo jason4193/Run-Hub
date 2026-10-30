@@ -1,7 +1,62 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T16:45:10.929Z",
+  "generatedAt": "2026-10-30T00:05:11.765Z",
   "sessions": [
+    {
+      "date": "2026-10-30",
+      "id": "i203395064",
+      "type": "quality",
+      "distance_m": 6859,
+      "moving_s": 2682,
+      "pace_s_per_km": 391,
+      "pace": "6:31",
+      "avg_hr_bpm": 161,
+      "max_hr_bpm": 185,
+      "hr_zone_s": [
+        390,
+        777,
+        280,
+        250,
+        279,
+        589,
+        119
+      ],
+      "rpe": 6,
+      "feel": null,
+      "name": "Run",
+      "note": "Warmup ~15mins, 3x3laps 2mins rest. \n2nd reps misclick to use 3 segments to record.\nAfter 3rd reps with rest tried to push for 4th, but no strength any more.",
+      "plan_session_id": "w03-quality",
+      "under_cap": false,
+      "reps": [
+        {
+          "n": 1,
+          "time_s": 383,
+          "distance_m": 1386,
+          "pace_s_per_km": 276,
+          "pace": "4:36",
+          "avg_hr_bpm": 171,
+          "all_out": false
+        },
+        {
+          "n": 2,
+          "time_s": 391,
+          "distance_m": 1409,
+          "pace_s_per_km": 278,
+          "pace": "4:38",
+          "avg_hr_bpm": 174,
+          "all_out": false
+        },
+        {
+          "n": 3,
+          "time_s": 386,
+          "distance_m": 1419,
+          "pace_s_per_km": 272,
+          "pace": "4:32",
+          "avg_hr_bpm": 176,
+          "all_out": false
+        }
+      ]
+    },
     {
       "date": "2026-10-27",
       "id": "i202207443",

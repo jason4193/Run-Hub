@@ -1,7 +1,131 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T16:45:10.929Z",
+  "generatedAt": "2026-10-30T00:05:11.765Z",
   "runs": [
+    {
+      "id": "i203395064",
+      "start_date_local": "2026-10-30T10:15:09",
+      "type": "Run",
+      "name": "Run",
+      "distance": 6859.15,
+      "moving_time": 2682,
+      "average_heartrate": 161,
+      "max_heartrate": 185,
+      "icu_hr_zone_times": [
+        390,
+        777,
+        280,
+        250,
+        279,
+        589,
+        119
+      ],
+      "icu_hr_zones": [
+        145,
+        153,
+        162,
+        171,
+        176,
+        181,
+        192
+      ],
+      "icu_rpe": 6,
+      "feel": null,
+      "description": "Warmup ~15mins, 3x3laps 2mins rest. \n2nd reps misclick to use 3 segments to record.\nAfter 3rd reps with rest tried to push for 4th, but no strength any more.",
+      "analyzed": "2026-10-30T00:04:03.550+00:00",
+      "icu_intervals": [
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1928.23,
+          "moving_time": 929,
+          "elapsed_time": 929,
+          "average_heartrate": 145,
+          "max_heartrate": 158
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1385.8401,
+          "moving_time": 383,
+          "elapsed_time": 383,
+          "average_heartrate": 171,
+          "max_heartrate": 181
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 79.75,
+          "moving_time": 120,
+          "elapsed_time": 120,
+          "average_heartrate": 157,
+          "max_heartrate": 180
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 121.68994,
+          "moving_time": 32,
+          "elapsed_time": 32,
+          "average_heartrate": 147,
+          "max_heartrate": 159
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 281.3501,
+          "moving_time": 76,
+          "elapsed_time": 76,
+          "average_heartrate": 171,
+          "max_heartrate": 178
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1005.92993,
+          "moving_time": 283,
+          "elapsed_time": 283,
+          "average_heartrate": 178,
+          "max_heartrate": 182
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 93.41992,
+          "moving_time": 120,
+          "elapsed_time": 120,
+          "average_heartrate": 159,
+          "max_heartrate": 179
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1418.69,
+          "moving_time": 386,
+          "elapsed_time": 386,
+          "average_heartrate": 176,
+          "max_heartrate": 185
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 108.12988,
+          "moving_time": 119,
+          "elapsed_time": 119,
+          "average_heartrate": 166,
+          "max_heartrate": 183
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 436.12012,
+          "moving_time": 236,
+          "elapsed_time": 236,
+          "average_heartrate": 154,
+          "max_heartrate": 171
+        }
+      ]
+    },
     {
       "id": "i202207443",
       "start_date_local": "2026-10-27T19:20:43",

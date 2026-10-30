@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T16:45:10.929Z",
+  "generatedAt": "2026-10-30T00:05:11.765Z",
   "weeks": [
     {
       "n": 0,
@@ -304,10 +304,10 @@
       "state": "current",
       "km": {
         "planned": 36,
-        "actual": 13
+        "actual": 19.9
       },
       "runs": {
-        "count": 2,
+        "count": 3,
         "min": 4,
         "max": 5
       },
@@ -318,17 +318,17 @@
         "id": "w03-quality",
         "kind": "quality",
         "text": "4 × 3 laps @ 4:20, 2 min rest",
-        "status": "pending",
-        "run_id": null,
-        "date": null,
-        "reps": 0,
+        "status": "done",
+        "run_id": "i203395064",
+        "date": "2026-10-30",
+        "reps": 3,
         "reps_planned": 4,
-        "spread_s": null,
-        "avg_pace_s_per_km": null,
-        "avg_pace": null,
+        "spread_s": 8,
+        "avg_pace_s_per_km": 275,
+        "avg_pace": "4:35",
         "target_pace_s_per_km": 260,
         "target_pace": "4:20",
-        "delta_s": null,
+        "delta_s": 15,
         "all_out": []
       },
       "long": {
@@ -347,7 +347,7 @@
         "date": "2026-10-27"
       },
       "easy_share": 0,
-      "moderate_share": 0.6,
+      "moderate_share": 0.38,
       "easy_zones": {
         "bounds_bpm": [
           145,
@@ -384,6 +384,13 @@
             0,
             0
           ]
+        },
+        {
+          "kind": "spread",
+          "week": 3,
+          "date": "2026-10-30",
+          "run_id": "i203395064",
+          "text": "Rep spread 8 s, over 5 s."
         }
       ]
     },
