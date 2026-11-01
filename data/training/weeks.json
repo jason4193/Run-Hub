@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T15:38:32.116Z",
+  "generatedAt": "2026-11-01T16:39:07.041Z",
   "weeks": [
     {
       "n": 0,
@@ -301,13 +301,13 @@
       "from": "2026-10-26",
       "to": "2026-11-01",
       "phase": "Build the engine",
-      "state": "current",
+      "state": "finished",
       "km": {
         "planned": 36,
-        "actual": 19.9
+        "actual": 37.4
       },
       "runs": {
-        "count": 3,
+        "count": 4,
         "min": 4,
         "max": 5
       },
@@ -335,19 +335,19 @@
         "id": "w03-long",
         "kind": "long",
         "text": "14 km easy",
-        "status": "pending",
+        "status": "done",
         "planned_km": 14,
-        "actual_km": null,
-        "run_id": null,
-        "date": null
+        "actual_km": 17.5,
+        "run_id": "i204158244",
+        "date": "2026-11-01"
       },
       "bagels": {
         "status": "done",
         "run_id": "i202079533",
         "date": "2026-10-27"
       },
-      "easy_share": 0,
-      "moderate_share": 0.38,
+      "easy_share": 0.81,
+      "moderate_share": 0.18,
       "easy_zones": {
         "bounds_bpm": [
           145,
@@ -359,9 +359,9 @@
           192
         ],
         "s": [
-          217,
-          67,
-          1059,
+          6819,
+          985,
+          1298,
           509,
           0,
           0,
@@ -391,6 +391,13 @@
           "date": "2026-10-30",
           "run_id": "i203395064",
           "text": "Rep spread 8 s, over 5 s."
+        },
+        {
+          "kind": "long_over_plan",
+          "week": 3,
+          "date": "2026-11-01",
+          "run_id": "i204158244",
+          "text": "Long run 17.5 km against 14 planned (+25%)."
         }
       ]
     },
@@ -399,7 +406,7 @@
       "from": "2026-11-02",
       "to": "2026-11-08",
       "phase": "Build the engine",
-      "state": "future",
+      "state": "current",
       "km": {
         "planned": 32,
         "actual": 0
