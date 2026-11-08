@@ -1,7 +1,176 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-07T16:11:06.675Z",
+  "generatedAt": "2026-11-08T16:32:55.677Z",
   "runs": [
+    {
+      "id": "i207177989",
+      "start_date_local": "2026-11-08T08:17:30",
+      "type": "Run",
+      "name": "Run",
+      "distance": 12355.09,
+      "moving_time": 5118,
+      "average_heartrate": 145,
+      "max_heartrate": 158,
+      "icu_hr_zone_times": [
+        2579,
+        2341,
+        99,
+        0,
+        0,
+        0,
+        0
+      ],
+      "icu_hr_zones": [
+        145,
+        153,
+        162,
+        171,
+        176,
+        181,
+        192
+      ],
+      "icu_rpe": 4,
+      "feel": null,
+      "description": null,
+      "analyzed": "2026-11-07T22:47:39.844+00:00",
+      "icu_intervals": [
+        {
+          "type": "RECOVERY",
+          "label": null,
+          "distance": null,
+          "moving_time": 1,
+          "elapsed_time": 1,
+          "average_heartrate": null,
+          "max_heartrate": null
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1000.56,
+          "moving_time": 415,
+          "elapsed_time": 415,
+          "average_heartrate": 141,
+          "max_heartrate": 147
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 997.96,
+          "moving_time": 422,
+          "elapsed_time": 422,
+          "average_heartrate": 141,
+          "max_heartrate": 148
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1000.44995,
+          "moving_time": 411,
+          "elapsed_time": 411,
+          "average_heartrate": 147,
+          "max_heartrate": 154
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1000.57007,
+          "moving_time": 422,
+          "elapsed_time": 484,
+          "average_heartrate": 142,
+          "max_heartrate": 150
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1001.50977,
+          "moving_time": 411,
+          "elapsed_time": 411,
+          "average_heartrate": 145,
+          "max_heartrate": 154
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 998.16016,
+          "moving_time": 411,
+          "elapsed_time": 459,
+          "average_heartrate": 141,
+          "max_heartrate": 150
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 999.7998,
+          "moving_time": 409,
+          "elapsed_time": 445,
+          "average_heartrate": 146,
+          "max_heartrate": 154
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1001.9404,
+          "moving_time": 409,
+          "elapsed_time": 426,
+          "average_heartrate": 147,
+          "max_heartrate": 155
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 998.29004,
+          "moving_time": 407,
+          "elapsed_time": 407,
+          "average_heartrate": 148,
+          "max_heartrate": 155
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1001.1494,
+          "moving_time": 407,
+          "elapsed_time": 407,
+          "average_heartrate": 147,
+          "max_heartrate": 157
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 998.6201,
+          "moving_time": 430,
+          "elapsed_time": 430,
+          "average_heartrate": 146,
+          "max_heartrate": 158
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1001.5703,
+          "moving_time": 409,
+          "elapsed_time": 409,
+          "average_heartrate": 141,
+          "max_heartrate": 146
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 354.50977,
+          "moving_time": 155,
+          "elapsed_time": 155,
+          "average_heartrate": 144,
+          "max_heartrate": 149
+        },
+        {
+          "type": "RECOVERY",
+          "label": null,
+          "distance": null,
+          "moving_time": 1,
+          "elapsed_time": 1,
+          "average_heartrate": 140,
+          "max_heartrate": 140
+        }
+      ]
+    },
     {
       "id": "i205474042",
       "start_date_local": "2026-11-04T08:09:40",

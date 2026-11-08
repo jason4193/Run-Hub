@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-07T16:11:06.675Z",
+  "generatedAt": "2026-11-08T16:32:55.677Z",
   "weeks": [
     {
       "n": 0,
@@ -406,13 +406,13 @@
       "from": "2026-11-02",
       "to": "2026-11-08",
       "phase": "Build the engine",
-      "state": "current",
+      "state": "finished",
       "km": {
         "planned": 32,
-        "actual": 8.3
+        "actual": 20.7
       },
       "runs": {
-        "count": 1,
+        "count": 2,
         "min": 3,
         "max": 4
       },
@@ -423,7 +423,7 @@
         "id": "w04-quality",
         "kind": "quality",
         "text": "3 × 4 laps @ 4:20, 3 min rest",
-        "status": "pending",
+        "status": "missed",
         "run_id": null,
         "date": null,
         "reps": 0,
@@ -440,14 +440,14 @@
         "id": "w04-long",
         "kind": "long",
         "text": "12 km easy",
-        "status": "pending",
+        "status": "done",
         "planned_km": 12,
-        "actual_km": null,
-        "run_id": null,
-        "date": null
+        "actual_km": 12.4,
+        "run_id": "i207177989",
+        "date": "2026-11-08"
       },
       "bagels": {
-        "status": "pending",
+        "status": "missed",
         "run_id": null,
         "date": null
       },
@@ -464,23 +464,38 @@
           192
         ],
         "s": [
-          1159,
-          2129,
-          48,
+          3738,
+          4470,
+          147,
           12,
           0,
           0,
           0
         ]
       },
-      "flags": []
+      "flags": [
+        {
+          "kind": "missed",
+          "week": 4,
+          "date": null,
+          "run_id": null,
+          "text": "Week 4: quality session missed."
+        },
+        {
+          "kind": "week_km",
+          "week": 4,
+          "date": null,
+          "run_id": null,
+          "text": "Week 4: 20.7 km against 32 (-35%)."
+        }
+      ]
     },
     {
       "n": 5,
       "from": "2026-11-09",
       "to": "2026-11-15",
       "phase": "Four laps at pace",
-      "state": "future",
+      "state": "current",
       "km": {
         "planned": 39,
         "actual": 0
