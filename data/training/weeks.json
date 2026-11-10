@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-09T20:31:11.103Z",
+  "generatedAt": "2026-11-10T17:33:31.079Z",
   "weeks": [
     {
       "n": 0,
@@ -498,10 +498,10 @@
       "state": "current",
       "km": {
         "planned": 39,
-        "actual": 0
+        "actual": 8.1
       },
       "runs": {
-        "count": 0,
+        "count": 1,
         "min": 4,
         "max": 5
       },
@@ -536,12 +536,12 @@
         "date": null
       },
       "bagels": {
-        "status": "pending",
-        "run_id": null,
-        "date": null
+        "status": "done",
+        "run_id": "i208002270",
+        "date": "2026-11-10"
       },
       "easy_share": null,
-      "moderate_share": null,
+      "moderate_share": 1,
       "easy_zones": null,
       "flags": []
     },
