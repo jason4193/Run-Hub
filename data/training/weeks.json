@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-12T17:59:08.182Z",
+  "generatedAt": "2026-11-12T22:45:00.678Z",
   "weeks": [
     {
       "n": 0,
@@ -498,10 +498,10 @@
       "state": "current",
       "km": {
         "planned": 39,
-        "actual": 8.1
+        "actual": 20.5
       },
       "runs": {
-        "count": 1,
+        "count": 2,
         "min": 4,
         "max": 5
       },
@@ -512,9 +512,9 @@
         "id": "w05-quality",
         "kind": "quality",
         "text": "4 × 4 laps @ 4:15, 4 min rest",
-        "status": "pending",
-        "run_id": null,
-        "date": null,
+        "status": "done",
+        "run_id": "i209356655",
+        "date": "2026-11-13",
         "reps": 0,
         "reps_planned": 4,
         "spread_s": null,
@@ -541,7 +541,7 @@
         "date": "2026-11-10"
       },
       "easy_share": null,
-      "moderate_share": 1,
+      "moderate_share": 0.33,
       "easy_zones": null,
       "flags": []
     },
