@@ -38,8 +38,11 @@ Every repeat is a place for a Change Brief to update one copy and miss the other
 
 ## Consequences
 
-- A Change Brief edits one line per change. Repeating a week after a failed
-  checkpoint shifts every later date with no further edits.
+- A Change Brief edits one line per change.
+- Amended 16 Nov 2026 (#28): a repeated week can't shift later dates. The test
+  and race dates are fixed, and the format check needs each goal's date inside
+  its week. A failed checkpoint is handled by rewriting the following weeks'
+  targets in place (Checkpoint A, 13 Nov brief: Weeks 5–7).
 - The Coach reads the YAML directly but can't run the helpers. The header
   comment in `plan.yaml` gives the arithmetic, and the Outputs will carry the
   computed values.

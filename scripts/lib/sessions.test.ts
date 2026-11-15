@@ -13,7 +13,9 @@ const fixture = {
   runs: live.runs.filter((r) => r.start_date_local !== null && r.start_date_local >= "2026-09-13" && r.start_date_local < "2026-10-28"),
 };
 const plan = await loadPlan();
-const notes = await loadNotes(plan);
+const allNotes = await loadNotes(plan);
+/** Notes cut to the same window as the runs, so a later Note never points at a run outside it. */
+const notes = { ...allNotes, entries: Object.fromEntries(Object.entries(allNotes.entries).filter(([date]) => date < "2026-10-28")) };
 
 /** The live notes with `edit` applied to a copy. */
 function notesWith(edit: (entries: Notes["entries"]) => void): Notes {
