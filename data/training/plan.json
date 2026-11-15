@@ -38,9 +38,9 @@
       "rest_s": 600,
       "max_spread_s": 5,
       "original_pace": "4:00",
-      "pace": "4:10",
+      "pace": "4:15",
       "pace_status": "working",
-      "pace_rule": "Set at Checkpoint B: 4:15 if a checkpoint fails; 4:05 only if B passes with room to spare."
+      "pace_rule": "Set at Checkpoint B: 4:20 if B fails; 4:10 only if B passes with room to spare. Checkpoint A failed (13 Nov), so 4:15 is the working ceiling."
     },
     "osaka": {
       "date": "2027-02-28",
@@ -65,7 +65,7 @@
     },
     {
       "name": "Four laps at pace",
-      "from_week": 5,
+      "from_week": 6,
       "note": "Full 4-lap reps; rest stretches to test conditions."
     },
     {
@@ -188,7 +188,7 @@
     },
     {
       "n": 5,
-      "km": 39,
+      "km": 36,
       "runs": [
         4,
         5
@@ -197,15 +197,17 @@
       "flag": null,
       "quality": {
         "reps": 4,
-        "laps_per_rep": 4,
-        "pace": "4:15",
-        "rest_s": 240
+        "laps_per_rep": 3,
+        "pace": "4:20",
+        "rest_s": 120
       },
       "long": {
-        "distance_km": 15,
+        "distance_km": 14,
         "pace": "easy"
       },
-      "notes": []
+      "notes": [
+        "Checkpoint A failed: Week 3's targets repeated."
+      ]
     },
     {
       "n": 6,
@@ -219,15 +221,15 @@
       "quality": {
         "reps": 3,
         "laps_per_rep": 4,
-        "pace": "4:10",
-        "rest_s": 360
+        "pace": "4:20",
+        "rest_s": 180
       },
       "long": {
         "distance_km": 16,
         "pace": "easy"
       },
       "notes": [
-        "First time at 4:10 over the full 4 laps. Rest is longer so the pace is honest."
+        "First full 4-lap reps. Same pace as Week 5, longer reps before faster ones."
       ]
     },
     {
@@ -242,7 +244,7 @@
       "quality": {
         "reps": 4,
         "laps_per_rep": 4,
-        "pace": "4:10",
+        "pace": "4:15",
         "rest_s": 480
       },
       "long": {
@@ -574,13 +576,13 @@
       "week": 4,
       "pass": "All three reps at 4:15-4:25 and the last no slower than the first -> advance to Week 5.",
       "fail": "Otherwise -> repeat Week 3's targets next week instead of advancing; the December target moves to 4:15.",
-      "verdict": "pending",
-      "note": null
+      "verdict": "fail",
+      "note": "Week 4 quality missed (not attempted). Repeated Week 3's session on 13 Nov: 4 × 3 laps @ 4:34 average against 4:20; reps 1–3 at 4:29–4:34, rep 4 faded to 4:43. December target moves to 4:15."
     },
     "B": {
       "week": 7,
-      "pass": "All four within 5 s and controlled -> test at 4:10. Last rep the fastest and still in control -> may try 4:05.",
-      "fail": "Can't hold 4:10 for four reps -> test at 4:15. 4:00 is back only if this session feels easy.",
+      "pass": "All four at 4:15 within 5 s and controlled -> test at 4:15. Last rep the fastest and still in control -> may try 4:10.",
+      "fail": "Can't hold 4:15 for four reps -> test at 4:20.",
       "verdict": "pending",
       "note": null
     }

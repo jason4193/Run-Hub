@@ -27,5 +27,9 @@ entries:
   "2026-10-21":
     activity_id: i199861035
     note: "5 of 6 planned 2-lap reps (GPS 922–950 m each). Recoveries 1:34–1:48 against 90 s planned. Faded from rep 2."
+  "2026-11-13":
+    activity_id: i209356655
+    session: w05-quality
+    note: "Repeat of Week 3 after Checkpoint A failed. Chose to hold a steady pace (~10 s off target) to finish all 4 reps. Only the last lap of rep 4 was pushed; not an all-out rep."
 
 gaps: []

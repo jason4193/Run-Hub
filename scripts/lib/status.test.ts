@@ -14,7 +14,9 @@ const fixture = {
   runs: live.runs.filter((r) => r.start_date_local !== null && r.start_date_local >= "2026-09-13" && r.start_date_local < "2026-10-28"),
 };
 const plan = await loadPlan();
-const notes = await loadNotes(plan);
+const allNotes = await loadNotes(plan);
+/** Notes cut to the same window as the runs, so a later Note never points at a run outside it. */
+const notes = { ...allNotes, entries: Object.fromEntries(Object.entries(allNotes.entries).filter(([date]) => date < "2026-10-28")) };
 const paceCurve: PaceCurve = JSON.parse(readFileSync(new URL("../../data/pace-curve.json", import.meta.url), "utf8"));
 
 function statusOn(today: string, runs = fixture.runs) {
@@ -69,7 +71,7 @@ test("28 Oct: Week 3, its quality next, flags of the last four weeks", () => {
   });
   assert.equal(s.flags.length, 8);
   assert.deepEqual(s.checkpoints, [
-    { id: "A", week: { n: 4, from: "2026-11-02", to: "2026-11-08" }, verdict: "pending", note: null },
+    { id: "A", week: { n: 4, from: "2026-11-02", to: "2026-11-08" }, verdict: "fail", note: plan.checkpoints.A.note },
     { id: "B", week: { n: 7, from: "2026-11-23", to: "2026-11-29" }, verdict: "pending", note: null },
   ]);
   assert.deepEqual(s.best_efforts.map((b) => [b.label, b.time, b.pace]), [
@@ -77,7 +79,7 @@ test("28 Oct: Week 3, its quality next, flags of the last four weeks", () => {
     ["1 km", "3:41", "3:41"],
     ["5 km", "24:27", "4:53"],
   ]);
-  assert.deepEqual(s.goals.four_lap, { date: "2026-12-15", days_left: 48, test_pace: "4:10", test_pace_status: "working" });
+  assert.deepEqual(s.goals.four_lap, { date: "2026-12-15", days_left: 48, test_pace: "4:15", test_pace_status: "working" });
   assert.deepEqual(Object.keys(s), [
     "schemaVersion", "generatedAt", "today", "sync", "current_week", "next_quality", "goals",
     "checkpoints", "last_4_weeks", "best_efforts", "flags",
