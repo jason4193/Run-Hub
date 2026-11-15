@@ -1,7 +1,34 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-14T16:27:20.706Z",
+  "generatedAt": "2026-11-15T16:51:49.891Z",
   "sessions": [
+    {
+      "date": "2026-11-15",
+      "id": "i210166238",
+      "type": "long",
+      "distance_m": 14576,
+      "moving_s": 6886,
+      "pace_s_per_km": 472,
+      "pace": "7:52",
+      "avg_hr_bpm": 131,
+      "max_hr_bpm": 169,
+      "hr_zone_s": [
+        6726,
+        70,
+        11,
+        15,
+        0,
+        0,
+        0
+      ],
+      "rpe": 4,
+      "feel": null,
+      "name": "Run",
+      "note": null,
+      "plan_session_id": "w05-long",
+      "under_cap": true,
+      "reps": []
+    },
     {
       "date": "2026-11-13",
       "id": "i209356655",
