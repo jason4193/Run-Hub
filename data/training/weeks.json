@@ -494,10 +494,10 @@
       "n": 5,
       "from": "2026-11-09",
       "to": "2026-11-15",
-      "phase": "Four laps at pace",
+      "phase": "Build the engine",
       "state": "finished",
       "km": {
-        "planned": 39,
+        "planned": 36,
         "actual": 35.1
       },
       "runs": {
@@ -511,26 +511,26 @@
       "quality": {
         "id": "w05-quality",
         "kind": "quality",
-        "text": "4 × 4 laps @ 4:15, 4 min rest",
+        "text": "4 × 3 laps @ 4:20, 2 min rest",
         "status": "done",
         "run_id": "i209356655",
         "date": "2026-11-13",
-        "reps": 0,
+        "reps": 4,
         "reps_planned": 4,
-        "spread_s": null,
-        "avg_pace_s_per_km": null,
-        "avg_pace": null,
-        "target_pace_s_per_km": 255,
-        "target_pace": "4:15",
-        "delta_s": null,
+        "spread_s": 19,
+        "avg_pace_s_per_km": 274,
+        "avg_pace": "4:34",
+        "target_pace_s_per_km": 260,
+        "target_pace": "4:20",
+        "delta_s": 14,
         "all_out": []
       },
       "long": {
         "id": "w05-long",
         "kind": "long",
-        "text": "15 km easy",
+        "text": "14 km easy",
         "status": "done",
-        "planned_km": 15,
+        "planned_km": 14,
         "actual_km": 14.6,
         "run_id": "i210166238",
         "date": "2026-11-15"
@@ -562,7 +562,15 @@
           0
         ]
       },
-      "flags": []
+      "flags": [
+        {
+          "kind": "spread",
+          "week": 5,
+          "date": "2026-11-13",
+          "run_id": "i209356655",
+          "text": "Rep spread 19 s, over 5 s."
+        }
+      ]
     },
     {
       "n": 6,
@@ -585,7 +593,7 @@
       "quality": {
         "id": "w06-quality",
         "kind": "quality",
-        "text": "3 × 4 laps @ 4:10, 6 min rest",
+        "text": "3 × 4 laps @ 4:20, 3 min rest",
         "status": "pending",
         "run_id": null,
         "date": null,
@@ -594,8 +602,8 @@
         "spread_s": null,
         "avg_pace_s_per_km": null,
         "avg_pace": null,
-        "target_pace_s_per_km": 250,
-        "target_pace": "4:10",
+        "target_pace_s_per_km": 260,
+        "target_pace": "4:20",
         "delta_s": null,
         "all_out": []
       },
@@ -640,7 +648,7 @@
       "quality": {
         "id": "w07-quality",
         "kind": "quality",
-        "text": "4 × 4 laps @ 4:10, 8 min rest",
+        "text": "4 × 4 laps @ 4:15, 8 min rest",
         "status": "pending",
         "run_id": null,
         "date": null,
@@ -649,8 +657,8 @@
         "spread_s": null,
         "avg_pace_s_per_km": null,
         "avg_pace": null,
-        "target_pace_s_per_km": 250,
-        "target_pace": "4:10",
+        "target_pace_s_per_km": 255,
+        "target_pace": "4:15",
         "delta_s": null,
         "all_out": []
       },
@@ -704,8 +712,8 @@
         "spread_s": null,
         "avg_pace_s_per_km": null,
         "avg_pace": null,
-        "target_pace_s_per_km": 250,
-        "target_pace": "4:10",
+        "target_pace_s_per_km": 255,
+        "target_pace": "4:15",
         "delta_s": null,
         "all_out": []
       },
@@ -759,8 +767,8 @@
         "spread_s": null,
         "avg_pace_s_per_km": null,
         "avg_pace": null,
-        "target_pace_s_per_km": 250,
-        "target_pace": "4:10",
+        "target_pace_s_per_km": 255,
+        "target_pace": "4:15",
         "delta_s": null,
         "all_out": []
       },
@@ -814,8 +822,8 @@
         "spread_s": null,
         "avg_pace_s_per_km": null,
         "avg_pace": null,
-        "target_pace_s_per_km": 250,
-        "target_pace": "4:10",
+        "target_pace_s_per_km": 255,
+        "target_pace": "4:15",
         "delta_s": null,
         "all_out": []
       },

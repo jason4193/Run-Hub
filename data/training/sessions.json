@@ -51,10 +51,47 @@
       "rpe": 6,
       "feel": null,
       "name": "Run",
-      "note": "4x3laps Target 4:20” pace Rest 120sec\nTry to keep it steady, so +0:10” pace off",
+      "note": "4x3laps Target 4:20” pace Rest 120sec\nTry to keep it steady, so +0:10” pace off\nRepeat of Week 3 after Checkpoint A failed. Chose to hold a steady pace (~10 s off target) to finish all 4 reps. Only the last lap of rep 4 was pushed; not an all-out rep.",
       "plan_session_id": "w05-quality",
       "under_cap": false,
-      "reps": []
+      "reps": [
+        {
+          "n": 1,
+          "time_s": 390,
+          "distance_m": 1423,
+          "pace_s_per_km": 274,
+          "pace": "4:34",
+          "avg_hr_bpm": 173,
+          "all_out": false
+        },
+        {
+          "n": 2,
+          "time_s": 390,
+          "distance_m": 1450,
+          "pace_s_per_km": 269,
+          "pace": "4:29",
+          "avg_hr_bpm": 176,
+          "all_out": false
+        },
+        {
+          "n": 3,
+          "time_s": 386,
+          "distance_m": 1426,
+          "pace_s_per_km": 271,
+          "pace": "4:31",
+          "avg_hr_bpm": 175,
+          "all_out": false
+        },
+        {
+          "n": 4,
+          "time_s": 405,
+          "distance_m": 1432,
+          "pace_s_per_km": 283,
+          "pace": "4:43",
+          "avg_hr_bpm": 179,
+          "all_out": false
+        }
+      ]
     },
     {
       "date": "2026-11-10",
