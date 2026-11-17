@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-16T20:05:35.073Z",
+  "generatedAt": "2026-11-17T18:59:58.564Z",
   "weeks": [
     {
       "n": 0,
@@ -580,10 +580,10 @@
       "state": "current",
       "km": {
         "planned": 39,
-        "actual": 0
+        "actual": 5.1
       },
       "runs": {
-        "count": 0,
+        "count": 1,
         "min": 4,
         "max": 5
       },
@@ -622,10 +622,46 @@
         "run_id": null,
         "date": null
       },
-      "easy_share": null,
-      "moderate_share": null,
-      "easy_zones": null,
-      "flags": []
+      "easy_share": 0,
+      "moderate_share": 0,
+      "easy_zones": {
+        "bounds_bpm": [
+          145,
+          153,
+          162,
+          171,
+          176,
+          181,
+          192
+        ],
+        "s": [
+          78,
+          46,
+          280,
+          867,
+          455,
+          88,
+          0
+        ]
+      },
+      "flags": [
+        {
+          "kind": "over_cap",
+          "week": 6,
+          "date": "2026-11-17",
+          "run_id": "i211097324",
+          "text": "Easy run over the HR cap: 166 > 150 bpm.",
+          "zone_s": [
+            78,
+            46,
+            280,
+            867,
+            455,
+            88,
+            0
+          ]
+        }
+      ]
     },
     {
       "n": 7,
