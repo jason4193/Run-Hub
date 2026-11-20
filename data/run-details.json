@@ -1,7 +1,104 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-19T18:54:44.745Z",
+  "generatedAt": "2026-11-20T05:30:15.723Z",
   "runs": [
+    {
+      "id": "i212338627",
+      "start_date_local": "2026-11-20T15:48:31",
+      "type": "Run",
+      "name": "Run",
+      "distance": 6186.67,
+      "moving_time": 2355,
+      "average_heartrate": 163,
+      "max_heartrate": 181,
+      "icu_hr_zone_times": [
+        445,
+        435,
+        139,
+        285,
+        280,
+        758,
+        0
+      ],
+      "icu_hr_zones": [
+        145,
+        153,
+        162,
+        171,
+        176,
+        181,
+        192
+      ],
+      "icu_rpe": 6,
+      "feel": null,
+      "description": null,
+      "analyzed": "2026-11-20T05:29:13.291+00:00",
+      "icu_intervals": [
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1012.95,
+          "moving_time": 508,
+          "elapsed_time": 508,
+          "average_heartrate": 144,
+          "max_heartrate": 154
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1871.1501,
+          "moving_time": 497,
+          "elapsed_time": 497,
+          "average_heartrate": 174,
+          "max_heartrate": 181
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 175.68994,
+          "moving_time": 180,
+          "elapsed_time": 180,
+          "average_heartrate": 152,
+          "max_heartrate": 181
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 1936.2397,
+          "moving_time": 534,
+          "elapsed_time": 534,
+          "average_heartrate": 176,
+          "max_heartrate": 181
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 144.08008,
+          "moving_time": 180,
+          "elapsed_time": 180,
+          "average_heartrate": 153,
+          "max_heartrate": 179
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 964.75,
+          "moving_time": 313,
+          "elapsed_time": 313,
+          "average_heartrate": 168,
+          "max_heartrate": 177
+        },
+        {
+          "type": "WORK",
+          "label": null,
+          "distance": 81.81006,
+          "moving_time": 145,
+          "elapsed_time": 145,
+          "average_heartrate": 145,
+          "max_heartrate": 169
+        }
+      ]
+    },
     {
       "id": "i211097324",
       "start_date_local": "2026-11-17T18:29:57",

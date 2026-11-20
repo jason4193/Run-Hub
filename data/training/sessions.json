@@ -1,7 +1,53 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-19T18:54:44.745Z",
+  "generatedAt": "2026-11-20T05:30:15.723Z",
   "sessions": [
+    {
+      "date": "2026-11-20",
+      "id": "i212338627",
+      "type": "quality",
+      "distance_m": 6187,
+      "moving_s": 2355,
+      "pace_s_per_km": 381,
+      "pace": "6:21",
+      "avg_hr_bpm": 163,
+      "max_hr_bpm": 181,
+      "hr_zone_s": [
+        445,
+        435,
+        139,
+        285,
+        280,
+        758,
+        0
+      ],
+      "rpe": 6,
+      "feel": null,
+      "name": "Run",
+      "note": null,
+      "plan_session_id": "w06-quality",
+      "under_cap": false,
+      "reps": [
+        {
+          "n": 1,
+          "time_s": 497,
+          "distance_m": 1871,
+          "pace_s_per_km": 266,
+          "pace": "4:26",
+          "avg_hr_bpm": 174,
+          "all_out": false
+        },
+        {
+          "n": 2,
+          "time_s": 534,
+          "distance_m": 1936,
+          "pace_s_per_km": 276,
+          "pace": "4:36",
+          "avg_hr_bpm": 176,
+          "all_out": false
+        }
+      ]
+    },
     {
       "date": "2026-11-17",
       "id": "i211097324",
