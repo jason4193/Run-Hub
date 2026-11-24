@@ -35,11 +35,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -87,5 +84,15 @@ jobs:
         with:
           path: frontend/dist
 
+  # Deploy in its own job: in the same job as the upload, the artifact lookup can run
+  # before GitHub lists the artifact and fail (actions/deploy-pages#451). A failed
+  # deploy can also be re-run alone, without syncing again.
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
       - id: deploy
         uses: actions/deploy-pages@v5

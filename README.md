@@ -164,7 +164,9 @@ repo, add `INTERVALS_API_KEY` and `INTERVALS_ATHLETE_ID` as Actions secrets, and
 enable Pages (source: GitHub Actions). The workflow then rebuilds the Snapshot on
 the daily cron, a manual run or a source push, commits it back with the
 built-in `GITHUB_TOKEN` (no personal access token needed) when a run changed or
-as the once-a-day heartbeat, and deploys. Update
+as the once-a-day heartbeat, and deploys. The deploy is its own job, so if only
+the deploy fails, "Re-run failed jobs" deploys the same build without syncing
+again. Update
 `frontend/vite.config.ts` `base` (or `BASE_PATH`) to match the repo name.
 
 ## Documentation
