@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-24T20:32:15.743Z",
+  "generatedAt": "2026-11-25T19:49:15.261Z",
   "weeks": [
     {
       "n": 0,
@@ -692,10 +692,10 @@
       "state": "current",
       "km": {
         "planned": 42,
-        "actual": 0
+        "actual": 5.8
       },
       "runs": {
-        "count": 0,
+        "count": 1,
         "min": 4,
         "max": 5
       },
@@ -734,9 +734,28 @@
         "run_id": null,
         "date": null
       },
-      "easy_share": null,
-      "moderate_share": null,
-      "easy_zones": null,
+      "easy_share": 1,
+      "moderate_share": 0,
+      "easy_zones": {
+        "bounds_bpm": [
+          145,
+          153,
+          162,
+          171,
+          176,
+          181,
+          192
+        ],
+        "s": [
+          999,
+          992,
+          503,
+          10,
+          0,
+          0,
+          0
+        ]
+      },
       "flags": []
     },
     {
