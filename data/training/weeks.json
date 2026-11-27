@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-26T19:27:17.303Z",
+  "generatedAt": "2026-11-27T19:23:27.524Z",
   "weeks": [
     {
       "n": 0,
@@ -692,10 +692,10 @@
       "state": "current",
       "km": {
         "planned": 42,
-        "actual": 5.8
+        "actual": 21.5
       },
       "runs": {
-        "count": 1,
+        "count": 2,
         "min": 4,
         "max": 5
       },
@@ -706,17 +706,17 @@
         "id": "w07-quality",
         "kind": "quality",
         "text": "4 × 4 laps @ 4:15, 8 min rest",
-        "status": "pending",
-        "run_id": null,
-        "date": null,
-        "reps": 0,
+        "status": "done",
+        "run_id": "i215149103",
+        "date": "2026-11-27",
+        "reps": 4,
         "reps_planned": 4,
-        "spread_s": null,
-        "avg_pace_s_per_km": null,
-        "avg_pace": null,
+        "spread_s": 32,
+        "avg_pace_s_per_km": 266,
+        "avg_pace": "4:26",
         "target_pace_s_per_km": 255,
         "target_pace": "4:15",
-        "delta_s": null,
+        "delta_s": 11,
         "all_out": []
       },
       "long": {
@@ -756,7 +756,15 @@
           0
         ]
       },
-      "flags": []
+      "flags": [
+        {
+          "kind": "spread",
+          "week": 7,
+          "date": "2026-11-27",
+          "run_id": "i215149103",
+          "text": "Rep spread 32 s, over 5 s."
+        }
+      ]
     },
     {
       "n": 8,
